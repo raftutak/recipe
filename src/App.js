@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import Header from './components/Header';
 import Form from './components/Form';
 import Recipes from './components/Recipes';
 
@@ -39,6 +40,7 @@ class App extends React.Component {
         <header className="App-header">
           <h1 className="App-title">Recipe Search</h1>
         </header>
+        <Header />
         <Form getRecipe={this.getRecipe} />
         <Recipes recipes={this.state.recipes} />
       </div>
