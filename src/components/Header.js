@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 const Header = () => (
     <div className="header-wrapper">
         <header className="header">
@@ -8,7 +10,7 @@ const Header = () => (
             </div>
             <nav className="top-nav">
                 <ul>
-                    <li><a href="#">Strona główna</a></li>
+                    <li><Link to="/">Strona główna</Link></li>
                     <li><a href="#">Przepisy</a></li>
                     <li><a href="#">Jadłospis</a></li>
                     <li><a href="#">Co ugotować?</a></li>
