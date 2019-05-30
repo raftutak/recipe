@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Header from '../containers/Header';
+
 import { Link } from 'react-router-dom';
 
 const API_KEY = 'a5e3ba3841e7d5a1e832fac92e33bb3f';
@@ -21,6 +23,7 @@ class Recipe extends React.Component {
         const recipe = this.state.activeRecipe;
         return (
             <div>
+                <Header />
                 {
                     this.state.activeRecipe.length !== 0 &&
                     <div>

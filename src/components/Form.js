@@ -1,11 +1,13 @@
 import React from 'react';
 
-// stateless component, bo nie potrzebuje state, dlatego nie uzywam klasy
 const Form = props => (
-    <form onSubmit={props.getRecipe}>
-        <input type="text" name="recipeName" />
-        <button>Search</button>
-    </form>
+    <div className="search-wrapper">
+        <section className="search">
+            <form onSubmit={props.getRecipe}>
+                <input className="main-search" type="search" name="recipeName" placeholder="Szukaj przepisu ..." />
+            </form>
+        </section>
+    </div>
 );
 
 export default Form;
