@@ -3,8 +3,9 @@ import React from 'react';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import Recipes from '../components/Recipes';
+import Footer from '../components/Footer';
 
-const API_KEY = 'c78b0144c73988c63d9fdf0226094d10';
+// const API_KEY = 'c78b0144c73988c63d9fdf0226094d10';
 
 class Home extends React.Component {
     state = {
@@ -14,7 +15,8 @@ class Home extends React.Component {
     getRecipe = async (e) => {
         const recipeName = e.target.elements.recipeName.value;
         e.preventDefault();
-        const api_call = await fetch(`https://www.food2fork.com/api/search?key=${API_KEY}&q=${recipeName}`);
+        // const api_call = await fetch(`https://www.food2fork.com/api/search?key=${API_KEY}&q=${recipeName}`);
+        const api_call = await fetch(`https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=${recipeName}&count=100`);
         console.log(recipeName);
 
         const data = await api_call.json();
@@ -28,6 +30,7 @@ class Home extends React.Component {
                 <Header />
                 <Form getRecipe={this.getRecipe} />
                 <Recipes recipes={this.state.recipes} />
+                <Footer />
             </div>
         )
     }
