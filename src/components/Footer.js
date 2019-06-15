@@ -1,49 +1,42 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import ListGroupItem from 'react-bootstrap/ListGroupItem';
 
 import { Link } from 'react-router-dom';
 
-const Footer = () => (
-
+const Recipes = props => (
     <div>
+        <section className="recipe-list container">
+            {props.recipes.map((recipe) => {
+                return (
+                    <div className="card" key={recipe.title}>
+                        <Link to={{ pathname: `/recipe/${recipe.id}`, state: { recipe: recipe.id } }}>
+                            <div className="card-image">
+                                <img src={recipe.image_Url} alt={recipe.title} />
+                            </div>
+                        </Link>
+                        <div className="card-text">
+                            <h2>{recipe.title}</h2>
+                            <div className="recipe-details">
+                                <h3><span>ID przepisu:</span> {recipe.id}</h3>
+                                <h3><span>Źródło:</span> {recipe.blog}</h3>
+                                <h3><span>URL:</span> {recipe.url}</h3>
+                            </div>
+                        </div>
+                        <Link to={{ pathname: `/recipe/${recipe.id}`, state: { recipe: recipe.id } }}>
 
-        <div className="container side-by-side">
-            <section id="slider">
-                <div className="wrap">
-                    <h2>Przepis tygodnia</h2>
-                    <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, alias. Perspiciatis possimus
-                        officiis a nulla dolore doloremque suscipit fugiat molestias necessitatibus. Nostrum, optio fugit!
-                    Architecto quod voluptates dolor ea magnam.</h3>
-                </div>
-            </section>
+                            <div className="goto-recipe">
+                                <h3>Przejdź do przepisu</h3>
+                            </div>
+                        </Link>
 
-            <section id="test">
-                <div className="wrap">
-                    <h2>Nagłówek</h2>
-                    <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, alias. Perspiciatis possimus
-                        officiis a nulla dolore doloremque suscipit fugiat molestias necessitatibus. Nostrum, optio fugit!
-                    Architecto quod voluptates dolor ea magnam.</h3>
-                </div>
-            </section>
-        </div>
+                    </div>
 
-        <section id="search">
-            <div className="container">
-                <h2>Nagłówek</h2>
-                <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, alias. Perspiciatis possimus
-                    officiis a nulla dolore doloremque suscipit fugiat molestias necessitatibus. Nostrum, optio fugit!
-                Architecto quod voluptates dolor ea magnam.</h3>
-            </div>
+                );
+            })}
         </section>
-
-        <footer>
-            <div className="wrap">
-                <i className="fab fa-facebook-square"></i>
-                <i className="fab fa-instagram"></i>
-                <i className="fab fa-twitter-square"></i>
-                <h3>Copyright &copy; recipe-search</h3>
-            </div>
-        </footer>
     </div>
 )
 
-export default Footer;
+export default Recipes;
