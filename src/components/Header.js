@@ -3,60 +3,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => (
-    <div className="header-wrapper">
-        <header className="header">
-            <div className="logo">
-                <h1>recipe</h1>
-            </div>
-            <nav className="top-nav">
-                <ul>
-                    <li><Link to="/">Strona główna</Link></li>
-                    <li><a href="#">Przepisy</a></li>
-                    <li><a href="#">Jadłospis</a></li>
-                    <li><a href="#">Co ugotować?</a></li>
-                    <li><a href="#">Moje konto</a></li>
-                    <li><a href="#">Kontakt</a></li>
-                </ul>
-            </nav>
-            <div className="top-search">
-                <input type="search" placeholder="Szukaj przepisu ..." />
-            </div>
-            <div className="banner">
-                <p>Nie wiesz co zjeść?</p>
-                <button className="button-banner">Sprawdź</button>
+    <div>
+        <header>
+            <div className="container">
+                <div className="wrap">
+                    <h1>Łatwe przepisy na każdą okazję</h1>
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum minima nostrum fugiat nisi? Earum
+                        reprehenderit iure qui consequuntur quasi, dignissimos fugit dolores ad, vitae, provident excepturi
+                    voluptatum assumenda et omnis!</h3>
+                    <a className="button" href="/">Sprawdź</a>
+                </div>
             </div>
         </header>
     </div>
 )
-
-// const Header = () => (
-//     <div className="header-wrapper">
-//         <header className="header">
-//             <div className="logo">
-//                 <h1>site-name</h1>
-//             </div>
-//             <nav className="top-nav">
-//                 <ul>
-//                     <li><Link to="/">Strona główna</Link></li>
-//                     <li><a href="#">Przepisy</a></li>
-//                     <li><a href="#">Jadłospis</a></li>
-//                     <li><a href="#">Co ugotować?</a></li>
-//                     <li><a href="#">Moje konto</a></li>
-//                     <li><a href="#">Kontakt</a></li>
-//                 </ul>
-//             </nav>
-//             <div className="top-search">
-//                 <input type="search" placeholder="Szukaj przepisu ..." />
-//             </div>
-//             <div className="banner">
-//                 <p>Nie wiesz co zjeść?</p>
-//                 <p>Z nami się dowiesz!</p>
-//                 <p>Skorzystaj z naszej zaawansowanej
-// wyszukiwarki przepisów!</p>
-//                 <button className="button-banner">Sprawdź</button>
-//             </div>
-//         </header>
-//     </div>
-// )
 
 export default Header;
