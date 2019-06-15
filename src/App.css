@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Glegoo:400,700|Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700|Pacifico|Poppins:400,700&display=swap');
+/* font-family: 'Pacifico', cursive; */
+/* font-family: 'Merriweather', serif; */
+/* font-family: 'Poppins', sans-serif; */
 
-/*
-font-family: 'Staatliches', cursive;
-font-family: 'Glegoo', serif;
-*/
-
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -12,236 +11,94 @@ font-family: 'Glegoo', serif;
 }
 
 body {
-  height: 100vh;
-  font-family: 'Glegoo', serif;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 /* HEADER */
-
-.header-wrapper {
-  background-color: rgb(30, 45, 66);
-  background-image: url('/img/bg-header.png');
-  height: 50vh;
-}
-
 header {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 70px 100px 300px;
-  grid-template-areas: "logo top-nav top-search""banner banner banner";
-  max-width: 1280px;
-  margin: 0 auto;
-  color: yellowgreen;
-  padding: 10px 20px 40px 20px;
+  min-height: 360px;
+  /* background */
+  background-image: url('https://themes.muffingroup.com/be/recipes2/wp-content/uploads/2018/07/home_recipes2_slider_bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.logo {
-  grid-area: logo;
+nav {
+  background-color: #1e2d42;
+  height: 80px;
 }
 
-.logo h1 {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
-  padding-left: 20px;
+i.fas.fa-bars {
+  position: absolute;
+  left: 20px;
+  font-size: 1.8rem;
+  line-height: 80px;
+  color: #fff;
 }
 
-.top-nav {
-  grid-area: top-nav;
+#logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  line-height: 80px;
+  color: #fff;
 }
 
-.top-nav ul {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
+nav ul {
+  display: none;
   list-style: none;
 }
 
-.top-nav li {
-  padding-right: 20px;
+header .wrap {
+  text-align: left;
+  width: 72%;
+  padding: 20px;
 }
 
-.top-nav a {
+h1 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.8rem;
+  color: #222223;
+  padding-top: 20px;
+  padding-bottom: 1.5rem;
+}
+
+h2 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.4rem;
+  color: #222223;
+  padding-bottom: 20px;
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+a.button {
+  display: inline-block;
   text-decoration: none;
-  color: yellowgreen;
-  transition: 0.3s;
-}
-
-.top-nav a:hover {
-  color: white;
-  padding-bottom: 3px;
-  border-bottom: 1px solid white;
-}
-
-.top-search {
-  grid-area: top-search;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.top-search input {
+  color: #1e2d42;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: 1px solid black;
   border-radius: 25px;
-  padding: 3px 20px;
-  border: 2px solid rgb(154, 205, 50);
-  transition: 0.3s;
-  font-family: 'Glegoo', serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
+  transition: 0.3s;
 }
 
-.top-search input:focus {
-  box-shadow: 0 0 5px rgba(154, 205, 50, 1);
-  border: 2px solid rgba(154, 205, 50, 1);
-  outline: none;
-}
-
-.banner {
-  grid-area: banner;
-  margin-top: 35px;
-  width: 70%;
-}
-
-.banner p {
-  font-family: 'Staatliches', cursive;
-  padding-bottom: 15px;
-  padding-left: 20px;
-}
-
-.banner p:nth-of-type(1) {
-  font-size: 40px;
-  letter-spacing: 3px;
-}
-
-.banner p:nth-of-type(2) {
-  font-size: 60px;
-  letter-spacing: 3px;
-}
-
-.banner p:nth-of-type(3) {
-  font-size: 40px;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
-}
-
-.button-banner {
-  margin-left: 20px;
-}
-
-button {
+a.button:hover {
+  background-color: #1e2d42;
   color: white;
-  background-color: rgb(13, 26, 43);
-  font-size: 20px;
-  border-radius: 25px;
-  padding: 8px 40px;
-  border: none;
-  transition: 0.3s;
-  font-family: 'Glegoo', serif;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-button:hover {
-  color: rgb(13, 26, 43);
-  background-color: white;
-  font-weight: 700;
-}
-
-/* SEARCH */
-
-.recipe-list-wrapper.container {
-  max-width: 1280px;
-  background-color: rgb(240, 240, 240);
-  min-height: 400px;
-}
-
-.search-wrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 35vh;
-  grid-template-areas: "search";
-  max-width: 1280px;
-  margin: 0 auto;
-  color: yellowgreen;
-  background-color: white;
-  height: 150px;
-}
-
-.search {
-  grid-area: search;
-  background-color: rgb(240, 240, 240);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-}
-
-.search form {
-  width: 100%;
-}
-
-.search input {
-  display: flex;
-  color: rgb(154, 205, 50);
-  font-size: 24px;
-  border-radius: 25px;
-  padding: 10px 30px;
-  border: 2px solid rgb(154, 205, 50);
-  transition: 0.3s;
-  font-family: 'Glegoo', serif;
-  font-weight: 700;
-  margin: 0 auto;
-  width: 50%;
-  height: 70px;
-}
-
-.search input:focus {
-  box-shadow: 0 0 15px 5px rgba(154, 205, 50, 1);
-  border: 2px solid rgba(154, 205, 50, 1);
-  outline: none;
-}
-
-.card-img-top {
-  width: 100%;
-  height: 15vw;
-  object-fit: cover;
-}
-
-.recipe-list .row {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-content: center;
-  align-self: center;
-  justify-self: center;
-}
-
-/* FOOTER */
-
-footer {
-  height: 80px;
-  background-color: rgb(30, 45, 66);
-  color: white;
-}
-
-footer div.wrapper {
-  display: flex;
-  justify-content: center;
-  height: 80px;
-}
-
-.footer-links {
-  height: 80px;
-}
-
-.footer-links p {
-  float: left;
-  line-height: 80px;
-  padding: 0 20px 0 0;
-  margin: 0;
 }
