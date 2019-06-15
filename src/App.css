@@ -264,3 +264,9 @@ section.recipe-list {
   width: 90%;
   color: white;
 }
+
+/* TEST */
+#test .wrap {
+  padding: 30px;
+}
+
