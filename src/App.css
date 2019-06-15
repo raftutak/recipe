@@ -270,3 +270,91 @@ section.recipe-list {
   padding: 30px;
 }
 
+/* MEDIA QUERIES */
+@media(min-width: 700px) {
+
+  /* NAV */
+  i.fas.fa-bars {
+    display: none;
+  }
+
+  nav {
+    text-align: left;
+  }
+
+  #logo {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  nav ul {
+    display: inline-block;
+  }
+
+  nav ul li {
+    display: inline-block;
+    padding-right: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+  }
+
+  nav ul li a {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: white;
+    top: 0;
+    transition: top ease 0.5s;
+    line-height: 80px;
+  }
+
+  nav ul li a:hover {
+    top: -5px;
+  }
+
+  /* HEADER */
+  header .wrap {
+    width: 62%;
+    padding: 20px;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  header h3 {
+    font-size: 1.2rem;
+  }
+
+  /* SEARCH */
+  input#main-search {
+    font-size: 1.1rem;
+    width: 70%;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  input#main-search:focus {
+    outline: none;
+  }
+
+  button {
+    font-size: 1.1rem;
+  }
+
+  .side-by-side {
+    display: flex;
+    margin: 0 auto;
+  }
+
+  footer i {
+    transition: 0.3s;
+  }
+
+  footer i:hover {
+    cursor: pointer;
+    color: #222223;
+  }
+}
