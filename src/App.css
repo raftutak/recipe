@@ -150,3 +150,23 @@ button:focus {
 input#main-search:focus {
   outline: none;
 }
+
+/* FOOTER */
+footer {
+  background-color: #fff;
+}
+
+footer .wrap {
+  padding: 20px;
+}
+
+footer .wrap i {
+  padding: 0 10px 15px 10px;
+  font-size: 2rem;
+  color: #cccccc;
+}
+
+footer .wrap h3 {
+  font-size: 0.7rem;
+  color: #cccccc;
+}
