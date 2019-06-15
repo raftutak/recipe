@@ -50,6 +50,4 @@ class Home extends React.Component {
 
 }
 
-test
-
 export default Home;
