@@ -6,31 +6,33 @@ import ListGroupItem from 'react-bootstrap/ListGroupItem';
 import { Link } from 'react-router-dom';
 
 const Recipes = props => (
-    <div className="recipe-list-wrapper container">
-        <section className="recipe-list row">
+    <div>
+        <section className="recipe-list container">
             {props.recipes.map((recipe) => {
                 return (
-                    <div key={recipe.title} className="col-md-4" style={{ marginBottom: "2rem" }}>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={recipe.image_Url} alt={recipe.title} />
-                            <Card.Body>
-                                <Card.Title>{recipe.title}</Card.Title>
-                                <Card.Text>Subtitle: {recipe.title}</Card.Text>
+                    <div className="card" key={recipe.title}>
+                        <Link to={{ pathname: `/recipe/${recipe.id}`, state: { recipe: recipe.id } }}>
+                            <div className="card-image">
+                                <img src={recipe.image_Url} alt={recipe.title} />
+                            </div>
+                        </Link>
+                        <div className="card-text">
+                            <h2>{recipe.title}</h2>
+                            <div className="recipe-details">
+                                <h3><span>ID przepisu:</span> {recipe.id}</h3>
+                                <h3><span>Źródło:</span> {recipe.blog}</h3>
+                                <h3><span>URL:</span> {recipe.url}</h3>
+                            </div>
+                        </div>
+                        <Link to={{ pathname: `/recipe/${recipe.id}`, state: { recipe: recipe.id } }}>
 
-                                <ListGroup className="list-group-flush">
-                                    <ListGroupItem>
-                                        Id: {recipe.blog}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        Id: {recipe.id}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        <Link to={{ pathname: `/recipe/${recipe.id}`, state: { recipe: recipe.id } }}>Sprawdź przepis</Link>
-                                    </ListGroupItem>
-                                </ListGroup>
-                            </Card.Body>
-                        </Card>
+                            <div className="goto-recipe">
+                                <h3>Przejdź do przepisu</h3>
+                            </div>
+                        </Link>
+
                     </div>
+
                 );
             })}
         </section>
