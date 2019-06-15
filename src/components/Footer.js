@@ -3,9 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => (
-
     <div>
-
         <div className="container side-by-side">
             <section id="slider">
                 <div className="wrap">
