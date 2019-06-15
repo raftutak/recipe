@@ -241,3 +241,26 @@ section.recipe-list {
 .card .goto-recipe h3 {
   font-weight: 700;
 }
+
+/* SLIDER */
+#slider {
+  background-image: url('http://be.beantownthemes.com/html/content/recipes2/images/home_recipes2_sectionbg2.jpg');
+  background-position: right top;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+#slider .wrap {
+  padding: 30px;
+  background-color: rgba(30, 45, 66, 0.7);
+}
+
+#slider .wrap h2 {
+  color: white;
+}
+
+#slider .wrap h3 {
+  margin: 0 auto;
+  width: 90%;
+  color: white;
+}
