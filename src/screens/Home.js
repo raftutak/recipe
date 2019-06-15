@@ -13,6 +13,17 @@ class Home extends React.Component {
         recipes: []
     }
 
+    componentDidMount = () => {
+        const json = localStorage.getItem('recipes');
+        const recipes = JSON.parse(json);
+        this.setState({ recipes: recipes });
+    }
+
+    componentDidUpdate = () => {
+        const recipes = JSON.stringify(this.state.recipes);
+        localStorage.setItem('recipes', recipes);
+    }
+
     getRecipe = async (e) => {
         const recipeName = e.target.elements.recipeName.value;
         e.preventDefault();
@@ -40,14 +51,3 @@ class Home extends React.Component {
 }
 
 export default Home;
-
-//     // componentDidMount = () => {
-//     //   const json = localStorage.getItem('recipes');
-//     //   const recipes = JSON.parse(json);
-//     //   this.setState({ recipes: recipes });
-//     // }
-
-//     // componentDidUpdate = () => {
-//     //   const recipes = JSON.stringify(this.state.recipes);
-//     //   localStorage.setItem('recipes', recipes);
-//     // }
