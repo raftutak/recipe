@@ -6,7 +6,7 @@ import ListGroupItem from 'react-bootstrap/ListGroupItem';
 import { Link } from 'react-router-dom';
 
 const Recipes = props => (
-    <div>
+    <div className="list-bg">
         <section className="recipe-list container">
             {props.recipes.map((recipe) => {
                 return (
@@ -17,19 +17,23 @@ const Recipes = props => (
                             </div>
                         </Link>
                         <div className="card-text">
-                            <h2>{recipe.title}</h2>
+                            <div className="recipe-title">
+                                <h2>{recipe.title}</h2>
+                            </div>
                             <div className="recipe-details">
-                                <h3><span>ID przepisu:</span> {recipe.id}</h3>
-                                <h3><span>Źródło:</span> {recipe.blog}</h3>
-                                <h3><span>URL:</span> {recipe.url}</h3>
+                                <div className="recipe-details-text">
+                                    <h3><span>ID przepisu:</span> {recipe.id}</h3>
+                                    <h3><span>Blog:</span> {recipe.blog}</h3>
+                                </div>
                             </div>
                         </div>
+                        <div className="goto-spacer"></div>
                         <Link to={{ pathname: `/recipe/${recipe.id}`, state: { recipe: recipe.id } }}>
-
                             <div className="goto-recipe">
                                 <h3>Przejdź do przepisu</h3>
                             </div>
                         </Link>
+
 
                     </div>
 

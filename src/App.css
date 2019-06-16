@@ -105,7 +105,7 @@ a.button:hover {
 
 /* SEARCH */
 #search {
-  background-color: #f0f0f0;
+  background-color: #e9e9e9;
   margin: 0 auto;
   padding: 30px;
 }
@@ -172,21 +172,24 @@ footer .wrap h3 {
 }
 
 /* RECIPES */
+.list-bg {
+  background-color: #f0f0f0;
+}
+
 section.recipe-list {
   padding: 30px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
-  justify-items: center;
+  grid-gap: 30px;
+  justify-content: center;
 }
 
 .card {
-  display: inline-block;
+  background-color: white;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
   transition: all .2s ease-in-out;
-  position: relative;
   min-height: 500px;
+  position: relative;
 }
 
 .card:hover {
@@ -196,10 +199,12 @@ section.recipe-list {
 .card-image {
   height: 200px;
   overflow: hidden;
+  position: relative;
 }
 
 .card-image img {
   width: 100%;
+  height: auto;
   transition: all .2s ease-in-out;
 }
 
@@ -212,24 +217,36 @@ section.recipe-list {
   text-align: left;
 }
 
+.card .recipe-title {}
+
 .card .recipe-details {
+  height: 40px;
+}
+
+.card .recipe-details-text {
+  height: 40px;
   position: absolute;
   bottom: 80px;
+  width: 100%;
 }
 
 .card .recipe-details span {
   font-weight: 700;
 }
 
+.card .goto-spacer {
+  height: 60px;
+}
+
 .card .goto-recipe {
-  width: 100%;
-  padding: 20px;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
+  height: 60px;
+  line-height: 60px;
   border-top: 1px solid #f0f0f0;
   transition: all .2s ease-in-out;
   color: #1e2d42;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .card:hover .goto-recipe {
@@ -239,6 +256,56 @@ section.recipe-list {
 }
 
 .card .goto-recipe h3 {
+  font-weight: 700;
+}
+
+/* GO-BACK */
+#go-back {
+  background-color: #f0f0f0;
+  margin: 0 auto;
+}
+
+.go-back-sec {
+  background-color: #e9e9e9;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.go-back-sec h2 {
+  padding-bottom: 0;
+}
+
+/* FULL-RECIPE */
+#full-recipe {
+  min-height: 500px;
+  padding: 30px;
+}
+
+#full-recipe img {
+  width: 100%;
+  float: left;
+  padding-bottom: 20px;
+}
+
+#full-recipe h3 {
+  padding-bottom: 20px;
+  text-align: left;
+}
+
+#full-recipe .button {
+  text-align: left;
+}
+
+#full-recipe .ingredients {
+  text-align: justify;
+}
+
+#full-recipe .ingredients li {
+  list-style: none;
+  display: inline;
+}
+
+#full-recipe span {
   font-weight: 700;
 }
 
@@ -271,6 +338,14 @@ section.recipe-list {
 }
 
 /* MEDIA QUERIES */
+@media(min-width: 500px) {
+  #full-recipe img {
+    width: 300px;
+    float: left;
+    padding: 0 20px 20px 0;
+  }
+}
+
 @media(min-width: 700px) {
 
   /* NAV */

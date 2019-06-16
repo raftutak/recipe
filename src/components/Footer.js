@@ -16,7 +16,7 @@ const Footer = () => (
 
             <section id="test">
                 <div className="wrap">
-                    <h2>Nagłówek</h2>
+                    <h2>Polecany blog</h2>
                     <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, alias. Perspiciatis possimus
                         officiis a nulla dolore doloremque suscipit fugiat molestias necessitatibus. Nostrum, optio fugit!
                     Architecto quod voluptates dolor ea magnam.</h3>
@@ -26,7 +26,7 @@ const Footer = () => (
 
         <section id="search">
             <div className="container">
-                <h2>Nagłówek</h2>
+                <h2>Lorem ipsum</h2>
                 <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, alias. Perspiciatis possimus
                     officiis a nulla dolore doloremque suscipit fugiat molestias necessitatibus. Nostrum, optio fugit!
                 Architecto quod voluptates dolor ea magnam.</h3>
