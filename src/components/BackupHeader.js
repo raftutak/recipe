@@ -67,8 +67,8 @@ const StyledButton = styled(Button)`
   color: hsl(215, 37%, 19%);
 
   :hover {
-    border: 1px solid hsl(138, 61%, 49%);
-    background-color: hsl(138, 61%, 49%);
+    border: 1px solid hsl(215, 37%, 19%);
+    background-color: hsl(215, 37%, 19%);
   }
 `;
 

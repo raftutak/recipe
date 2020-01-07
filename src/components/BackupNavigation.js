@@ -25,7 +25,7 @@ import AppContext from '../context';
 const StyledNavbar = styled(Navbar)`
   height: 80px;
   background-color: hsl(215, 37%, 19%);
-  box-shadow: 0 0 10px 0 hsla(0, 0%, 0%, 0.5);
+  box-shadow: 0 0 10px 0 hsla(0, 0%, 0%, 0.3);
 
   .navbar-brand {
     padding-right: 25px;
@@ -42,11 +42,8 @@ const StyledNavbar = styled(Navbar)`
     margin-right: 25px;
     transition: 0.2s ease-in;
 
-    :hover,
-    :after {
+    :hover {
       color: hsla(0, 100%, 100%, 1);
-      border-bottom: 5px solid hsla(138, 61%, 49%, 1);
-      padding: 0;
     }
 
     &.active {
@@ -67,7 +64,7 @@ const UserButton = styled(Button)`
   border-radius: 5px;
 
   :hover {
-    background-color: hsl(138, 61%, 49%);
+    background-color: hsl(44, 60%, 42%);
   }
 `;
 
@@ -166,7 +163,7 @@ const Navigation = () => {
                             overlay={popover}
                           >
                             <UserButton
-                              style={{ backgroundColor: 'hsl(138, 61%, 49%)' }}
+                              style={{ backgroundColor: 'hsl(44, 60%, 42%)' }}
                               variant="secondary"
                             >
                               {loading || !user ? (

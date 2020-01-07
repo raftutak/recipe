@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Container, CardColumns } from 'react-bootstrap';
 
 // COMPONENTS
-import RecipeCardStyled from './RecipeCardStyled';
+import RecipeCard from './RecipeCard';
 import LoadingDots from './LoadingDots';
 
 const InnerWrapper = styled(Container)`
@@ -15,7 +15,6 @@ const InnerWrapper = styled(Container)`
 `;
 
 const StyledCardColumns = styled(CardColumns)``;
-
 
 class RecipeList extends React.Component {
   render() {
@@ -30,7 +29,7 @@ class RecipeList extends React.Component {
                     <StyledCardColumns id="recipeList">
                       {context.categories_result.map(recipe => {
                         return (
-                          <RecipeCardStyled key={recipe.title} recipe={recipe} />
+                          <RecipeCard key={recipe.title} recipe={recipe} />
                         );
                       })}
                     </StyledCardColumns>

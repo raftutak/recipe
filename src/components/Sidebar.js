@@ -10,7 +10,6 @@ const StyledWrapper = styled.div`
   width: 200px;
 `;
 
-
 const StyledList = styled.ul`
   list-style: none;
   text-align: left;
@@ -18,7 +17,7 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   box-sizing: border-box;
-  padding: 15px 0 15px 0;
+  padding: 15px 20px;
   background-color: white;
   border-left: 15px solid transparent;
   border-bottom: 1px solid #ddd;
@@ -26,8 +25,8 @@ const StyledListItem = styled.li`
   cursor: pointer;
 
   :hover {
-    border-left: 10px solid hsl(138, 61%, 49%);
-    padding-left: 20px;
+    border-left: 10px solid #ddd;
+    padding-left: 30px;
     z-index: 999;
   }
 `;
@@ -36,9 +35,7 @@ const Sidebar = () => (
   <AppContext.Consumer>
     {context => (
       <>
-    
         <StyledWrapper>
-        <div className="mb-4 sticky-top">
           <h5>Kategorie główne</h5>
           <StyledList>
             {categories.map((item, id) => {
@@ -54,7 +51,6 @@ const Sidebar = () => (
               );
             })}
           </StyledList>
-        </div>
         </StyledWrapper>
       </>
     )}

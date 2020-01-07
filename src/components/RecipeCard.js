@@ -49,16 +49,13 @@ const StyledCard = styled(Card)`
     }
 
     :hover {
-      background-color: hsl(138, 61%, 49%);
-      color: white;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      background-color: hsl(215, 37%, 19%);
     }
   }
 `;
 
 const StyledStar = styled(FontAwesomeIcon)`
-  color: hsl(56, 100%, 46%);
+  color: hsl(44, 60%, 42%);
 `;
 
 const RecipeCard = ({ recipe }) => (
@@ -243,7 +240,6 @@ const RecipeCard = ({ recipe }) => (
                 </span>
               ))}
             </ListGroupItem> */}
-<<<<<<< HEAD
             <ListGroupItem>
               <strong>Składniki:</strong>{' '}
               {recipe.ingredientIds.map(ingredientID => (
@@ -288,11 +284,6 @@ const RecipeCard = ({ recipe }) => (
             <ListGroupItem>
               <Link
                 style={{ textDecoration: 'none', color: 'hsl(215, 37%, 19%)' }}
-=======
-            <ListGroupItem className="goto">
-              <Link
-                onClick={context.handleReadRecipe}
->>>>>>> daniel
                 to={{
                   pathname: `/recipe/${recipe.id}`
                 }}
@@ -302,7 +293,6 @@ const RecipeCard = ({ recipe }) => (
             </ListGroupItem>
           </ListGroup>
         </StyledCard>
-        
       </>
     )}
   </AppContext.Consumer>
