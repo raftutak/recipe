@@ -3,32 +3,46 @@ import AppContext from '../context';
 
 // STYLES
 import styled from 'styled-components';
-import { Container, CardColumns } from 'react-bootstrap';
 
 // COMPONENTS
 import RecipeCardStyled from './RecipeCardStyled';
 import LoadingDots from './LoadingDots';
+
+import { Container, CardColumns } from 'react-bootstrap';
+
+// const StyledWrapper = styled.div`
+//   padding: 40px;
+//   text-align: left;
+// `;
 
 const InnerWrapper = styled(Container)`
   margin: 0 auto;
   padding: 30px 0;
 `;
 
-const StyledCardColumns = styled(CardColumns)``;
+const StyledCardColumns = styled(CardColumns)`
+  column-count: 4;
+`;
 
 
-class RecipeList extends React.Component {
+class SearchResultStyled extends React.Component {
+  // componentDidMount() {
+  //   document
+  //     .getElementById('search-form')
+  //     .scrollIntoView({ behavior: 'smooth' });
+  // }
+
   render() {
     return (
       <AppContext.Consumer>
         {context =>
-          context.categories_result ? (
-            !context.categories_isLoading ? (
+          context.search_result ? (
+            !context.search_isLoading ? (
               <>
                 <Container fluid>
                   <InnerWrapper>
-                    <StyledCardColumns id="recipeList">
-                      {context.categories_result.map(recipe => {
+                    <StyledCardColumns>
+                      {context.search_result.map(recipe => {
                         return (
                           <RecipeCardStyled key={recipe.title} recipe={recipe} />
                         );
@@ -47,4 +61,4 @@ class RecipeList extends React.Component {
   }
 }
 
-export default RecipeList;
+export default SearchResultStyled;

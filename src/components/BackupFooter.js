@@ -19,7 +19,7 @@ const InnerWrapper = styled(Container)`
   }
 
   p {
-    color: white;
+    color: hsl(0, 100%, 100%, 0.5);
     margin: 0;
     font-size: 0.9rem;
   }
@@ -54,7 +54,7 @@ const Tag = styled(Badge)`
   border-radius: 5px;
 
   :hover {
-    background-color: hsl(44, 60%, 42%);
+    background-color: hsl(138, 61%, 49%);
   }
 `;
 
@@ -64,7 +64,7 @@ const StyledButton = styled(Button)`
   border: none;
 
   :hover {
-    background-color: hsl(44, 60%, 42%);
+    background-color: hsl(138, 61%, 49%);
   }
 `;
 
@@ -150,7 +150,7 @@ const Footer = () => (
         <Row>
           <Col>
             <span className="brand">recipe-search</span>{' '}
-            <span style={{ fontSize: '0.9rem' }}>Copyright © 2020</span>
+            <span style={{ fontSize: '0.9rem', color:'hsla(0, 100%, 100%, 0.5)' }}>Copyright © 2020</span>
           </Col>
         </Row>
       </InnerWrapper>

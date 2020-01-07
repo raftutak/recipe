@@ -1,20 +1,20 @@
 export const tips = [
   {
     id: 1,
-    heading: 'Porada 1',
+    heading: 'Kulinarna porada #1',
     paragraph:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dignissim lorem vel dignissim imperdiet. Quisque et lacus venenatis, mollis lorem sed, scelerisque tortor. Quisque rutrum urna vitae leo sagittis, id dapibus nibh lobortis. Nulla facilisi.'
+      '1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dignissim lorem vel dignissim imperdiet. Quisque et lacus venenatis, mollis lorem sed, scelerisque tortor. Quisque rutrum urna vitae leo sagittis, id dapibus nibh lobortis. Nulla facilisi.'
   },
   {
     id: 2,
-    heading: 'Porada 2',
+    heading: 'Kulinarna porada #2',
     paragraph:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dignissim lorem vel dignissim imperdiet. Quisque et lacus venenatis, mollis lorem sed, scelerisque tortor. Quisque rutrum urna vitae leo sagittis, id dapibus nibh lobortis. Nulla facilisi.'
+      '2 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dignissim lorem vel dignissim imperdiet. Quisque et lacus venenatis, mollis lorem sed, scelerisque tortor. Quisque rutrum urna vitae leo sagittis, id dapibus nibh lobortis. Nulla facilisi.'
   },
   {
     id: 3,
-    heading: 'Porada 3',
+    heading: 'Kulinarna porada #3',
     paragraph:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dignissim lorem vel dignissim imperdiet. Quisque et lacus venenatis, mollis lorem sed, scelerisque tortor. Quisque rutrum urna vitae leo sagittis, id dapibus nibh lobortis. Nulla facilisi.'
+      '3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dignissim lorem vel dignissim imperdiet. Quisque et lacus venenatis, mollis lorem sed, scelerisque tortor. Quisque rutrum urna vitae leo sagittis, id dapibus nibh lobortis. Nulla facilisi.'
   }
 ];

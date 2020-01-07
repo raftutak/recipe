@@ -15,7 +15,7 @@ const StyledWrapper = styled.div`
 const LoadingDots = () => (
   <>
     <StyledWrapper>
-      <Loader type="ThreeDots" color="#ddd" height={70} width={70} />
+      <Loader type="ThreeDots" color="hsl(138, 61%, 49%)" height={70} width={70} />
     </StyledWrapper>
   </>
 );

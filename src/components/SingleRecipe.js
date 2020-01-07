@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-import { Container, ListGroup, Card, Nav } from 'react-bootstrap';
+import { Container, ListGroup, Nav, Breadcrumb } from 'react-bootstrap';
 
 import LoadingDots from '../components/LoadingDots';
 
@@ -23,15 +23,14 @@ const StyledPath = styled.div`
 
 const StyledContainer = styled(Container)`
   margin: 0 auto;
-  padding: 30px 0;
+  padding: 15px;
 `;
 
 // LIST OF INGREDIENTS
-const StyledIngridients = styled(ListGroup)`
+const StyledIngredients = styled(ListGroup)`
   margin: 0 auto;
   padding: 0;
   width: auto;
-  min-width: 450px;
   float: left;
 `;
 
@@ -44,7 +43,7 @@ const StyledIngredientsListGroupItem = styled(ListGroup.Item)`
   padding: 8px;
 
   :hover {
-    background-color: hsla(215, 37%, 19%, 0.08);
+    background-color: hsla(215, 37%, 19%, 0.04);
     border-left: 6px solid #31c95f;
     transition: 0.2s;
   }
@@ -52,17 +51,25 @@ const StyledIngredientsListGroupItem = styled(ListGroup.Item)`
 
 // RECIPE NAME
 const StyledRecipeName = styled.h4`
-  float: left;
   padding: 0;
   font-weight: 600;
+  clear: both;
 `;
 
 // RECIPE IMAGE
-const StyledImage = styled(Card)`
-  clear: both;
-  float: right;
-  width: auto;
-  transition: 0.2s;
+const StyledImage = styled.div`
+    clear: both;
+
+  img {
+    float: right;
+    padding: 0;
+    margin-left: 1rem;
+    width: auto;
+    min-width: 25%;
+    max-width: 50%;
+    border-radius: 5px;
+    box-shadow: 0 3px 1rem 0 hsla(0, 0%, 0%, 0.1);
+  }
 
   .border-bottom {
     padding: 10px;
@@ -75,12 +82,24 @@ const StyledImage = styled(Card)`
 
 // RECIPE DESCRIPTION
 const StyledDescription = styled.div`
-  margin-top: 20px;
-  margin-left: 5px;
-  padding: 10px;
-  font-size: 10pt;
-  float: none;
-  clear: both;
+  padding-top: 4rem;
+  text-align: left;
+  font-size: 12pt;
+  min-width: 5rem;
+  width: auto;
+  max-width: 100%;
+  width: auto;
+  clear: left;
+`;
+
+const StyledBreadcrumb = styled(Breadcrumb)`
+    ol {
+      background-color: #fff;
+    }
+    
+    li {
+      text-decoration: none;
+    }
 `;
 
 class SingleRecipe extends React.Component {
@@ -115,23 +134,31 @@ class SingleRecipe extends React.Component {
     return this.state.singleRecipe_result ? (
       <>
         <Container className="mb-4">
-          <StyledContainer>
-            <StyledPath>Jesteś w: recipe-search/przepisy/{id}</StyledPath>
+          <StyledContainer fluid>
+            <StyledPath>
+              <StyledBreadcrumb>
+                <Breadcrumb.Item aria-label="Breadcrumb"><NavLink as={NavLink} to={routes.home} style={{color: "hsla(215, 37%, 19%, 0.9)"}}>recipe-search</NavLink></Breadcrumb.Item>
+                <Breadcrumb.Item aria-label="Breadcrumb"><NavLink as={NavLink} to={routes.categories} style={{color: "hsla(215, 37%, 19%, 0.9)"}}>przepisy</NavLink></Breadcrumb.Item>
+                <Breadcrumb.Item aria-current="page" style={{textDecoration: "none", color: "hsla(215, 37%, 19%, 0.9)", fontWeight: "500"}}>{this.state.singleRecipe_result.title}</Breadcrumb.Item>
+              </StyledBreadcrumb>
+            </StyledPath>
             <StyledRecipeName>
               <p>{this.state.singleRecipe_result.title}</p>
               <br></br>
             </StyledRecipeName>
             <StyledImage>
+              <div>
               <img
                 src={this.state.singleRecipe_result.image_Url}
                 alt={this.state.singleRecipe_result.title}
               />
-              <div className="border-bottom">
+              {/* <div className="border-bottom">
                 Czas przygotowania: 60 minut<br></br>
                 Poziom trudności: średni
+              </div> */}
               </div>
             </StyledImage>
-            <StyledIngridients>
+            <StyledIngredients>
               <h4>Lista składników</h4>
               {this.state.singleRecipe_result.ingredients.map(item => {
                 return (
@@ -143,12 +170,14 @@ class SingleRecipe extends React.Component {
               <Nav.Link as={NavLink} to={routes.contact}>
                 Skorzystaj z przelicznika miar kuchennych!
               </Nav.Link>
-            </StyledIngridients>
-          </StyledContainer>
+            </StyledIngredients>
           <StyledDescription>
+            <h4 style={{paddingBottom: "10px"}}>Opis przygotowania</h4>
             <p>{this.state.singleRecipe_result.description}</p>
           </StyledDescription>
-        </Container>
+          </StyledContainer>
+      </Container>
+      <div style={{clear: "both", padding: "2rem"}}></div>
       </>
     ) : (
       <LoadingDots />
