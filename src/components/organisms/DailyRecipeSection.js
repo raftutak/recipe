@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import styled from 'styled-components';
 
@@ -13,119 +14,150 @@ import AppContext from '../../context';
 
 import noimage from '../../assets/img/noimage.png';
 
-const DailyRecipeSection = () => {
-  return (
-    <AppContext.Consumer>
-      {context =>
-        context.dailyRecipe_result && context.randomRecipe_result ? (
-          !context.search_isLoading ? (
-            <>
-              <StyledSearchContainer fluid>
-                <StyledBackground fluid />
-                <StyledInnerContainer>
-                  <Container>
+class DailyRecipeSection extends React.Component {
+  state = {
+    dailyRecipe_result: undefined
+  };
+
+  handleDailyRecipe = async () => {
+    this.setState({
+      dailyRecipe_isLoading: true,
+      dailyRecipe_result: undefined
+    });
+
+    const url =
+      'https://recipe-search.projektstudencki.pl/recipe/searchDayRecipe';
+    const response = await axios(url);
+    const dailyRecipe_result = await response.data.recipe;
+
+    this.setState({ dailyRecipe_isLoading: false, dailyRecipe_result });
+
+    console.log(this.state.dailyRecipe_result);
+  };
+
+  handleRandomRecipe = async () => {
+    this.setState({
+      randomRecipe_isLoading: true,
+      randomRecipe_result: undefined
+    });
+
+    const url =
+      'https://recipe-search.projektstudencki.pl/recipe/searchRandomRecipe';
+    const response = await axios(url);
+    const randomRecipe_result = await response.data.recipe;
+
+    this.setState({ randomRecipe_isLoading: false, randomRecipe_result });
+
+    console.log(this.state.randomRecipe_result);
+  };
+
+  componentDidMount() {
+    this.handleDailyRecipe();
+    this.handleRandomRecipe();
+  }
+
+  render() {
+    return this.state.dailyRecipe_result && this.state.randomRecipe_result ? (
+      <>
+        <StyledSearchContainer fluid>
+          <StyledBackground fluid />
+          <StyledInnerContainer>
+            <Container>
+              <Row>
+                <Col xs={12} md={6} lg={6}>
+                  <h5 className="mb-4">
+                    <strong>Przepis dnia</strong>
+                  </h5>
+                  <Row>
+                    <Col xs={12} md={6} lg={6}>
+                      <StyledImageBackground
+                        background={
+                          this.state.dailyRecipe_result.image_Url
+                            ? this.state.dailyRecipe_result.image_Url
+                            : noimage
+                        }
+                      />
+                    </Col>
+                    <Col xs={12} md={6} lg={6}>
+                      <ListGroup style={{ minHeight: '196px' }}>
+                        <ListGroup.Item>
+                          <strong>{this.state.dailyRecipe_result.title}</strong>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          <strong>Źródło: </strong>
+                          {this.state.dailyRecipe_result.blog}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          <Link
+                            style={{
+                              textDecoration: 'none',
+                              color: 'hsl(215, 37%, 19%)'
+                            }}
+                            to={{
+                              pathname: `/recipe/${this.state.dailyRecipe_result.id}`
+                            }}
+                          >
+                            <strong>Przejdź do przepisu</strong>
+                          </Link>
+                        </ListGroup.Item>
+                      </ListGroup>
+                    </Col>
+                  </Row>
+                </Col>
+                {this.state.dailyRecipe_result && (
+                  <Col xs={12} md={6} lg={6}>
+                    <h5 className="mb-4">
+                      <strong>Szczęśliwy traf</strong>
+                    </h5>
                     <Row>
                       <Col xs={12} md={6} lg={6}>
-                        <h5 className="mb-4">
-                          <strong>Przepis dnia</strong>
-                        </h5>
-                        <Row>
-                          <Col xs={12} md={6} lg={6}>
-                            <StyledImageBackground
-                              background={
-                                context.dailyRecipe_result.image_Url !==
-                                undefined
-                                  ? context.dailyRecipe_result.image_Url
-                                  : noimage
-                              }
-                            />
-                          </Col>
-                          <Col xs={12} md={6} lg={6}>
-                            <ListGroup style={{ minHeight: '196px' }}>
-                              <ListGroup.Item>
-                                <strong>
-                                  {context.dailyRecipe_result.title}
-                                </strong>
-                              </ListGroup.Item>
-                              <ListGroup.Item>
-                                <strong>Źródło: </strong>
-                                {context.dailyRecipe_result.blog}
-                              </ListGroup.Item>
-                              <ListGroup.Item>
-                                <Link
-                                  style={{
-                                    textDecoration: 'none',
-                                    color: 'hsl(215, 37%, 19%)'
-                                  }}
-                                  to={{
-                                    pathname: `/recipe/${context.dailyRecipe_result.id}`
-                                  }}
-                                >
-                                  <strong>Przejdź do przepisu</strong>
-                                </Link>
-                              </ListGroup.Item>
-                            </ListGroup>
-                          </Col>
-                        </Row>
+                        <StyledImageBackground
+                          background={
+                            this.state.randomRecipe_result.image_Url
+                              ? this.state.randomRecipe_result.image_Url
+                              : noimage
+                          }
+                        />
                       </Col>
-                      {context.dailyRecipe_result && (
-                        <Col xs={12} md={6} lg={6}>
-                          <h5 className="mb-4">
-                            <strong>Szczęśliwy traf</strong>
-                          </h5>
-                          <Row>
-                            <Col xs={12} md={6} lg={6}>
-                              <StyledImageBackground
-                                background={
-                                  context.randomRecipe_result.image_Url !==
-                                  undefined
-                                    ? context.randomRecipe_result.image_Url
-                                    : noimage
-                                }
-                              />
-                            </Col>
-                            <Col xs={12} md={6} lg={6}>
-                              <ListGroup style={{ minHeight: '196px' }}>
-                                <ListGroup.Item>
-                                  <strong>
-                                    {context.randomRecipe_result.title}
-                                  </strong>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                  <strong>Źródło: </strong>
-                                  {context.randomRecipe_result.blog}
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                  <Link
-                                    style={{
-                                      textDecoration: 'none',
-                                      color: 'hsl(215, 37%, 19%)'
-                                    }}
-                                    to={{
-                                      pathname: `/recipe/${context.randomRecipe_result.id}`
-                                    }}
-                                  >
-                                    <strong>Przejdź do przepisu</strong>
-                                  </Link>
-                                </ListGroup.Item>
-                              </ListGroup>
-                            </Col>
-                          </Row>
-                        </Col>
-                      )}
+                      <Col xs={12} md={6} lg={6}>
+                        <ListGroup style={{ minHeight: '196px' }}>
+                          <ListGroup.Item>
+                            <strong>
+                              {this.state.randomRecipe_result.title}
+                            </strong>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <strong>Źródło: </strong>
+                            {this.state.randomRecipe_result.blog}
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <Link
+                              style={{
+                                textDecoration: 'none',
+                                color: 'hsl(215, 37%, 19%)'
+                              }}
+                              to={{
+                                pathname: `/recipe/${this.state.randomRecipe_result.id}`
+                              }}
+                            >
+                              <strong>Przejdź do przepisu</strong>
+                            </Link>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      </Col>
                     </Row>
-                  </Container>
-                </StyledInnerContainer>
-              </StyledSearchContainer>
-            </>
-          ) : (
-            <LoadingDots />
-          )
-        ) : null
-      }
-    </AppContext.Consumer>
-  );
-};
+                  </Col>
+                )}
+              </Row>
+            </Container>
+          </StyledInnerContainer>
+        </StyledSearchContainer>
+      </>
+    ) : (
+      <LoadingDots />
+    );
+  }
+}
 
 const InnerWrapper = styled(Container)`
   margin: 0 auto;

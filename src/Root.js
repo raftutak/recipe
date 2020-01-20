@@ -137,38 +137,6 @@ class Root extends React.Component {
     //   .scrollIntoView({ behavior: 'smooth' });
   };
 
-  handleDailyRecipe = async () => {
-    this.setState({
-      dailyRecipe_isLoading: true,
-      dailyRecipe_result: undefined
-    });
-
-    const url =
-      'https://recipe-search.projektstudencki.pl/recipe/searchDayRecipe';
-    const response = await axios(url);
-    const dailyRecipe_result = await response.data.recipe;
-
-    this.setState({ dailyRecipe_isLoading: false, dailyRecipe_result });
-
-    console.log(this.state.dailyRecipe_result);
-  };
-
-  handleRandomRecipe = async () => {
-    this.setState({
-      randomRecipe_isLoading: true,
-      randomRecipe_result: undefined
-    });
-
-    const url =
-      'https://recipe-search.projektstudencki.pl/recipe/searchRandomRecipe';
-    const response = await axios(url);
-    const randomRecipe_result = await response.data.recipe;
-
-    this.setState({ randomRecipe_isLoading: false, randomRecipe_result });
-
-    console.log(this.state.randomRecipe_result);
-  };
-
   handleTagClick = async tag => {
     this.setState({
       search_isLoading: true,
@@ -181,24 +149,6 @@ class Root extends React.Component {
 
     this.setState({ search_isLoading: false, search_result });
   };
-
-  // handleShowCategory = async event => {
-  //   const cat_id = event ? event.target.value : 1;
-
-  //   await this.setState({
-  //     categories_isLoading: true,
-  //     categories_result: undefined,
-  //     category_id: cat_id
-  //   });
-
-  //   const id = this.state.category_id;
-  //   const url = `https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=&count=12&dishMainCategoryIds=${id}`;
-
-  //   const response = await axios(url);
-  //   const categories_result = await response.data.recipes;
-
-  //   this.setState({ categories_result, categories_isLoading: false });
-  // };
 
   // handleShowLoginModal = event => {
   //   this.setState({ showLoginModal: !this.state.showLoginModal });
@@ -214,9 +164,6 @@ class Root extends React.Component {
 
   componentDidMount() {
     this.handleInitialSearch();
-    this.handleDailyRecipe();
-    this.handleRandomRecipe();
-    // this.handleShowCategory();
   }
 
   render() {
