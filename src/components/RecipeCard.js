@@ -52,6 +52,17 @@ const StyledCard = styled(Card)`
       background-color: hsl(215, 37%, 19%);
     }
   }
+
+  > .card-header {
+    width: 100%;
+    min-height: 4em;
+    max-height: 4em;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;
 
 const StyledStar = styled(FontAwesomeIcon)`
