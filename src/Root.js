@@ -97,7 +97,8 @@ class Root extends React.Component {
 
     this.setState({
       search_isLoading: true,
-      search_result: undefined
+      search_result: undefined,
+      search_phrase: this.state.search_input
     });
 
     const query = this.state.search_input;

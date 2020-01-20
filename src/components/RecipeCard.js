@@ -23,6 +23,10 @@ import noimage from '../assets/img/noimage.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as starChecked } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
+import Rating from 'react-rating';
+
+import starRegular from '../assets/img/icons/star-regular.png';
+import starSolid from '../assets/img/icons/star-solid.png';
 
 const StyledCard = styled(Card)`
   border-radius: 15px;
@@ -53,20 +57,24 @@ const StyledCard = styled(Card)`
     }
   }
 
-  > .card-header {
-    width: 100%;
-    min-height: 4em;
-    max-height: 4em;
-    line-height: 1.5em;
+  .card-header {
+    height: 73px;
+  }
+
+  .card-title {
+    margin: 0;
+    padding: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-`;
 
-const StyledStar = styled(FontAwesomeIcon)`
-  color: hsl(44, 60%, 42%);
+  .icon {
+    height: 1.4rem;
+    padding-bottom: 5px;
+    padding-right: 2px;
+  }
 `;
 
 const RecipeCard = ({ recipe }) => (
@@ -90,24 +98,30 @@ const RecipeCard = ({ recipe }) => (
             />
           </Link>
           <Card.Header>
-            <Link
-              style={{ textDecoration: 'none', color: 'hsl(215, 37%, 19%)' }}
-              onClick={context.handleReadRecipe}
-              to={{
-                pathname: `/recipe/${recipe.id}`
-              }}
-            >
-              <strong>{recipe.title}</strong>
-            </Link>
+            <div className="card-title">
+              <Link
+                style={{ textDecoration: 'none', color: 'hsl(215, 37%, 19%)' }}
+                onClick={context.handleReadRecipe}
+                to={{
+                  pathname: `/recipe/${recipe.id}`
+                }}
+              >
+                <strong>{recipe.title}</strong>
+              </Link>
+            </div>
           </Card.Header>
           <ListGroup variant="flush">
             <ListGroupItem>
               <strong>Ocena: </strong>
+              <Rating
+                emptySymbol={<img src={starRegular} className="icon" />}
+                fullSymbol={<img src={starSolid} className="icon" />}
+              />
+              {/* <StyledStar icon={starChecked} />
               <StyledStar icon={starChecked} />
               <StyledStar icon={starChecked} />
               <StyledStar icon={starChecked} />
-              <StyledStar icon={starChecked} />
-              <StyledStar icon={faStar} />
+              <StyledStar icon={faStar} /> */}
             </ListGroupItem>
             <ListGroupItem>
               <strong>Źródło:</strong>{' '}

@@ -25,6 +25,12 @@ class SearchResultSection extends React.Component {
               <>
                 <Container fluid>
                   <InnerWrapper>
+                    {context.search_phrase ? (
+                      <StyledHeading>
+                        <strong>Wyniki wyszukiwania dla:</strong>{' '}
+                        {context.search_phrase}
+                      </StyledHeading>
+                    ) : null}
                     <StyledCardColumns>
                       {context.search_result.map(recipe => {
                         return (
@@ -48,6 +54,10 @@ class SearchResultSection extends React.Component {
 const InnerWrapper = styled(Container)`
   margin: 0 auto;
   padding: 30px 10px;
+`;
+
+const StyledHeading = styled.h3`
+  padding-bottom: 20px;
 `;
 
 const StyledCardColumns = styled(CardColumns)`
