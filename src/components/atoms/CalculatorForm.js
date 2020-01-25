@@ -3,6 +3,8 @@ import CalculatorTextInput from './CalculatorTextInput.js'
 import styled from 'styled-components';
 import CalculatorSubmitButton from './CalculatorSubmitButton.js';
 
+import AppContext from '../../context.js';
+
 
 const StyledDiv = styled('div')`
     .row {
@@ -17,33 +19,39 @@ const StyledDiv = styled('div')`
 class CalculatorForm extends React.Component {
     render() {
         return(
-            <div>
+            <AppContext.Consumer>
+                {context => (
+
+            <StyledDiv>
                 <StyledDiv className="row">
-                    <CalculatorTextInput label="Height" placeholder="Wpisz wzrost w metrach" onChange={this.heightChange} />
+                    <CalculatorTextInput label="Height" placeholder="Wpisz wzrost w metrach" onChange={context.heightChange} />
                 </StyledDiv>
                 <StyledDiv className="row">
-                    <CalculatorTextInput label="Weight" placeholder="Wpisz wagę w kilogramach" onChange={this.weightChange} />
+                    <CalculatorTextInput label="Weight" placeholder="Wpisz wagę w kilogramach" onChange={context.weightChange} />
                 </StyledDiv>
                 <StyledDiv className="row">
-                     <CalculatorSubmitButton label="SUBMIT" onClick={ this.computeBmi } />
+                     <CalculatorSubmitButton label="SUBMIT" onClick={ context.computeBmi } />
                 </StyledDiv>
                 <StyledDiv className="row">
-                    <h3>BMI = {this.state.bmi}</h3>
+                    <h3>BMI = {context.bmi}</h3>
                 </StyledDiv>
                 <StyledDiv className="row">
-                    <h3>{this.state.bmiClass}</h3>
+                    <h3>{context.bmiClass}</h3>
                 </StyledDiv>
-            </div>
+            </StyledDiv>
+
+                )}
+            </AppContext.Consumer>
         )
     }
 
-    constructor(props) {
-        super(props);
-        this.weightChange = this.weightChange.bind(this);
-        this.heightChange = this.heightChange.bind(this);
-        this.bmiValue = this.bmiValue.bind(this);
-        this.bmiClass = this.bmiClass.bind(this);
-        this.bmi = this.bmi.bind(this);
+    constructor(props, context) {
+        super(props, context);
+        this.weightChange = this.weightChanged.bind(this);
+        this.heightChange = this.heightChanged.bind(this);
+        this.bmiValue = this.computeBmi.bind(this);
+        this.bmiClass = this.computeBmi.bind(this);
+        this.bmi = this.getBmi.bind(this);
     }
     
     weightChanged(weightValue) {

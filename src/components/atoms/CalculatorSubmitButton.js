@@ -1,11 +1,19 @@
 import React from 'react';
 
+import AppContext from '../../context.js';
+
 class CalculatorSubmitButton extends React.Component {
     render() {
         return(
-            <div onClick={this.props.onClick}>
-                {this.props.label}
-            </div>
+            <AppContext.Consumer>
+                {context => (
+
+                <div onClick={context.onClick}>
+                    {context.label}
+                </div>
+
+                )}
+            </AppContext.Consumer>
         )
     }
 }

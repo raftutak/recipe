@@ -1,12 +1,20 @@
 import React from 'react';
 
+import AppContext from '../../context.js';
+
 class CalculatorTextInput extends React.Component {
     render() {
         return(
-            <div>
-                <label>{this.props.label}</label>
-                <input type="text" placeholder={this.props.placeholder} onChange={this.handleChange} />
-            </div>
+            <AppContext.Consumer>
+                {context => (
+
+                    <div>
+                    <label>{context.label}</label>
+                    <input type="text" placeholder={context.placeholder} onChange={context.handleChange} />
+                    </div>
+
+                )}
+            </AppContext.Consumer>
         )
     }
 
@@ -16,11 +24,11 @@ class CalculatorTextInput extends React.Component {
         this.props.onChange(inputValue);
     }
 
-    constructor(props) {
-        super(props);
-        this.state = { value : '' };
-        this.handleChange = this.handleChange.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { value : '' };
+    //     this.handleChange = this.handleChange.bind(this);
+    // }
 }
 
 export default CalculatorTextInput;

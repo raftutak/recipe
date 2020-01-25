@@ -21,10 +21,6 @@ const CalculatorBMI = () => (
     <AppContext.Consumer>
         {context => (
             <CalculatorForm>
-                <CalculatorTextInput>
-                </CalculatorTextInput>
-                <CalculatorSubmitButton>
-                </CalculatorSubmitButton>
             </CalculatorForm>
         )}
     </AppContext.Consumer>
