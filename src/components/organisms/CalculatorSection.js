@@ -12,9 +12,6 @@ const CalculatorSection = () => (
   <>
     <Container fluid>
       <Container>
-        <h5 className="mb-4">
-          <strong>Oblicz swój wskaźnik BMI</strong>
-        </h5>
         <CalculatorBMI />
       </Container>
     </Container>
