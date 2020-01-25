@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from '../../context';
 import styled from 'styled-components';
+import { Container, Form } from 'react-bootstrap';
 
 class CalculatorBMI extends React.Component {
 
@@ -95,11 +96,11 @@ class CalculatorBMI extends React.Component {
     render() {
 
       return (
-        <div>
+        <StyledContainer>
           <div>
-            <h2>Oblicz swój wskaźnik BMI</h2>
+            <h3>Oblicz swój wskaźnik BMI</h3>
           </div>
-            <form onSubmit={this.submitButton}>
+            <StyledForm onSubmit={this.submitButton}>
               <label>
                 Wpisz swoje imię: 
               </label>
@@ -118,12 +119,18 @@ class CalculatorBMI extends React.Component {
               <label>{this.state.optimalweight}</label>
                
               <input type="submit" value="Submit"/>
-            </form>
+            </StyledForm>
         
-        </div>
+        </StyledContainer>
       );
 
     }
   }
-  
+
+const StyledContainer = styled(Container)`
+
+`;
+
+const StyledForm = styled(Form)``;
+
   export default CalculatorBMI;
