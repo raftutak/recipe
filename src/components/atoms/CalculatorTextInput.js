@@ -10,7 +10,7 @@ class CalculatorTextInput extends React.Component {
 
                     <div>
                     <label>{context.label}</label>
-                    <input type="text" placeholder={context.placeholder} onChange={context.handleChange} />
+                    <input type="text" placeholder={context.placeholder} value={context.value} onChange={context.handleChange} />
                     </div>
 
                 )}
@@ -24,11 +24,11 @@ class CalculatorTextInput extends React.Component {
         this.props.onChange(inputValue);
     }
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { value : '' };
-    //     this.handleChange = this.handleChange.bind(this);
-    // }
+    constructor(props) {
+        super(props);
+        this.state = { value : '' };
+        this.handleChange = this.handleChange.bind(this);
+    }
 }
 
 export default CalculatorTextInput;

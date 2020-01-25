@@ -24,16 +24,18 @@ class CalculatorForm extends React.Component {
 
             <StyledDiv>
                 <StyledDiv className="row">
+                    Podaj swój wzorst w metrach.
                     <CalculatorTextInput label="Height" placeholder="Wpisz wzrost w metrach" onChange={context.heightChange} />
                 </StyledDiv>
                 <StyledDiv className="row">
+                    Podaj swoją wagę w kilogramach.
                     <CalculatorTextInput label="Weight" placeholder="Wpisz wagę w kilogramach" onChange={context.weightChange} />
                 </StyledDiv>
                 <StyledDiv className="row">
-                     <CalculatorSubmitButton label="SUBMIT" onClick={ context.computeBmi } />
+                     <CalculatorSubmitButton label="SUBMIT" onClick={this.props.computeBmi} />
                 </StyledDiv>
                 <StyledDiv className="row">
-                    <h3>BMI = {context.bmi}</h3>
+                    <h3>BMI = {this.props.bmi}</h3>
                 </StyledDiv>
                 <StyledDiv className="row">
                     <h3>{context.bmiClass}</h3>
