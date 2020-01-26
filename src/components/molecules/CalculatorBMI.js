@@ -17,17 +17,18 @@ class CalculatorBMI extends React.Component {
            weight: '',
            height: '',
            bmi: '',
-           optimalweight: ''
+           optimalWeight: '',
+          //  fields: {},
+          //  errors: {}
         };
        this.submitButton = this.submitButton.bind(this);
        this.heightChange = this.heightChange.bind(this);
        this.weightChange = this.weightChange.bind(this);
-       this.change = this.change.bind(this);  
+       this.handleChange = this.handleChange.bind(this);  
        //this.ticker = this.ticker.bind(this); 
        this.blur = this.blur.bind(this); 
        this.calculateBMI = this.calculateBMI.bind(this); 
     }
-  
   
     heightChange(event){
       this.setState({height: event.target.value});
@@ -36,6 +37,7 @@ class CalculatorBMI extends React.Component {
   
     blur(event){
      this.calculateBMI();
+     event.preventDefault();
     }
      weightChange(event){
       this.setState({weight: event.target.value});
@@ -49,6 +51,7 @@ class CalculatorBMI extends React.Component {
         let low = Math.round(18.5 * heightSquared);                                                         
         let high = Math.round(24.99 * heightSquared);    
         let message = "";
+
         if( bmi >= 18.5  && bmi <= 24.99 ){
             message = "Wartość BMI jest prawidłowa!";
         }
@@ -73,15 +76,10 @@ class CalculatorBMI extends React.Component {
         else if(bmi < 16){
           message = "Jesteś skrajnie wychudzony/a.";
         }
-        this.setState({message: message});  
-        this.setState({optimalweight: "Sugerowana waga dla Twojego wzrostu to przedział: "+low+ " - "+high + " kg."});    
-        this.setState({bmi: Math.round(bmi * 100) / 100});   
-  
-    }
-  
-    submitButton(e) {
-       e.preventDefault();
-       this.calculateBMI();
+        
+        // this.setState({message: message});  
+        // this.setState({optimalWeight: "Sugerowana waga dla Twojego wzrostu to od "+low+ " kg do "+high + " kg."});
+        // this.setState({bmi: Math.round(bmi * 100) / 100});   
     }
   
     // ticker() {
@@ -92,12 +90,54 @@ class CalculatorBMI extends React.Component {
     //   setInterval(this.ticker, 60000);
     // }
   
-    change(e){
-      e.preventDefault();
-      console.log(e.target);
-      this.setState({name: e.target.value});
+    handleChange(event){
+      event.preventDefault();
+      console.log(event.target);
+      this.setState({name: event.target.value});
     }
   
+    // handleValidation(){
+    //     let fields = this.state.fields;
+    //     let errors = {};
+    //     let isFormValid = true;
+
+    //     if(!fields["name"]){
+    //       isFormValid = false;
+    //       errors["name"] = "Pole nie może być puste."
+    //     }
+
+    //     if(typeof fields["name"] !== "undefined"){
+    //       if(!fields["name"].match(/[0-9]*/)){
+    //         isFormValid = false;
+    //         errors["name"] = "Wprowadź tylko liczby"
+    //       }
+          
+    //     this.setState({errors: errors});
+    //     return isFormValid;
+
+    //     }
+
+    // }
+  
+    submitButton(event) {
+      this.calculateBMI();
+      event.preventDefault();
+      let message = "";
+      let heightSquared = (this.state.height/100  * this.state.height/100);
+      let bmi = this.state.weight / heightSquared;
+      let low = Math.round(18.5 * heightSquared);                                                         
+      let high = Math.round(24.99 * heightSquared);  
+      this.setState({message: message});  
+      this.setState({optimalWeight: "Sugerowana waga dla Twojego wzrostu to od "+low+ " kg do "+high + " kg."});
+      this.setState({bmi: Math.round(bmi * 100) / 100});   
+    //   if(this.handleValidation()){
+
+    //   } else {
+    //     alert("Błędy!");
+    //   }
+    }
+
+
     render() {
 
       return (
@@ -110,25 +150,49 @@ class CalculatorBMI extends React.Component {
               <StyledForm onSubmit={this.submitButton}>
                 
                 <p className="mb-2">
-                Wprowadź swój wzrost w cm: 
+                Wprowadź swój wzrost w centymetrach: 
                 </p>
-                <input className="field" type="text" name="height" value={this.state.height} onBlur={this.blur} onChange={this.heightChange} />
+
+                <input
+                  className="field"
+                  type="text"
+                  name="height"
+                  value={this.state.height}
+                  onBlur={this.blur}
+                  onChange={this.heightChange}
+                />
+
                 <p className="mb-2 mt-2">
-                Wprowadź swoją wagę w kg : 
+                Wprowadź swoją wagę w kilogramach: 
                 </p>
-                <input className="field" type="text" name="weight" value={this.state.weight} onChange={this.weightChange} />
+                
+                <input
+                  className="field"
+                  type="text"
+                  refs="weight"
+                  required
+                  value={this.state.weight}
+                  onChange={this.weightChange}
+                />
+
                 <p className='mt-2 mb-2'>
                   {this.state.checked}Twoje BMI wynosi: {this.state.bmi}
                 </p>
 
                 <p className="mb-2">{this.state.message}</p>
-                <p className="mt-2 mb-2">{this.state.optimalweight}</p>
+                <p className="mt-2 mb-2">{this.state.optimalWeight}</p>
 
-                <Button type="submit" className="btn btn-primary">Oblicz BMI</Button>
+                <Button
+                  type="submit"
+                  className="btn btn-secondary"
+                  onSubmit={this.submitButton}
+                >
+                  Oblicz BMI
+                </Button>
 
               </StyledForm>
             </Col>
-            <Col xs={12} md={6} lg={6}>
+            <Col xs={12} md={6} lg={6} className="mt-2">
               <StyledDescriptionContainer>
               <h3 className="mb-3">
               Czym jest BMI?
@@ -150,6 +214,7 @@ class CalculatorBMI extends React.Component {
   }
 
 const StyledDescriptionContainer = styled(Container)`
+      width: 100%;
       border: 1px solid rgba(0,0,0,0.1);
       border-radius: 5px;
       padding: 1.2em;
@@ -158,10 +223,33 @@ const StyledDescriptionContainer = styled(Container)`
 
 const StyledContainer = styled(Container)`
     padding: 1.2em;
+
+    Button { 
+      width: 100%;
+      color: hsl(215, 40%, 12%);
+      font-weight: 600;
+      background-color: rgba(0,0,0,0.1);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+
+    Button:hover {
+      color: rgb(255,255,255);
+      background-color: hsl(44, 60%, 42%);
+      border: 1px solid hsl(44, 60%, 42%);
+    }
+
+    Button:focus {
+      outline: none;
+      color: rgb(255,255,255);
+      background-color: hsl(44, 60%, 42%);
+      border: 1px solid hsl(44, 60%, 42%);
+    }
 `;
 
 const StyledForm = styled(Form)`
     .field {
+      text-indent: 10px;
       width: 100%;
       height: 30px;
       border: 1px solid rgba(0,0,0,0.1);
