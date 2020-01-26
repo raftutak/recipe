@@ -3,8 +3,8 @@ import React from 'react';
 // STYLES
 import styled from 'styled-components';
 
-import { categories } from '../data/categories';
-import AppContext from '../context';
+import { categories } from '../../data/categories';
+import AppContext from '../../context';
 
 const StyledWrapper = styled.div`
   width: 200px;

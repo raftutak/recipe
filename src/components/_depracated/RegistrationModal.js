@@ -1,5 +1,5 @@
 import React from 'react';
-import AppContext from '../context';
+import AppContext from '../../context';
 
 import { Modal, Button } from 'react-bootstrap';
 

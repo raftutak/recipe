@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Container, CardColumns } from 'react-bootstrap';
 
-import LoadingDots from '../../components/LoadingDots';
-import RecipeCard from '../RecipeCard';
+import LoadingDots from '../atoms/LoadingDots';
+import RecipeCard from '../molecules/RecipeCard';
 
 import { categories } from '../../data/categories';
 

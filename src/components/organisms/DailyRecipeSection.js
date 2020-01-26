@@ -7,7 +7,7 @@ import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
-import LoadingDots from '../LoadingDots';
+import LoadingDots from '../atoms/LoadingDots';
 
 import search from '../../assets/img/search.png';
 import AppContext from '../../context';

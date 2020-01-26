@@ -4,7 +4,7 @@ import AppContext from '../context';
 // COMPONENTS
 import SearchResultSection from '../components/organisms/SearchResultSection';
 import SearchSection from '../components/organisms/SearchSection';
-import LoadingDots from '../components/LoadingDots';
+import LoadingDots from '../components/atoms/LoadingDots';
 
 const HomeView = () => (
   <AppContext.Consumer>

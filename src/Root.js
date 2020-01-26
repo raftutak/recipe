@@ -19,7 +19,6 @@ import HomeView from './views/HomeView';
 import CategoryView from './views/CategoryView';
 import SingleRecipeView from './views/SingleRecipeView';
 import CalculatorView from './views/CalculatorView';
-import ContactView from './views/ContactView';
 import ProfileView from './views/ProfileView';
 import FeatureView from './views/FeatureView';
 import ScrollToTop from './utils/ScrollToTop';
@@ -205,7 +204,6 @@ class Root extends React.Component {
                   )}
                 />
                 <Route path={routes.calculatorBMI} component={CalculatorView} />
-                <Route path={routes.contact} component={ContactView} />
                 <Route path={routes.profile} component={ProfileView} />
               </MainTemplate>
             </Switch>

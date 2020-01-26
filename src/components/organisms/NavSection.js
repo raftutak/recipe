@@ -39,6 +39,14 @@ const NavSection = () => (
                       {category.name}
                     </NavDropdown.Item>
                   ))}
+                  {
+                    <NavDropdown.Item
+                      as={NavLink}
+                      to={{ pathname: `/category/${0}` }}
+                    >
+                      Inne
+                    </NavDropdown.Item>
+                  }
                 </NavDropdown>
                 <NavDropdown title="Posiłki">
                   {features

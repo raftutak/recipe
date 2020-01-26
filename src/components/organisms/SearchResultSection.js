@@ -5,9 +5,9 @@ import AppContext from '../../context';
 import styled from 'styled-components';
 
 // COMPONENTS
-import RecipeCard from '../RecipeCard';
-import LoadingDots from '../LoadingDots';
-import { Container, CardColumns } from 'react-bootstrap';
+import RecipeCard from '../molecules/RecipeCard';
+import LoadingDots from '../atoms/LoadingDots';
+import { Container, CardColumns, Pagination } from 'react-bootstrap';
 
 class SearchResultSection extends React.Component {
   // componentDidMount() {
@@ -38,6 +38,14 @@ class SearchResultSection extends React.Component {
                         );
                       })}
                     </StyledCardColumns>
+                    <Pagination style={{ justifyContent: 'center' }}>
+                      <Pagination.First />
+                      <Pagination.Prev />
+                      <Pagination.Item active>{1}</Pagination.Item>
+                      <Pagination.Ellipsis />
+                      <Pagination.Next />
+                      <Pagination.Last />
+                    </Pagination>
                   </InnerWrapper>
                 </Container>
               </>
