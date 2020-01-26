@@ -1,7 +1,12 @@
 import React from 'react';
 import AppContext from '../../context';
 import styled from 'styled-components';
-import { Container, Form } from 'react-bootstrap';
+
+//Bootstrap 
+import { Container, Form, Row, Col } from 'react-bootstrap';
+
+//Data & assets
+import bmiDescription from '../../data/bmiDescription.js'
 
 class CalculatorBMI extends React.Component {
 
@@ -18,7 +23,7 @@ class CalculatorBMI extends React.Component {
        this.heightChange = this.heightChange.bind(this);
        this.weightChange = this.weightChange.bind(this);
        this.change = this.change.bind(this);  
-       this.ticker = this.ticker.bind(this); 
+       //this.ticker = this.ticker.bind(this); 
        this.blur = this.blur.bind(this); 
        this.calculateBMI = this.calculateBMI.bind(this); 
     }
@@ -79,13 +84,13 @@ class CalculatorBMI extends React.Component {
        this.calculateBMI();
     }
   
-    ticker() {
-      this.setState({time: new Date().toLocaleTimeString()})
-    }
+    // ticker() {
+    //   this.setState({time: new Date().toLocaleTimeString()})
+    // }
    
-    componentDidMount(){
-      setInterval(this.ticker, 60000);
-    }
+    // componentDidMount(){
+    //   setInterval(this.ticker, 60000);
+    // }
   
     change(e){
       e.preventDefault();
@@ -96,41 +101,73 @@ class CalculatorBMI extends React.Component {
     render() {
 
       return (
-        <StyledContainer>
-          <div>
+        <StyledContainer fluid>
+          <Row className="my-4">
             <h3>Oblicz swój wskaźnik BMI</h3>
-          </div>
-            <StyledForm onSubmit={this.submitButton}>
-              <label>
-                Wpisz swoje imię: 
-              </label>
-              <input type="text" name="name" value={this.state.name} onBlur={this.blur} onChange={this.change}   />
-               <label>
-               Wprowadź swój wzrost w cm: 
-              </label>
-              <input type="text" name="height" value={this.state.height} onBlur={this.blur} onChange={this.heightChange}   />
-               <label>
-               Wprowadź swoją wagę w kg : 
-              </label>
-              <input type="text" name="weight" value={this.state.weight} onChange={this.weightChange}    />
-              <label>{this.state.checked} Cześć {this.state.name}. Twoje BMI wynosi: {this.state.bmi} </label>
+          </Row>
+          <Row className="mb-4">
+            <Col xs={12} md={6} lg={6}>
+              <StyledForm onSubmit={this.submitButton}>
+                {/* <p className="mb-2">
+                  Wpisz swoje imię: 
+                </p>
+                <input type="text" name="name" value={this.state.name} onBlur={this.blur} onChange={this.change}   /> */}
+                <p className="mb-2">
+                Wprowadź swój wzrost w cm: 
+                </p>
+                <input className="field" type="text" name="height" value={this.state.height} onBlur={this.blur} onChange={this.heightChange} />
+                <p className="mb-2 mt-2">
+                Wprowadź swoją wagę w kg : 
+                </p>
+                <input className="field" type="text" name="weight" value={this.state.weight} onChange={this.weightChange} />
+                <p className='mt-2 mb-2'>
+                  {this.state.checked}Cześć {this.state.name}. Twoje BMI wynosi: {this.state.bmi}
+                </p>
 
-              <label>{this.state.message}</label>
-              <label>{this.state.optimalweight}</label>
-               
-              <input type="submit" value="Submit"/>
-            </StyledForm>
-        
+                <p className="mb-2">{this.state.message}</p>
+                <p className="mt-2 mb-2">{this.state.optimalweight}</p>
+
+                <input type="submit" value="Submit"/>
+              </StyledForm>
+            </Col>
+            <Col xs={12} md={6} lg={6}>
+              <StyledDescriptionContainer>
+              <h3 className="mb-3">
+              Czym jest BMI?
+              </h3>
+              <p className="mt-2">
+              BMI jest jednym z ważnych wskaźniów określających nasz stan fizyczny, ale niestety nie wystarczającym.
+              Bardzo ważnym uzupełnieniem BMI jest wskaźnik ilości tłuszczu brzusznego - zbyt duży może oznaczać niebezpieczną
+              otyłość brzuszną i to nawet przy prawidłowym BMI! Ponadto, paradoksalnie, badania naukowe wskazują, że osoby
+              z lekką nadwagą zwykle są zdrowsze i żyją dłużej od osób z tzw. "prawidłową wagą". Pojawiają się nawet głosy,
+              że ustalony arbitralnie przez WHO próg nadwagi (25) jest zbyt niski.
+              </p>
+              </StyledDescriptionContainer>
+            </Col>
+          </Row>
         </StyledContainer>
       );
 
     }
   }
 
-const StyledContainer = styled(Container)`
-
+const StyledDescriptionContainer = styled(Container)`
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 5px;
+      padding: 1.2em;
+      text-align: justify;
 `;
 
-const StyledForm = styled(Form)``;
+const StyledContainer = styled(Container)`
+    padding: 1.2em;
+`;
+
+const StyledForm = styled(Form)`
+    .field {
+      width: 100%;
+    }
+`;
+
+
 
   export default CalculatorBMI;
