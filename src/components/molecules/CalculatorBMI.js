@@ -3,7 +3,7 @@ import AppContext from '../../context';
 import styled from 'styled-components';
 
 //Bootstrap 
-import { Container, Form, Row, Col } from 'react-bootstrap';
+import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 
 //Data & assets
 import bmiDescription from '../../data/bmiDescription.js'
@@ -13,7 +13,7 @@ class CalculatorBMI extends React.Component {
     constructor(props) {
        super(props);
        this.state = {
-           name: '',
+       //    name: '',
            weight: '',
            height: '',
            bmi: '',
@@ -108,10 +108,7 @@ class CalculatorBMI extends React.Component {
           <Row className="mb-4">
             <Col xs={12} md={6} lg={6}>
               <StyledForm onSubmit={this.submitButton}>
-                {/* <p className="mb-2">
-                  Wpisz swoje imię: 
-                </p>
-                <input type="text" name="name" value={this.state.name} onBlur={this.blur} onChange={this.change}   /> */}
+                
                 <p className="mb-2">
                 Wprowadź swój wzrost w cm: 
                 </p>
@@ -121,13 +118,14 @@ class CalculatorBMI extends React.Component {
                 </p>
                 <input className="field" type="text" name="weight" value={this.state.weight} onChange={this.weightChange} />
                 <p className='mt-2 mb-2'>
-                  {this.state.checked}Cześć {this.state.name}. Twoje BMI wynosi: {this.state.bmi}
+                  {this.state.checked}Twoje BMI wynosi: {this.state.bmi}
                 </p>
 
                 <p className="mb-2">{this.state.message}</p>
                 <p className="mt-2 mb-2">{this.state.optimalweight}</p>
 
-                <input type="submit" value="Submit"/>
+                <Button type="submit" className="btn btn-primary">Oblicz BMI</Button>
+
               </StyledForm>
             </Col>
             <Col xs={12} md={6} lg={6}>
@@ -165,6 +163,8 @@ const StyledContainer = styled(Container)`
 const StyledForm = styled(Form)`
     .field {
       width: 100%;
+      height: 30px;
+      border: 1px solid rgba(0,0,0,0.1);
     }
 `;
 
