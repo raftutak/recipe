@@ -84,9 +84,24 @@ const NavSection = () => (
                       </NavDropdown.Item>
                     ))}
                 </NavDropdown>
-                {/* <Nav.Link as={NavLink} to={routes.calculatorBMI} eventKey={2}>
-                  Kalkulator BMI
-                </Nav.Link> */}
+                <Nav.Link as={NavLink} to={routes.calculatorBMI} eventKey={2}>
+                    Kalkulator BMI
+                  </Nav.Link>
+                {/* <NavDropdown title="Kalkulatory">
+                  <NavDropdown.item
+                    as={NavLink}
+                    to={routes.calculatorBMI}
+                  >
+                    Kalkulator BMI
+                  </NavDropdown.item>
+                  <NavDropdown.item
+                    as={NavLink}
+                    to={routes.converter}
+                  >
+                    Przelicznik Miar Kuchennych
+                  </NavDropdown.item>
+                  
+                </NavDropdown>*/}
               </Nav>
               <Nav>
                 <Userbox />

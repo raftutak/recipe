@@ -1,5 +1,5 @@
 import React from 'react';
-import Calculator from '../molecules/Calculator';
+import CalculatorBMI from '../molecules/CalculatorBMI';
 import styled from 'styled-components';
 
 // BOOTSTRAP
@@ -12,10 +12,7 @@ const CalculatorSection = () => (
   <>
     <Container fluid>
       <Container>
-        <h5 className="mb-4">
-          <strong>Oblicz swój wskaźnik BMI</strong>
-        </h5>
-        <Calculator />
+        <CalculatorBMI />
       </Container>
     </Container>
   </>
