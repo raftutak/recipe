@@ -20,6 +20,7 @@ const StyledButton = styled(Button)`
     position: fixed;
     bottom: 20px;
     right: 20px;
+    z-index: 11111;
   }
 `;
 
