@@ -60,7 +60,7 @@ class DailyRecipeSection extends React.Component {
     return this.state.dailyRecipe_result && this.state.randomRecipe_result ? (
       <>
         <StyledSearchContainer fluid>
-          <StyledBackground fluid />
+          {/* <StyledBackground fluid /> */}
           <StyledInnerContainer>
             <Container>
               <Row>
@@ -165,28 +165,27 @@ const InnerWrapper = styled(Container)`
 `;
 
 const StyledSearchContainer = styled(Container)`
-  position: relative;
   padding: 32px 0;
   text-align: center;
   background-color: hsl(0, 0%, 95%);
   z-index: 1;
 `;
 
-const StyledBackground = styled(Container)`
-  position: absolute;
-  top: 0;
-  padding: 0;
-  height: 100%;
-  background-image: url(${search});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.1;
+// const StyledBackground = styled(Container)`
+//   position: absolute;
+//   top: 0;
+//   padding: 0;
+//   height: 100%;
+//   /* background-image: url(${search});
+//   background-repeat: no-repeat;
+//   background-position: center;
+//   background-size: cover;
+//   opacity: 0.1; */
 
-  @media (min-width: 992px) {
-    background-position-y: -80px;
-  }
-`;
+//   @media (min-width: 992px) {
+//     background-position-y: -80px;
+//   }
+// `;
 
 const StyledInnerContainer = styled(Container)`
   padding: 0 10px;

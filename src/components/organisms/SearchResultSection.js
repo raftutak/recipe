@@ -16,6 +16,14 @@ class SearchResultSection extends React.Component {
   //     .scrollIntoView({ behavior: 'smooth' });
   // }
 
+  createPagination = pagesAmount => {
+    let pages = [];
+    for (let i = 1; i < 15; i++) {
+      pages.push(<Pagination.Item>{i}</Pagination.Item>);
+    }
+    return pages;
+  };
+
   render() {
     return (
       <AppContext.Consumer>
@@ -29,6 +37,8 @@ class SearchResultSection extends React.Component {
                       <StyledHeading>
                         <strong>Wyniki wyszukiwania dla:</strong>{' '}
                         {context.search_phrase}
+                        {', ilość wyników: '}
+                        {context.pagination.totalCount}
                       </StyledHeading>
                     ) : null}
                     <StyledCardColumns>
@@ -38,12 +48,19 @@ class SearchResultSection extends React.Component {
                         );
                       })}
                     </StyledCardColumns>
-                    <Pagination style={{ justifyContent: 'center' }}>
+
+                    <Pagination
+                      style={{
+                        justifyContent: 'center'
+                      }}
+                    >
                       <Pagination.First />
-                      <Pagination.Prev />
-                      <Pagination.Item active>{1}</Pagination.Item>
-                      <Pagination.Ellipsis />
-                      <Pagination.Next />
+                      {context.pagination.prevPage && <Pagination.Prev />}
+                      {this.createPagination(context.pagination.pagesAmount)}
+                      {/* <Pagination.Item active>
+                        {context.pagination.pageNumber}
+                      </Pagination.Item> */}
+                      {context.pagination.nextPage && <Pagination.Next />}
                       <Pagination.Last />
                     </Pagination>
                   </InnerWrapper>
@@ -62,6 +79,15 @@ class SearchResultSection extends React.Component {
 const InnerWrapper = styled(Container)`
   margin: 0 auto;
   padding: 30px 10px;
+
+  .page-link {
+    color: hsl(215, 37%, 19%) !important;
+  }
+
+  .page-item.active .page-link {
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid #dee2e6;
+  }
 `;
 
 const StyledHeading = styled.h3`
