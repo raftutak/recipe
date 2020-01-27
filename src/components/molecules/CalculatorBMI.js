@@ -157,6 +157,7 @@ class CalculatorBMI extends React.Component {
                   className="field"
                   type="text"
                   name="height"
+                  required
                   value={this.state.height}
                   onBlur={this.blur}
                   onChange={this.heightChange}
