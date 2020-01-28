@@ -22,6 +22,7 @@ import CalculatorView from './views/CalculatorView';
 import ProfileView from './views/ProfileView';
 import FeatureView from './views/FeatureView';
 import ScrollToTop from './utils/ScrollToTop';
+import ConverterView from './views/ConverterView';
 
 class Root extends React.Component {
   state = {
@@ -281,6 +282,7 @@ class Root extends React.Component {
                     <SingleRecipeView id={props.match.params.id} />
                   )}
                 />
+                <Route path={routes.converter} component={ConverterView} />
                 <Route path={routes.calculatorBMI} component={CalculatorView} />
                 <Route path={routes.profile} component={ProfileView} />
               </MainTemplate>
