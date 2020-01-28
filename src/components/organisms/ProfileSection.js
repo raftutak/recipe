@@ -14,6 +14,7 @@ import search from '../../assets/img/search.png';
 import AppContext from '../../context';
 
 import SearchResultSection from './SearchResultSection';
+import Favourites from '../molecules/Favourites';
 
 const FeatureSection = () => {
   const { loading, user } = useAuth0();
@@ -41,10 +42,11 @@ const FeatureSection = () => {
                 </p>
               </StyledInnerContainer>
             </StyledSearchContainer>
-            {context.search_isLoading && !context.search_result && (
+            {/* {context.search_isLoading && !context.search_result && (
               <LoadingDots />
             )}
-            {context.search_result && <SearchResultSection id="recipe-list" />}
+            {context.search_result && <SearchResultSection id="recipe-list" />} */}
+            <Favourites username={user.name} />
           </>
         )}
       </AppContext>

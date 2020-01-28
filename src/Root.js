@@ -27,7 +27,10 @@ class Root extends React.Component {
   state = {
     search_input: '',
     category_id: 1,
-    collapseNavbar: false
+    collapseNavbar: false,
+    pagination: {
+      pageNumber: 1
+    }
   };
 
   handleInputChange = event => {
@@ -87,12 +90,6 @@ class Root extends React.Component {
     });
   };
 
-  // handleExclusionChange = search_exclusion => {
-  //   this.setState({
-  //     search_exclusion
-  //   });
-  // };
-
   handleCheckboxChange = event => {
     const checkboxValue =
       event.target.type === 'checkbox' ? event.target.checked : null;
@@ -102,42 +99,50 @@ class Root extends React.Component {
     });
   };
 
-  handleInitialSearchPagination = async () => {
+  handleSearchWithPagination = async pageNumber => {
     this.setState({
       search_isLoading: true,
       search_result: undefined
     });
 
-    const url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=papryka&pageNumber=1&pageSize=6`;
+    const url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=papryka&pageNumber=${pageNumber}&pageSize=6`;
     const response = await axios(url);
     const search_result = await response.data.recipes;
+
     const pagination = {
       pagesAmount: response.data.pagesAmount,
       pageNumber: response.data.pageNumber,
       totalCount: response.data.totalCount,
       nextPage: response.data.nextPage,
-      prevPage: response.data.prevPage
+      prevPage: response.data.prevPage,
+      pageNumbers: []
     };
+
+    for (let i = 1; i <= response.data.pagesAmount; i++) {
+      pagination.pageNumbers.push(i);
+    }
 
     this.setState({
       search_isLoading: false,
       search_result,
       pagination
     });
+
+    console.log(this.state.pagination);
   };
 
-  handleInitialSearch = async () => {
-    this.setState({
-      search_isLoading: true,
-      search_result: undefined
-    });
+  // handleInitialSearch = async () => {
+  //   this.setState({
+  //     search_isLoading: true,
+  //     search_result: undefined
+  //   });
 
-    const url = `https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=makaron&count=6`;
-    const response = await axios(url);
-    const search_result = await response.data.recipes;
+  //   const url = `https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=makaron&count=6`;
+  //   const response = await axios(url);
+  //   const search_result = await response.data.recipes;
 
-    this.setState({ search_isLoading: false, search_result });
-  };
+  //   this.setState({ search_isLoading: false, search_result });
+  // };
 
   handleSubmitSearch = async event => {
     event.preventDefault();
@@ -237,7 +242,7 @@ class Root extends React.Component {
   };
 
   componentDidMount() {
-    this.handleInitialSearchPagination();
+    this.handleSearchWithPagination(1);
   }
 
   render() {
@@ -253,6 +258,7 @@ class Root extends React.Component {
       handleTimeRequiredChange: this.handleTimeRequiredChange,
       handleCostChange: this.handleCostChange,
       handleSubmitSearch: this.handleSubmitSearch,
+      handleSearchWithPagination: this.handleSearchWithPagination,
       handleTagClick: this.handleTagClick,
       handleCollapseNavbar: this.handleCollapseNavbar
       // handleShowLoginModal: this.handleShowLoginModal,

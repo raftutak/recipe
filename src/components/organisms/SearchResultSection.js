@@ -7,22 +7,32 @@ import styled from 'styled-components';
 // COMPONENTS
 import RecipeCard from '../molecules/RecipeCard';
 import LoadingDots from '../atoms/LoadingDots';
-import { Container, CardColumns, Pagination } from 'react-bootstrap';
+import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
 
 class SearchResultSection extends React.Component {
+  // state = {
+  //   pagination: {
+  //     totalCount: undefined,
+  //     pageCount: undefined,
+  //     pageSize: undefined,
+  //     pageNumber: undefined,
+  //     pagesAmount: undefined,
+  //     nextPage: undefined,
+  //     prevPage: undefined
+  //   }
+  // };
   // componentDidMount() {
   //   document
   //     .getElementById('search-form')
   //     .scrollIntoView({ behavior: 'smooth' });
   // }
 
-  createPagination = pagesAmount => {
-    let pages = [];
-    for (let i = 1; i < 15; i++) {
-      pages.push(<Pagination.Item>{i}</Pagination.Item>);
-    }
-    return pages;
-  };
+  // createPagination = this.props.searchResult.pagesAmount => {
+  //   const pageNumbers = [];
+  //   for (let i = 1; i < pagesAmount; i++) {
+  //     pageNumbers.push({ i });
+  //   }
+  // };
 
   render() {
     return (
@@ -49,19 +59,67 @@ class SearchResultSection extends React.Component {
                       })}
                     </StyledCardColumns>
 
+                    {/* PAGINATION */}
+
                     <Pagination
                       style={{
                         justifyContent: 'center'
                       }}
                     >
-                      <Pagination.First />
-                      {context.pagination.prevPage && <Pagination.Prev />}
-                      {this.createPagination(context.pagination.pagesAmount)}
-                      {/* <Pagination.Item active>
-                        {context.pagination.pageNumber}
-                      </Pagination.Item> */}
-                      {context.pagination.nextPage && <Pagination.Next />}
-                      <Pagination.Last />
+                      <Pagination.First
+                        disabled={context.pagination.pageNumber === 1}
+                        onClick={() => context.handleSearchWithPagination(1)}
+                      />
+                      <Pagination.Prev
+                        disabled={!context.pagination.prevPage}
+                        onClick={() =>
+                          context.handleSearchWithPagination(
+                            context.pagination.pageNumber - 1
+                          )
+                        }
+                      />
+                      {context.pagination.pageNumbers.map(number => {
+                        let active = context.pagination.pageNumber;
+
+                        if (
+                          // number === 1 ||
+                          // number === context.pagination.pagesAmount ||
+                          number >= context.pagination.pageNumber - 5 &&
+                          number <= context.pagination.pageNumber + 5
+                        ) {
+                          return (
+                            <Pagination.Item
+                              onClick={() =>
+                                context.handleSearchWithPagination(number)
+                              }
+                              disabled={number === active ? true : false}
+                              active={number === active ? true : false}
+                            >
+                              {number}
+                            </Pagination.Item>
+                          );
+                        }
+                      })}
+
+                      <Pagination.Next
+                        disabled={!context.pagination.nextPage}
+                        onClick={() =>
+                          context.handleSearchWithPagination(
+                            context.pagination.pageNumber + 1
+                          )
+                        }
+                      />
+                      <Pagination.Last
+                        disabled={
+                          context.pagination.pageNumber ===
+                          context.pagination.pagesAmount
+                        }
+                        onClick={() =>
+                          context.handleSearchWithPagination(
+                            context.pagination.pagesAmount
+                          )
+                        }
+                      />
                     </Pagination>
                   </InnerWrapper>
                 </Container>
@@ -85,7 +143,7 @@ const InnerWrapper = styled(Container)`
   }
 
   .page-item.active .page-link {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(0, 0, 0, 0.09);
     border: 1px solid #dee2e6;
   }
 `;

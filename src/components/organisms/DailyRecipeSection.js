@@ -42,9 +42,9 @@ class DailyRecipeSection extends React.Component {
     });
 
     const url =
-      'https://recipe-search.projektstudencki.pl/recipe/searchRandomRecipe';
+      'https://recipe-search.projektstudencki.pl/recipe/searchRandomRecipe/?count=1';
     const response = await axios(url);
-    const randomRecipe_result = await response.data.recipe;
+    const randomRecipe_result = await response.data.recipes[0];
 
     this.setState({ randomRecipe_isLoading: false, randomRecipe_result });
 
