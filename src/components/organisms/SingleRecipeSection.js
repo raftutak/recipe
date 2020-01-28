@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-import { Container, ListGroup, Card, Nav, Row, Col } from 'react-bootstrap';
+import { Container, ListGroup, Card, Nav, Row, Col, Button } from 'react-bootstrap';
 
 import LoadingDots from '../atoms/LoadingDots';
 
@@ -12,6 +12,10 @@ import { NavLink } from 'react-router-dom';
 import { routes } from '../../routes';
 
 import history from '../../utils/history';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+
+const arrow = <FontAwesomeIcon icon={faAngleLeft} />
 
 class SingleRecipeSection extends React.Component {
   state = {
@@ -86,11 +90,13 @@ class SingleRecipeSection extends React.Component {
                 {this.state.singleRecipe_result.description}
               </Col>
             </Row>
-            <div>
-              <button onClick={history.goBack}>
-                <strong>Powrót</strong>
-              </button>
-            </div>
+            <Row className="mb-2 mt-4">
+              <Col xs={12} md={12} lg={12}>
+                <StyledButton onClick={history.goBack} className="btn-secondary">
+                  {arrow}{' '}Powrót do wyników
+                </StyledButton>
+              </Col>
+            </Row>
           </Container>
         </StyledSingleRecipeContainer>
       </>
@@ -110,5 +116,17 @@ const StyledImageBackground = styled(Container)`
   background-position: center;
   background-repeat: no-repeat;
 `;
+
+const StyledButton = styled(Button)`
+    display: inline-block;
+    width: auto;
+    height: 50px;
+    padding: 10px;
+    border: none;
+
+    :hover {
+      background-color: hsl(44, 60%, 42%);
+    }
+`
 
 export default SingleRecipeSection;
