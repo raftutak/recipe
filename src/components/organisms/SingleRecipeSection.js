@@ -13,9 +13,7 @@ import { routes } from '../../routes';
 
 import history from '../../utils/history';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-
-const arrow = <FontAwesomeIcon icon={faAngleLeft} />
+import { faCaretLeft, faAngleLeft, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 class SingleRecipeSection extends React.Component {
   state = {
@@ -64,7 +62,9 @@ class SingleRecipeSection extends React.Component {
                   <strong>{this.state.singleRecipe_result.blog}</strong>
                 </p>
                 <p className="mb-0 text-break">
-                  {this.state.singleRecipe_result.source_Url}
+                  <a href={this.state.singleRecipe_result.source_Url} style={{textDecoration: "none", color: "hsl(215, 37%, 19%)"}}>
+                    {this.state.singleRecipe_result.source_Url}
+                  </a>
                 </p>
               </Col>
             </Row>
@@ -108,6 +108,8 @@ class SingleRecipeSection extends React.Component {
 
 const StyledSingleRecipeContainer = styled(Container)``;
 
+const arrow = <FontAwesomeIcon icon={faAngleLeft} size="lg"/>;
+
 const StyledImageBackground = styled(Container)`
   min-height: 200px;
   height: 100%;
@@ -120,9 +122,10 @@ const StyledImageBackground = styled(Container)`
 const StyledButton = styled(Button)`
     display: inline-block;
     width: auto;
-    height: 50px;
-    padding: 10px;
+    height: 47px;
+    padding: 12px;
     border: none;
+    border-radius: 5px;
 
     :hover {
       background-color: hsl(44, 60%, 42%);
