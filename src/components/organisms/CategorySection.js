@@ -5,8 +5,10 @@ import styled from 'styled-components';
 
 import { Container, CardColumns } from 'react-bootstrap';
 
-import LoadingDots from '../../components/LoadingDots';
-import RecipeCard from '../RecipeCard';
+import LoadingDots from '../atoms/LoadingDots';
+import RecipeCard from '../molecules/RecipeCard';
+
+import { categories } from '../../data/categories';
 
 class CategorySection extends React.Component {
   state = {
@@ -46,6 +48,9 @@ class CategorySection extends React.Component {
       <>
         <Container fluid>
           <InnerWrapper>
+            <StyledHeading>
+              <strong>Aktualna kategoria:</strong> {categories[id - 1].name}
+            </StyledHeading>
             <StyledCardColumns>
               {this.state.category_result.map(recipe => {
                 return <RecipeCard key={recipe.title} recipe={recipe} />;
@@ -63,6 +68,10 @@ class CategorySection extends React.Component {
 const InnerWrapper = styled(Container)`
   margin: 0 auto;
   padding: 30px 10px;
+`;
+
+const StyledHeading = styled.h3`
+  padding-bottom: 20px;
 `;
 
 const StyledCardColumns = styled(CardColumns)`

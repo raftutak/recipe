@@ -9,6 +9,7 @@ import { Form, Col, InputGroup, Button } from 'react-bootstrap';
 import { categories } from '../../data/categories';
 import { dishes } from '../../data/dishes';
 import { features } from '../../data/features';
+import { ingredients } from '../../data/ingredients';
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -122,6 +123,47 @@ const SearchForm = () => (
                 components={animatedComponents}
                 onChange={context.handleExclusionChange}
                 isMulti
+                isClearable
+              />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+        <Form.Row>
+          <Col xs={12} md={4} lg={4}>
+            <Form.Group>
+              <Select
+                styles={customStyles}
+                options={features.filter(feature => feature.categoryId === 5)}
+                getOptionLabel={feature => feature.name}
+                getOptionValue={feature => feature.id}
+                placeholder="Trudność"
+                onChange={context.handleDifficultyChange}
+                isClearable
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={4} lg={4}>
+            <Form.Group>
+              <Select
+                styles={customStyles}
+                options={features.filter(feature => feature.categoryId === 6)}
+                getOptionLabel={feature => feature.name}
+                getOptionValue={feature => feature.id}
+                placeholder="Czas przygotowania"
+                onChange={context.handleTimeRequiredChange}
+                isClearable
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={4} lg={4}>
+            <Form.Group className="mb-0">
+              <Select
+                styles={customStyles}
+                options={features.filter(feature => feature.categoryId === 4)}
+                getOptionLabel={feature => feature.name}
+                getOptionValue={feature => feature.id}
+                placeholder="Koszt"
+                onChange={context.handleCostChange}
                 isClearable
               />
             </Form.Group>

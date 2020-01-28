@@ -7,7 +7,7 @@ import { Container, CardColumns } from 'react-bootstrap';
 
 import { useAuth0 } from '../../react-auth0-spa';
 
-import LoadingDots from '../../components/LoadingDots';
+import LoadingDots from '../atoms/LoadingDots';
 import ReactJson from 'react-json-view';
 
 import search from '../../assets/img/search.png';

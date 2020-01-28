@@ -5,11 +5,13 @@ import styled from 'styled-components';
 
 import { Container, ListGroup, Card, Nav, Row, Col } from 'react-bootstrap';
 
-import LoadingDots from '../../components/LoadingDots';
+import LoadingDots from '../atoms/LoadingDots';
 
 // ROUTER
 import { NavLink } from 'react-router-dom';
 import { routes } from '../../routes';
+
+import history from '../../utils/history';
 
 class SingleRecipeSection extends React.Component {
   state = {
@@ -35,6 +37,12 @@ class SingleRecipeSection extends React.Component {
 
   componentDidMount() {
     this.handleReadRecipe();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.handleReadRecipe();
+    }
   }
 
   render() {
@@ -78,6 +86,11 @@ class SingleRecipeSection extends React.Component {
                 {this.state.singleRecipe_result.description}
               </Col>
             </Row>
+            <div>
+              <button onClick={history.goBack}>
+                <strong>Powrót</strong>
+              </button>
+            </div>
           </Container>
         </StyledSingleRecipeContainer>
       </>

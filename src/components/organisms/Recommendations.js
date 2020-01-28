@@ -7,10 +7,10 @@ import styled, { css } from 'styled-components';
 import { Container, Row, Col, Carousel } from 'react-bootstrap';
 
 // ASSETS
-import block_bg_1 from '../assets/img/block_bg_1.jpg';
+import block_bg_1 from '../../assets/img/block_bg_1.jpg';
 
 // DATA
-import { sources } from '../data/sources';
+import { sources } from '../../data/sources';
 
 const containerContent = (
   <>

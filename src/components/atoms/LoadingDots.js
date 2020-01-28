@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 
 // STYLES
 import styled from 'styled-components';
-import '../../node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import '../../../node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 // COMPONENTS
 
