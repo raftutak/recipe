@@ -89,7 +89,7 @@ const StyledCarousel = styled(Carousel)`
 
 const Recommendations = () => (
   <>
-    <Container fluid>
+    <Container fluid style={{ zIndex: '-5' }}>
       <Container style={{ padding: '0' }}>
         <Row>
           <StyledCol xs={12} md={6} lg={6}>

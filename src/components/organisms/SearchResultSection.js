@@ -9,130 +9,100 @@ import RecipeCard from '../molecules/RecipeCard';
 import LoadingDots from '../atoms/LoadingDots';
 import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
 
-class SearchResultSection extends React.Component {
-  // state = {
-  //   pagination: {
-  //     totalCount: undefined,
-  //     pageCount: undefined,
-  //     pageSize: undefined,
-  //     pageNumber: undefined,
-  //     pagesAmount: undefined,
-  //     nextPage: undefined,
-  //     prevPage: undefined
-  //   }
-  // };
-  // componentDidMount() {
-  //   document
-  //     .getElementById('search-form')
-  //     .scrollIntoView({ behavior: 'smooth' });
-  // }
+const SearchResultSection = () => (
+  <AppContext.Consumer>
+    {context =>
+      context.search_result ? (
+        !context.search_isLoading ? (
+          <>
+            <Container fluid>
+              <InnerWrapper>
+                {context.search_phrase ? (
+                  <StyledHeading>
+                    <strong>Wyniki wyszukiwania dla:</strong>{' '}
+                    {context.search_phrase}
+                    {', ilość wyników: '}
+                    {context.pagination.totalCount}
+                  </StyledHeading>
+                ) : null}
+                <StyledFlexContainer>
+                  {context.search_result.map(recipe => {
+                    return <RecipeCard key={recipe.title} recipe={recipe} />;
+                  })}
+                </StyledFlexContainer>
 
-  // createPagination = this.props.searchResult.pagesAmount => {
-  //   const pageNumbers = [];
-  //   for (let i = 1; i < pagesAmount; i++) {
-  //     pageNumbers.push({ i });
-  //   }
-  // };
+                {/* PAGINATION */}
 
-  render() {
-    return (
-      <AppContext.Consumer>
-        {context =>
-          context.search_result ? (
-            !context.search_isLoading ? (
-              <>
-                <Container fluid>
-                  <InnerWrapper>
-                    {context.search_phrase ? (
-                      <StyledHeading>
-                        <strong>Wyniki wyszukiwania dla:</strong>{' '}
-                        {context.search_phrase}
-                        {', ilość wyników: '}
-                        {context.pagination.totalCount}
-                      </StyledHeading>
-                    ) : null}
-                    <StyledCardColumns>
-                      {context.search_result.map(recipe => {
-                        return (
-                          <RecipeCard key={recipe.title} recipe={recipe} />
-                        );
-                      })}
-                    </StyledCardColumns>
+                <Pagination
+                  style={{
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Pagination.First
+                    disabled={context.pagination.pageNumber === 1}
+                    onClick={() => context.handleSearchWithPagination(1)}
+                  />
+                  <Pagination.Prev
+                    disabled={!context.pagination.prevPage}
+                    onClick={() =>
+                      context.handleSearchWithPagination(
+                        context.pagination.pageNumber - 1
+                      )
+                    }
+                  />
+                  {context.pagination.pageNumbers.map(number => {
+                    let active = context.pagination.pageNumber;
 
-                    {/* PAGINATION */}
+                    if (
+                      // number === 1 ||
+                      // number === context.pagination.pagesAmount ||
+                      number >= context.pagination.pageNumber - 5 &&
+                      number <= context.pagination.pageNumber + 5
+                    ) {
+                      return (
+                        <Pagination.Item
+                          onClick={() =>
+                            context.handleSearchWithPagination(number)
+                          }
+                          disabled={number === active ? true : false}
+                          active={number === active ? true : false}
+                        >
+                          {number}
+                        </Pagination.Item>
+                      );
+                    }
+                  })}
 
-                    <Pagination
-                      style={{
-                        justifyContent: 'center'
-                      }}
-                    >
-                      <Pagination.First
-                        disabled={context.pagination.pageNumber === 1}
-                        onClick={() => context.handleSearchWithPagination(1)}
-                      />
-                      <Pagination.Prev
-                        disabled={!context.pagination.prevPage}
-                        onClick={() =>
-                          context.handleSearchWithPagination(
-                            context.pagination.pageNumber - 1
-                          )
-                        }
-                      />
-                      {context.pagination.pageNumbers.map(number => {
-                        let active = context.pagination.pageNumber;
-
-                        if (
-                          // number === 1 ||
-                          // number === context.pagination.pagesAmount ||
-                          number >= context.pagination.pageNumber - 5 &&
-                          number <= context.pagination.pageNumber + 5
-                        ) {
-                          return (
-                            <Pagination.Item
-                              onClick={() =>
-                                context.handleSearchWithPagination(number)
-                              }
-                              disabled={number === active ? true : false}
-                              active={number === active ? true : false}
-                            >
-                              {number}
-                            </Pagination.Item>
-                          );
-                        }
-                      })}
-
-                      <Pagination.Next
-                        disabled={!context.pagination.nextPage}
-                        onClick={() =>
-                          context.handleSearchWithPagination(
-                            context.pagination.pageNumber + 1
-                          )
-                        }
-                      />
-                      <Pagination.Last
-                        disabled={
-                          context.pagination.pageNumber ===
-                          context.pagination.pagesAmount
-                        }
-                        onClick={() =>
-                          context.handleSearchWithPagination(
-                            context.pagination.pagesAmount
-                          )
-                        }
-                      />
-                    </Pagination>
-                  </InnerWrapper>
-                </Container>
-              </>
-            ) : (
-              <LoadingDots />
-            )
-          ) : null
-        }
-      </AppContext.Consumer>
-    );
-  }
-}
+                  <Pagination.Next
+                    disabled={!context.pagination.nextPage}
+                    onClick={() =>
+                      context.handleSearchWithPagination(
+                        context.pagination.pageNumber + 1
+                      )
+                    }
+                  />
+                  <Pagination.Last
+                    disabled={
+                      context.pagination.pageNumber ===
+                      context.pagination.pagesAmount
+                    }
+                    onClick={() =>
+                      context.handleSearchWithPagination(
+                        context.pagination.pagesAmount
+                      )
+                    }
+                  />
+                </Pagination>
+              </InnerWrapper>
+            </Container>
+          </>
+        ) : (
+          <LoadingDots />
+        )
+      ) : null
+    }
+  </AppContext.Consumer>
+);
 
 const InnerWrapper = styled(Container)`
   margin: 0 auto;
@@ -150,6 +120,12 @@ const InnerWrapper = styled(Container)`
 
 const StyledHeading = styled.h3`
   padding-bottom: 20px;
+`;
+
+const StyledFlexContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const StyledCardColumns = styled(CardColumns)`

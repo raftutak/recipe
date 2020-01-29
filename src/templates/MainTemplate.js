@@ -14,19 +14,23 @@ import FooterSection from '../components/organisms/FooterSection';
 import BlockSection from '../components/organisms/BlockSection';
 import DailyRecipeSection from '../components/organisms/DailyRecipeSection';
 import ScrollToTopButton from '../components/atoms/ScrollToTopButton';
+import CalculatorModal from '../components/organisms/CalculatorModal';
+import AboveFooterSection from '../components/organisms/AboveFooterSection';
+import AdviceSection from '../components/organisms/AdviceSection';
 
 const MainTemplate = ({ children, location }) => (
   <>
     <GlobalStyle />
     <ScrollToTopButton />
     <NavSection />
-    <LoginModal />
-    <RegistrationModal />
+    <CalculatorModal />
     {location.pathname === '/' ? <HeaderSection /> : null}
     {children}
     {/* <BlockSection /> */}
-    <DailyRecipeSection />
+    {/* <DailyRecipeSection /> */}
     <Recommendations />
+    <AdviceSection />
+    <AboveFooterSection />
     <FooterSection />
   </>
 );

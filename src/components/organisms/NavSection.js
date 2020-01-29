@@ -84,9 +84,16 @@ const NavSection = () => (
                       </NavDropdown.Item>
                     ))}
                 </NavDropdown>
-                <Nav.Link as={NavLink} to={routes.calculatorBMI} eventKey={2}>
+                <Nav.Link
+                  // as={NavLink}
+                  onClick={context.handleShowCalculatorModal}
+                  // eventKey={2}
+                >
                   Kalkulator BMI
                 </Nav.Link>
+                {/* <Nav.Link as={NavLink} to={routes.calculatorBMI} eventKey={2}>
+                  Kalkulator BMI
+                </Nav.Link> */}
                 {/* <NavDropdown title="Kalkulatory">
                   <NavDropdown.item
                     as={NavLink}

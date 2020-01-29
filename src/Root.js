@@ -30,7 +30,8 @@ class Root extends React.Component {
     collapseNavbar: false,
     pagination: {
       pageNumber: 1
-    }
+    },
+    showCalculatorModal: false
   };
 
   handleInputChange = event => {
@@ -237,6 +238,10 @@ class Root extends React.Component {
   //   this.setState({ showRegistrationModal: !this.state.showRegistrationModal });
   // };
 
+  handleShowCalculatorModal = event => {
+    this.setState({ showCalculatorModal: !this.state.showCalculatorModal });
+  };
+
   handleCollapseNavbar = event => {
     this.setState({ collapseNavbar: !this.state.collapseNavbar });
   };
@@ -260,7 +265,8 @@ class Root extends React.Component {
       handleSubmitSearch: this.handleSubmitSearch,
       handleSearchWithPagination: this.handleSearchWithPagination,
       handleTagClick: this.handleTagClick,
-      handleCollapseNavbar: this.handleCollapseNavbar
+      handleCollapseNavbar: this.handleCollapseNavbar,
+      handleShowCalculatorModal: this.handleShowCalculatorModal
       // handleShowLoginModal: this.handleShowLoginModal,
       // handleShowRegistrationModal: this.handleShowRegistrationModal
     };

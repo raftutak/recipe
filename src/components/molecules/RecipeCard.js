@@ -133,51 +133,60 @@ class RecipeCard extends React.Component {
                     {this.state.amount}
                   </ListGroupItem>
                   <ListGroupItem>
-                    <strong>Źródło:</strong>{' '}
-                    <a
-                      style={{
-                        textDecoration: 'none',
-                        color: 'hsl(215, 37%, 19%)'
-                      }}
-                      href={recipe.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {recipe.blog}
-                    </a>
-                  </ListGroupItem>
-                  <ListGroupItem style={{ height: '73px' }}>
-                    <div className="limiter-2">
-                      <strong>Kategoria:</strong>{' '}
-                      {recipe.dishMainCategoryId !== 0 ? (
-                        categories[recipe.dishMainCategoryId - 1].name
-                      ) : (
-                        <strong style={{ color: 'red' }}>Brak kategorii</strong>
-                      )}
-                      {' / '}
-                      {recipe.dishMainCategoryId !== 0 ? (
-                        categories[recipe.dishMainCategoryId - 1].subcategories[
-                          categories[
-                            recipe.dishMainCategoryId - 1
-                          ].subcategories.findIndex(
-                            index => index.id === recipe.dishSubCategoryId
-                          )
-                        ].name
-                      ) : (
-                        <strong style={{ color: 'red' }}>
-                          Brak podkategorii
-                        </strong>
-                      )}
-                      {' / '}
-                      {recipe.dishId ? (
-                        dishes[
-                          dishes.findIndex(index => index.id === recipe.dishId)
-                        ].name
-                      ) : (
-                        <strong style={{ color: 'red' }}>Brak dishId</strong>
-                      )}
+                    <div className="limiter-1">
+                      <strong>Źródło:</strong>{' '}
+                      <a
+                        style={{
+                          textDecoration: 'none',
+                          color: 'hsl(215, 37%, 19%)'
+                        }}
+                        href={recipe.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {recipe.blog}
+                      </a>
                     </div>
                   </ListGroupItem>
+                  {this.props.truncated ? null : (
+                    <ListGroupItem style={{ height: '73px' }}>
+                      <div className="limiter-2">
+                        <strong>Kategoria:</strong>{' '}
+                        {recipe.dishMainCategoryId !== 0 ? (
+                          categories[recipe.dishMainCategoryId - 1].name
+                        ) : (
+                          <strong style={{ color: 'red' }}>
+                            Brak kategorii
+                          </strong>
+                        )}
+                        {' / '}
+                        {recipe.dishMainCategoryId !== 0 ? (
+                          categories[recipe.dishMainCategoryId - 1]
+                            .subcategories[
+                            categories[
+                              recipe.dishMainCategoryId - 1
+                            ].subcategories.findIndex(
+                              index => index.id === recipe.dishSubCategoryId
+                            )
+                          ].name
+                        ) : (
+                          <strong style={{ color: 'red' }}>
+                            Brak podkategorii
+                          </strong>
+                        )}
+                        {' / '}
+                        {recipe.dishId ? (
+                          dishes[
+                            dishes.findIndex(
+                              index => index.id === recipe.dishId
+                            )
+                          ].name
+                        ) : (
+                          <strong style={{ color: 'red' }}>Brak dishId</strong>
+                        )}
+                      </div>
+                    </ListGroupItem>
+                  )}
                   {/* <ListGroupItem>
               <strong>Kategoria:</strong>{' '}
               {recipe.dishMainCategoryId !== 0 ? (
@@ -207,71 +216,75 @@ class RecipeCard extends React.Component {
                 <strong style={{ color: 'red' }}>Brak typu dania</strong>
               )}
             </ListGroupItem> */}
-                  <ListGroupItem style={{ height: '97px' }}>
-                    <div className="limiter-3">
-                      <strong>Składniki:</strong>{' '}
-                      {recipe.ingredientIds.map(ingredientID => (
-                        <span key={ingredientID}>
-                          {
-                            ingredients[
-                              ingredients.findIndex(
-                                index => index.id === ingredientID
-                              )
-                            ].name
-                          }
-                          ,{' '}
-                        </span>
-                      ))}
-                    </div>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <strong>Trudność:</strong>{' '}
-                    {recipe.featureIds
-                      ? recipe.featureIds.map(featureID => (
-                          <>
-                            {features[
-                              features.findIndex(
-                                index =>
-                                  index.id === featureID &&
-                                  index.categoryId === 5
-                              )
-                            ] &&
-                              features[
-                                features.findIndex(
-                                  index =>
-                                    index.id === featureID &&
-                                    index.categoryId === 5
-                                )
-                              ].name}
-                          </>
-                        ))
-                      : null}
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <div className="limiter-1">
-                      <strong>Czas przygotowania:</strong>{' '}
-                      {recipe.featureIds
-                        ? recipe.featureIds.map(featureID => (
-                            <>
-                              {features[
-                                features.findIndex(
-                                  index =>
-                                    index.id === featureID &&
-                                    index.categoryId === 6
-                                )
-                              ] &&
-                                features[
+                  {this.props.truncated ? null : (
+                    <>
+                      <ListGroupItem style={{ height: '97px' }}>
+                        <div className="limiter-3">
+                          <strong>Składniki:</strong>{' '}
+                          {recipe.ingredientIds.map(ingredientID => (
+                            <span key={ingredientID}>
+                              {
+                                ingredients[
+                                  ingredients.findIndex(
+                                    index => index.id === ingredientID
+                                  )
+                                ].name
+                              }
+                              ,{' '}
+                            </span>
+                          ))}
+                        </div>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <strong>Trudność:</strong>{' '}
+                        {recipe.featureIds
+                          ? recipe.featureIds.map(featureID => (
+                              <>
+                                {features[
                                   features.findIndex(
                                     index =>
                                       index.id === featureID &&
-                                      index.categoryId === 6
+                                      index.categoryId === 5
                                   )
-                                ].name}
-                            </>
-                          ))
-                        : null}
-                    </div>
-                  </ListGroupItem>
+                                ] &&
+                                  features[
+                                    features.findIndex(
+                                      index =>
+                                        index.id === featureID &&
+                                        index.categoryId === 5
+                                    )
+                                  ].name}
+                              </>
+                            ))
+                          : null}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <div className="limiter-1">
+                          <strong>Czas przygotowania:</strong>{' '}
+                          {recipe.featureIds
+                            ? recipe.featureIds.map(featureID => (
+                                <>
+                                  {features[
+                                    features.findIndex(
+                                      index =>
+                                        index.id === featureID &&
+                                        index.categoryId === 6
+                                    )
+                                  ] &&
+                                    features[
+                                      features.findIndex(
+                                        index =>
+                                          index.id === featureID &&
+                                          index.categoryId === 6
+                                      )
+                                    ].name}
+                                </>
+                              ))
+                            : null}
+                        </div>
+                      </ListGroupItem>
+                    </>
+                  )}
                   {/* <ListGroupItem>
               {featuresCategories.map(featureCategory => (
                 <>
@@ -323,8 +336,11 @@ class RecipeCard extends React.Component {
 const StyledCard = styled(Card)`
   border-radius: 15px;
   transition: 0.2s;
+  margin: auto;
   margin-bottom: 20px !important;
   overflow: hidden;
+  flex-basis: 32%;
+  max-width: 357px;
 
   .card-img {
     width: 100%;
@@ -338,7 +354,7 @@ const StyledCard = styled(Card)`
   }
 
   :hover {
-    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.15);
     transition: all 0.2s ease-in-out;
 
     .card-img {
@@ -394,6 +410,18 @@ const StyledCard = styled(Card)`
     height: 1.4rem;
     padding-bottom: 5px;
     padding-right: 2px;
+  }
+
+  @media (max-width: 576px) {
+    flex-basis: 100%;
+  }
+
+  @media (min-width: 577px) and (max-width: 992px) {
+    flex-basis: 48%;
+  }
+
+  @media (min-width: 993px) {
+    flex-basis: 32%;
   }
 `;
 

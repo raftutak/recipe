@@ -41,6 +41,8 @@ const StyledHeader = styled(Container)`
   background-image: url(${header});
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
 
   /* @media (max-width: 500px) {
     min-height: 540px;
