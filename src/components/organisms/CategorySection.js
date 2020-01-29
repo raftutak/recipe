@@ -36,6 +36,8 @@ class CategorySection extends React.Component {
   };
 
   handleCategorySearch = async pageNumber => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
     this.setState({
       categorySearch: {
         isLoading: true,
@@ -77,7 +79,9 @@ class CategorySection extends React.Component {
         <Container fluid>
           <InnerWrapper>
             <StyledHeading>
-              <strong>Aktualna kategoria:</strong> {categories[id - 1].name}
+              Aktualna kategoria: <strong>{categories[id - 1].name}</strong>
+              {', ilość wyników: '}
+              <strong>{this.state.categorySearch.pagination.totalCount}</strong>
               {', strona: '}
               {this.state.categorySearch.pagination.pageNumber}
               {' z '}

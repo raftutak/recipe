@@ -35,6 +35,7 @@ const NavSection = () => (
                     <NavDropdown.Item
                       as={NavLink}
                       to={{ pathname: `/category/${category.id}` }}
+                      eventKey={category.id}
                     >
                       {category.name}
                     </NavDropdown.Item>
@@ -43,6 +44,7 @@ const NavSection = () => (
                     <NavDropdown.Item
                       as={NavLink}
                       to={{ pathname: `/category/${0}` }}
+                      eventKey={0}
                     >
                       Inne
                     </NavDropdown.Item>
@@ -55,6 +57,7 @@ const NavSection = () => (
                       <NavDropdown.Item
                         as={NavLink}
                         to={{ pathname: `/feature/${feature.id}` }}
+                        eventKey={feature.id}
                       >
                         {feature.name}
                       </NavDropdown.Item>
@@ -67,6 +70,7 @@ const NavSection = () => (
                       <NavDropdown.Item
                         as={NavLink}
                         to={{ pathname: `/feature/${feature.id}` }}
+                        eventKey={feature.id}
                       >
                         {feature.name}
                       </NavDropdown.Item>
@@ -79,6 +83,7 @@ const NavSection = () => (
                       <NavDropdown.Item
                         as={NavLink}
                         to={{ pathname: `/feature/${feature.id}` }}
+                        eventKey={feature.id}
                       >
                         {feature.name}
                       </NavDropdown.Item>
@@ -87,7 +92,6 @@ const NavSection = () => (
                 <Nav.Link
                   // as={NavLink}
                   onClick={context.handleShowCalculatorModal}
-                  // eventKey={2}
                 >
                   Kalkulator BMI
                 </Nav.Link>

@@ -17,10 +17,10 @@ const MainSearchResultSection = () => (
           <Container fluid>
             <InnerWrapper>
               <StyledHeading>
-                <strong>Wyniki wyszukiwania dla:</strong>{' '}
-                {context.mainSearch.heading}
+                Wyniki wyszukiwania dla:{' '}
+                <strong>{context.mainSearch.heading}</strong>
                 {', ilość wyników: '}
-                {context.mainSearch.pagination.totalCount}
+                <strong>{context.mainSearch.pagination.totalCount}</strong>
                 {', strona: '}
                 {context.mainSearch.pagination.pageNumber}
                 {' z '}
