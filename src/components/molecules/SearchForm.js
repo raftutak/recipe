@@ -26,7 +26,13 @@ const customStyles = {
 const SearchForm = () => (
   <AppContext.Consumer>
     {context => (
-      <StyledForm autoComplete="off" onSubmit={context.handleSubmitSearch}>
+      <StyledForm
+        autoComplete="off"
+        onSubmit={event => {
+          event.preventDefault();
+          return context.handleMainSearch(1);
+        }}
+      >
         <Form.Row className="mb-3">
           <Col>
             <InputGroup>

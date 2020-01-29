@@ -3,64 +3,169 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-import { Container, CardColumns } from 'react-bootstrap';
-
 import LoadingDots from '../atoms/LoadingDots';
 import RecipeCard from '../molecules/RecipeCard';
 
 import { categories } from '../../data/categories';
+import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
 
 class CategorySection extends React.Component {
   state = {
-    category_result: undefined
+    categorySearch: {
+      isLoading: true,
+      result: undefined,
+      pagination: undefined
+    }
   };
 
-  handleShowCategory = async () => {
+  createPagination = responseData => {
+    const pagination = {
+      pagesAmount: responseData.pagesAmount,
+      pageNumber: responseData.pageNumber,
+      totalCount: responseData.totalCount,
+      nextPage: responseData.nextPage,
+      prevPage: responseData.prevPage,
+      pageNumbers: []
+    };
+
+    for (let i = 1; i <= responseData.pagesAmount; i++) {
+      pagination.pageNumbers.push(i);
+    }
+
+    return pagination;
+  };
+
+  handleCategorySearch = async pageNumber => {
     this.setState({
-      category_isLoading: true,
-      category_result: undefined
+      categorySearch: {
+        isLoading: true,
+        result: undefined
+      }
     });
 
     const id = this.props.id;
-    const url = `https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=&count=12&dishMainCategoryIds=${id}`;
-
+    const url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=&pageNumber=${pageNumber}&pageSize=6&dishMainCategoryIds=${id}`;
     const response = await axios(url);
-    const category_result = await response.data.recipes;
+    const result = await response.data.recipes;
 
-    this.setState({ category_isLoading: false, category_result });
+    const pagination = this.createPagination(response.data);
+
+    this.setState({
+      categorySearch: {
+        isLoading: false,
+        result,
+        pagination
+      }
+    });
   };
 
   componentDidMount() {
-    this.handleShowCategory();
+    this.handleCategorySearch(1);
   }
 
   componentDidUpdate(prevProps) {
-    debugger;
     if (this.props.id !== prevProps.id) {
-      this.handleShowCategory();
+      this.handleCategorySearch(1);
     }
   }
 
   render() {
     const { id } = this.props;
 
-    return this.state.category_result ? (
+    return this.state.categorySearch && this.state.categorySearch.result ? (
       <>
         <Container fluid>
           <InnerWrapper>
             <StyledHeading>
               <strong>Aktualna kategoria:</strong> {categories[id - 1].name}
+              {', strona: '}
+              {this.state.categorySearch.pagination.pageNumber}
+              {' z '}
+              {this.state.categorySearch.pagination.pagesAmount}
             </StyledHeading>
-            <StyledCardColumns>
-              {this.state.category_result.map(recipe => {
+            <StyledFlexContainer>
+              {this.state.categorySearch.result.map(recipe => {
                 return <RecipeCard key={recipe.title} recipe={recipe} />;
               })}
-            </StyledCardColumns>
+            </StyledFlexContainer>
+
+            {/* PAGINATION */}
+
+            <Pagination
+              style={{
+                justifyContent: 'center'
+              }}
+            >
+              <Pagination.First
+                disabled={this.state.categorySearch.pagination.pageNumber === 1}
+                onClick={() => this.handleCategorySearch(1)}
+              />
+              <Pagination.Prev
+                disabled={!this.state.categorySearch.pagination.prevPage}
+                onClick={() =>
+                  this.handleCategorySearch(
+                    this.state.categorySearch.pagination.pageNumber - 1
+                  )
+                }
+              />
+              {this.state.categorySearch.pagination.pageNumbers &&
+                this.state.categorySearch.pagination.pageNumbers.map(number => {
+                  let active = this.state.categorySearch.pagination.pageNumber;
+
+                  if (
+                    // number === 1 ||
+                    // number === context.pagination.pagesAmount ||
+                    number >=
+                      this.state.categorySearch.pagination.pageNumber - 5 &&
+                    number <=
+                      this.state.categorySearch.pagination.pageNumber + 5
+                  ) {
+                    return (
+                      <Pagination.Item
+                        onClick={() => this.handleCategorySearch(number)}
+                        disabled={number === active ? true : false}
+                        active={number === active ? true : false}
+                      >
+                        {number}
+                      </Pagination.Item>
+                    );
+                  }
+                })}
+
+              <Pagination.Next
+                disabled={!this.state.categorySearch.pagination.nextPage}
+                onClick={() =>
+                  this.handleCategorySearch(
+                    this.state.categorySearch.pagination.pageNumber + 1
+                  )
+                }
+              />
+              <Pagination.Last
+                disabled={
+                  this.state.categorySearch.pagination.pageNumber ===
+                  this.state.categorySearch.pagination.pagesAmount
+                }
+                onClick={() =>
+                  this.handleCategorySearch(
+                    this.state.categorySearch.pagination.pagesAmount
+                  )
+                }
+              />
+            </Pagination>
           </InnerWrapper>
         </Container>
       </>
     ) : (
-      <LoadingDots />
+      <>
+        <Container fluid>
+          <InnerWrapper>
+            <h5 style={{ textAlign: 'center' }}>
+              Trwa wczytywanie listy przepisów ...
+            </h5>
+            <LoadingDots />
+          </InnerWrapper>
+        </Container>
+      </>
     );
   }
 }
@@ -68,28 +173,25 @@ class CategorySection extends React.Component {
 const InnerWrapper = styled(Container)`
   margin: 0 auto;
   padding: 30px 10px;
+
+  .page-link {
+    color: hsl(215, 37%, 19%) !important;
+  }
+
+  .page-item.active .page-link {
+    background-color: rgba(0, 0, 0, 0.09);
+    border: 1px solid #dee2e6;
+  }
 `;
 
 const StyledHeading = styled.h3`
   padding-bottom: 20px;
 `;
 
-const StyledCardColumns = styled(CardColumns)`
-  @media (min-width: 576px) {
-    column-count: 1;
-  }
-
-  @media (min-width: 768px) {
-    column-count: 2;
-  }
-
-  @media (min-width: 992px) {
-    column-count: 3;
-  }
-
-  @media (min-width: 1200px) {
-    column-count: 3;
-  }
+const StyledFlexContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 export default CategorySection;

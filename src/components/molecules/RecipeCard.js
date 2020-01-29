@@ -7,7 +7,7 @@ import { useAuth0 } from '../../react-auth0-spa';
 import { Link } from 'react-router-dom';
 
 // STYLES
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // BOOTSTRAP
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -94,11 +94,19 @@ class RecipeCard extends React.Component {
                     pathname: `/recipe/${recipe.id}`
                   }}
                 >
-                  <Card.Header>
-                    <div className="limiter-2">
-                      <strong>{recipe.title}</strong>
-                    </div>
-                  </Card.Header>
+                  {this.props.truncated ? (
+                    <Card.Header style={{ height: 'auto' }}>
+                      <div className="limiter-1">
+                        <strong>{recipe.title}</strong>
+                      </div>
+                    </Card.Header>
+                  ) : (
+                    <Card.Header>
+                      <div className="limiter-2">
+                        <strong>{recipe.title}</strong>
+                      </div>
+                    </Card.Header>
+                  )}
                 </Link>
                 <ListGroup variant="flush">
                   <ListGroupItem>
@@ -364,6 +372,11 @@ const StyledCard = styled(Card)`
 
     .card-header {
       background-color: rgba(0, 0, 0, 0.07);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .list-group-item {
+      background-color: rgba(0, 0, 0, 0.03);
       transition: all 0.2s ease-in-out;
     }
   }

@@ -13,7 +13,7 @@ import ReactJson from 'react-json-view';
 import search from '../../assets/img/search.png';
 import AppContext from '../../context';
 
-import SearchResultSection from './SearchResultSection';
+import SearchResultSection from './MainSearchResultSection';
 import Favourites from '../molecules/Favourites';
 
 const FeatureSection = () => {

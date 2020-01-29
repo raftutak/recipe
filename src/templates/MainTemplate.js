@@ -28,9 +28,9 @@ const MainTemplate = ({ children, location }) => (
     {children}
     {/* <BlockSection /> */}
     {/* <DailyRecipeSection /> */}
-    <Recommendations />
     <AdviceSection />
-    <AboveFooterSection />
+    <Recommendations />
+    {/* <AboveFooterSection /> */}
     <FooterSection />
   </>
 );
