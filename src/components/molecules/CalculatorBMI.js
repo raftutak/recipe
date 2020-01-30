@@ -164,68 +164,6 @@ class CalculatorBMI extends React.Component {
                 {this.state.checked}Twoje BMI wynosi: {this.state.bmi}
               </p>
 
-<<<<<<< HEAD
-    render() {
-
-      return (
-        <StyledContainer fluid>
-          <Row className="my-4">
-            <h3>Oblicz swój wskaźnik BMI</h3>
-          </Row>
-          <Row className="mb-4">
-            <Col xs={12} md={6} lg={6}>
-              <StyledForm onSubmit={this.submitButton}>
-                
-                <p className="mb-2">
-                Wprowadź swój wzrost w centymetrach: 
-                </p>
-
-                <input
-                  className="field"
-                  type="text"
-                  name="height"
-                  required
-                  value={this.state.height}
-                  onBlur={this.blur}
-                  onChange={this.heightChange}
-                />
-
-                <p className="mb-2 mt-2">
-                Wprowadź swoją wagę w kilogramach: 
-                </p>
-                
-                <input
-                  className="field"
-                  type="text"
-                  refs="weight"
-                  required
-                  value={this.state.weight}
-                  onChange={this.weightChange}
-                />
-
-                <p className='mt-2 mb-2'>
-                  {this.state.checked}Twoje BMI wynosi: {this.state.bmi}
-                </p>
-
-                <p className="mb-2">{this.state.message}</p>
-                <p className="mt-2 mb-2">{this.state.optimalWeight}</p>
-
-                <Button
-                  type="submit"
-                  className="btn btn-secondary"
-                  onSubmit={this.submitButton}
-                >
-                  Oblicz BMI
-                </Button>
-
-              </StyledForm>
-            </Col>
-            <Col xs={12} md={6} lg={6} className="mt-2">
-              <StyledDescriptionContainer>
-              <h3 className="mb-3">
-              Czym jest BMI?
-              </h3>
-=======
               <p className="mb-2">{this.state.message}</p>
               <p className="mt-2 mb-2">{this.state.optimalWeight}</p>
 
@@ -241,7 +179,6 @@ class CalculatorBMI extends React.Component {
           <Col xs={12} md={6} lg={6} className="mt-2">
             <StyledDescriptionContainer>
               <h3 className="mb-3">Czym jest BMI?</h3>
->>>>>>> develop
               <p className="mt-2">
                 BMI jest jednym z ważnych wskaźniów określających nasz stan
                 fizyczny, ale niestety nie wystarczającym. Bardzo ważnym
