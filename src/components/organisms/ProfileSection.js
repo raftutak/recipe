@@ -1,19 +1,17 @@
 import React from 'react';
-import axios from 'axios';
 
 import styled from 'styled-components';
 
-import { Container, CardColumns } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import { useAuth0 } from '../../react-auth0-spa';
 
 import LoadingDots from '../atoms/LoadingDots';
-import ReactJson from 'react-json-view';
 
 import search from '../../assets/img/search.png';
 import AppContext from '../../context';
 
-import SearchResultSection from './SearchResultSection';
+import Favourites from '../molecules/Favourites';
 
 const FeatureSection = () => {
   const { loading, user } = useAuth0();
@@ -41,20 +39,16 @@ const FeatureSection = () => {
                 </p>
               </StyledInnerContainer>
             </StyledSearchContainer>
-            {context.search_isLoading && !context.search_result && (
+            {/* {context.search_isLoading && !context.search_result && (
               <LoadingDots />
             )}
-            {context.search_result && <SearchResultSection id="recipe-list" />}
+            {context.search_result && <SearchResultSection id="recipe-list" />} */}
+            <Favourites username={user.name} />
           </>
         )}
       </AppContext>
     );
 };
-
-const InnerWrapper = styled(Container)`
-  margin: 0 auto;
-  padding: 30px 10px;
-`;
 
 const StyledSearchContainer = styled(Container)`
   position: relative;

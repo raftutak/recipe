@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../../context';
+import axios from 'axios';
 
 // REACT-ROUTER
 import { Link } from 'react-router-dom';
@@ -14,28 +15,348 @@ import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { categories } from '../../data/categories';
 import { dishes } from '../../data/dishes';
 import { ingredients } from '../../data/ingredients';
-import { ingredientsCategories } from '../../data/ingredientsCategories';
-import { recipesFeatures } from '../../data/recipesFeatures';
+
 import { features } from '../../data/features';
-import { featuresCategories } from '../../data/featuresCategories';
+
+// ASSETS
 import noimage from '../../assets/img/noimage.png';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar as starChecked } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
-import Rating from 'react-rating';
-
 import starRegular from '../../assets/img/icons/star-regular.png';
 import starSolid from '../../assets/img/icons/star-solid.png';
-import axios from 'axios';
+import Rating from 'react-rating';
 
-import { useAuth0 } from '../../react-auth0-spa';
+import { Auth0Context } from '../../react-auth0-spa';
+
+// const { isAuthenticated, user } = useAuth0();
+
+class RecipeCard extends React.Component {
+  static contextType = Auth0Context;
+
+  state = {
+    disabled: false,
+    average: this.props.recipe.rate.average,
+    amount: this.props.recipe.rate.amount
+  };
+
+  handleRecipeRatePost = async (value, recipeId, user) => {
+    const url = `https://recipe-search.projektstudencki.pl/recipe/insertRecipeRate/?recipeId=${recipeId}&rate=${value}&username=${user.name}`;
+    const response = await axios.post(url);
+
+    console.log(response.data);
+
+    if (!response.data.exists) {
+      this.setState({
+        amount: response.data.amount,
+        average: response.data.average
+      });
+    }
+
+    if (response.data.exists) {
+      alert('Już głosowałeś na ten przepis!');
+      this.setState({
+        disabled: true
+      });
+    }
+
+    this.setState({ disabled: false });
+  };
+
+  render() {
+    const { recipe } = this.props;
+    const { isAuthenticated } = this.context;
+
+    return (
+      <>
+        <AppContext.Consumer>
+          {context => (
+            <>
+              <StyledCard>
+                <div style={{ overflow: 'hidden' }}>
+                  <Link
+                    onClick={context.handleReadRecipe}
+                    to={{
+                      pathname: `/recipe/${recipe.id}`
+                    }}
+                  >
+                    <Card.Img
+                      src={recipe.image_Url}
+                      onError={e => {
+                        e.target.onerror = null;
+                        e.target.src = `${noimage}`;
+                      }}
+                    />
+                  </Link>
+                </div>
+                <Link
+                  style={{
+                    textDecoration: 'none',
+                    color: 'hsl(215, 37%, 19%)'
+                  }}
+                  onClick={context.handleReadRecipe}
+                  to={{
+                    pathname: `/recipe/${recipe.id}`
+                  }}
+                >
+                  {this.props.truncated ? (
+                    <Card.Header style={{ height: 'auto' }}>
+                      <div className="limiter-1">
+                        <strong>{recipe.title}</strong>
+                      </div>
+                    </Card.Header>
+                  ) : (
+                    <Card.Header>
+                      <div className="limiter-2">
+                        <strong>{recipe.title}</strong>
+                      </div>
+                    </Card.Header>
+                  )}
+                </Link>
+                <ListGroup variant="flush">
+                  <ListGroupItem>
+                    <strong>Ocena: </strong>
+                    <Rating
+                      // readonly={
+                      //   false ? true : this.state.disabled ? true : false
+                      // }
+                      readonly={
+                        !isAuthenticated
+                          ? true
+                          : this.state.disabled
+                          ? true
+                          : false
+                      }
+                      onClick={
+                        value =>
+                          this.handleRecipeRatePost(
+                            value,
+                            recipe.id,
+                            'raftutak@gmail.com'
+                          )
+                        // this.handleRecipeRatePost(value, recipe.id, user)
+                      }
+                      placeholderRating={this.state.average}
+                      emptySymbol={
+                        <img src={starRegular} className="icon" alt="" />
+                      }
+                      fullSymbol={
+                        <img src={starSolid} className="icon" alt="" />
+                      }
+                      placeholderSymbol={
+                        <img src={starSolid} className="icon" alt="" />
+                      }
+                    />
+                    <br />
+                    <strong>Liczba ocen: </strong>
+                    {this.state.amount}
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <div className="limiter-1">
+                      <strong>Źródło:</strong>{' '}
+                      <a
+                        style={{
+                          textDecoration: 'none',
+                          color: 'hsl(215, 37%, 19%)'
+                        }}
+                        href={recipe.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {recipe.blog}
+                      </a>
+                    </div>
+                  </ListGroupItem>
+                  {this.props.truncated ? null : (
+                    <ListGroupItem style={{ height: '73px' }}>
+                      <div className="limiter-2">
+                        <strong>Kategoria:</strong>{' '}
+                        {recipe.dishMainCategoryId !== 0 ? (
+                          categories[recipe.dishMainCategoryId - 1].name
+                        ) : (
+                          <strong style={{ color: 'red' }}>
+                            Brak kategorii
+                          </strong>
+                        )}
+                        {' / '}
+                        {recipe.dishMainCategoryId !== 0 ? (
+                          categories[recipe.dishMainCategoryId - 1]
+                            .subcategories[
+                            categories[
+                              recipe.dishMainCategoryId - 1
+                            ].subcategories.findIndex(
+                              index => index.id === recipe.dishSubCategoryId
+                            )
+                          ].name
+                        ) : (
+                          <strong style={{ color: 'red' }}>
+                            Brak podkategorii
+                          </strong>
+                        )}
+                        {' / '}
+                        {recipe.dishId ? (
+                          dishes[
+                            dishes.findIndex(
+                              index => index.id === recipe.dishId
+                            )
+                          ].name
+                        ) : (
+                          <strong style={{ color: 'red' }}>Brak dishId</strong>
+                        )}
+                      </div>
+                    </ListGroupItem>
+                  )}
+                  {/* <ListGroupItem>
+              <strong>Kategoria:</strong>{' '}
+              {recipe.dishMainCategoryId !== 0 ? (
+                categories[recipe.dishMainCategoryId - 1].name
+              ) : (
+                <strong style={{ color: 'red' }}>Brak kategorii</strong>
+              )}
+              <br />
+              <strong>Podkategoria:</strong>{' '}
+              {recipe.dishMainCategoryId !== 0 ? (
+                categories[recipe.dishMainCategoryId - 1].subcategories[
+                  categories[
+                    recipe.dishMainCategoryId - 1
+                  ].subcategories.findIndex(
+                    index => index.id === recipe.dishSubCategoryId
+                  )
+                ].name
+              ) : (
+                <strong style={{ color: 'red' }}>Brak podkategorii</strong>
+              )}
+              <br />
+              <strong>Typ dania</strong>:{' '}
+              {recipe.dishId ? (
+                dishes[dishes.findIndex(index => index.id === recipe.dishId)]
+                  .name
+              ) : (
+                <strong style={{ color: 'red' }}>Brak typu dania</strong>
+              )}
+            </ListGroupItem> */}
+                  {this.props.truncated ? null : (
+                    <>
+                      <ListGroupItem style={{ height: '97px' }}>
+                        <div className="limiter-3">
+                          <strong>Składniki:</strong>{' '}
+                          {recipe.ingredientIds.map(ingredientID => (
+                            <span key={ingredientID}>
+                              {
+                                ingredients[
+                                  ingredients.findIndex(
+                                    index => index.id === ingredientID
+                                  )
+                                ].name
+                              }
+                              ,{' '}
+                            </span>
+                          ))}
+                        </div>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <strong>Trudność:</strong>{' '}
+                        {recipe.featureIds
+                          ? recipe.featureIds.map(featureID => (
+                              <>
+                                {features[
+                                  features.findIndex(
+                                    index =>
+                                      index.id === featureID &&
+                                      index.categoryId === 5
+                                  )
+                                ] &&
+                                  features[
+                                    features.findIndex(
+                                      index =>
+                                        index.id === featureID &&
+                                        index.categoryId === 5
+                                    )
+                                  ].name}
+                              </>
+                            ))
+                          : null}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <div className="limiter-1">
+                          <strong>Czas przygotowania:</strong>{' '}
+                          {recipe.featureIds
+                            ? recipe.featureIds.map(featureID => (
+                                <>
+                                  {features[
+                                    features.findIndex(
+                                      index =>
+                                        index.id === featureID &&
+                                        index.categoryId === 6
+                                    )
+                                  ] &&
+                                    features[
+                                      features.findIndex(
+                                        index =>
+                                          index.id === featureID &&
+                                          index.categoryId === 6
+                                      )
+                                    ].name}
+                                </>
+                              ))
+                            : null}
+                        </div>
+                      </ListGroupItem>
+                    </>
+                  )}
+                  {/* <ListGroupItem>
+              {featuresCategories.map(featureCategory => (
+                <>
+                  <strong>{featureCategory.name}: </strong>
+                  {recipe.featureIds
+                    ? recipe.featureIds.map(featureID => (
+                        <>
+                          {features[
+                            features.findIndex(
+                              index =>
+                                index.id === featureID &&
+                                index.categoryId === featureCategory.id
+                            )
+                          ] &&
+                            features[
+                              features.findIndex(
+                                index =>
+                                  index.id === featureID &&
+                                  index.categoryId === featureCategory.id
+                              )
+                            ].name + ', '}
+                        </>
+                      ))
+                    : null}
+                  <br />
+                </>
+              ))}
+            </ListGroupItem> */}
+                  {/* <ListGroupItem className="goto">
+              <Link
+                style={{ textDecoration: 'none', color: 'hsl(215, 37%, 19%)' }}
+                to={{
+                  pathname: `/recipe/${recipe.id}`
+                }}
+              >
+                <strong>Przejdź do przepisu</strong>
+              </Link>
+            </ListGroupItem> */}
+                </ListGroup>
+              </StyledCard>
+            </>
+          )}
+        </AppContext.Consumer>
+      </>
+    );
+  }
+}
 
 const StyledCard = styled(Card)`
   border-radius: 15px;
   transition: 0.2s;
+  margin: auto;
   margin-bottom: 20px !important;
   overflow: hidden;
+  flex-basis: 32%;
+  max-width: 357px;
 
   .card-img {
     width: 100%;
@@ -49,7 +370,7 @@ const StyledCard = styled(Card)`
   }
 
   :hover {
-    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.15);
     transition: all 0.2s ease-in-out;
 
     .card-img {
@@ -59,6 +380,11 @@ const StyledCard = styled(Card)`
 
     .card-header {
       background-color: rgba(0, 0, 0, 0.07);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .list-group-item {
+      background-color: rgba(0, 0, 0, 0.03);
       transition: all 0.2s ease-in-out;
     }
   }
@@ -106,261 +432,18 @@ const StyledCard = styled(Card)`
     padding-bottom: 5px;
     padding-right: 2px;
   }
+
+  @media (max-width: 576px) {
+    flex-basis: 100%;
+  }
+
+  @media (min-width: 577px) and (max-width: 992px) {
+    flex-basis: 48%;
+  }
+
+  @media (min-width: 993px) {
+    flex-basis: 32%;
+  }
 `;
-
-const handleRecipeRatePost = async (value, recipeId) => {
-  const url = `https://recipe-search.projektstudencki.pl/recipe/insertRecipeRate/?recipeId=${recipeId}&rate=${value}&username=test2`;
-  const response = await axios.post(url);
-
-  console.log(response);
-};
-
-const handleRecipeRate = (value, recipeId) => {
-  console.log(value);
-  console.log(recipeId);
-};
-
-const RecipeCard = ({ recipe }) => {
-  const {
-    isAuthenticated,
-    loginWithPopup,
-    loginWithRedirect,
-    logout,
-    loading,
-    user
-  } = useAuth0();
-
-  return (
-    <>
-      <AppContext.Consumer>
-        {context => (
-          <>
-            <StyledCard>
-              <div style={{ overflow: 'hidden' }}>
-                <Link
-                  onClick={context.handleReadRecipe}
-                  to={{
-                    pathname: `/recipe/${recipe.id}`
-                  }}
-                >
-                  <Card.Img
-                    src={recipe.image_Url}
-                    onError={e => {
-                      e.target.onerror = null;
-                      e.target.src = `${noimage}`;
-                    }}
-                  />
-                </Link>
-              </div>
-              <Link
-                style={{ textDecoration: 'none', color: 'hsl(215, 37%, 19%)' }}
-                onClick={context.handleReadRecipe}
-                to={{
-                  pathname: `/recipe/${recipe.id}`
-                }}
-              >
-                <Card.Header>
-                  <div className="limiter-2">
-                    <strong>{recipe.title}</strong>
-                  </div>
-                </Card.Header>
-              </Link>
-              <ListGroup variant="flush">
-                <ListGroupItem>
-                  <strong>Ocena: </strong>
-                  <Rating
-                    readonly={!isAuthenticated ? true : false}
-                    onClick={value => handleRecipeRatePost(value, recipe.id)}
-                    placeholderRating={recipe.rate.average}
-                    emptySymbol={<img src={starRegular} className="icon" />}
-                    fullSymbol={<img src={starSolid} className="icon" />}
-                    placeholderSymbol={<img src={starSolid} className="icon" />}
-                  />
-                </ListGroupItem>
-                <ListGroupItem>
-                  <strong>Źródło:</strong>{' '}
-                  <a
-                    style={{
-                      textDecoration: 'none',
-                      color: 'hsl(215, 37%, 19%)'
-                    }}
-                    href={recipe.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {recipe.blog}
-                  </a>
-                </ListGroupItem>
-                <ListGroupItem style={{ height: '73px' }}>
-                  <div className="limiter-2">
-                    <strong>Kategoria:</strong>{' '}
-                    {recipe.dishMainCategoryId !== 0 ? (
-                      categories[recipe.dishMainCategoryId - 1].name
-                    ) : (
-                      <strong style={{ color: 'red' }}>Brak kategorii</strong>
-                    )}
-                    {' / '}
-                    {recipe.dishMainCategoryId !== 0 ? (
-                      categories[recipe.dishMainCategoryId - 1].subcategories[
-                        categories[
-                          recipe.dishMainCategoryId - 1
-                        ].subcategories.findIndex(
-                          index => index.id === recipe.dishSubCategoryId
-                        )
-                      ].name
-                    ) : (
-                      <strong style={{ color: 'red' }}>
-                        Brak podkategorii
-                      </strong>
-                    )}
-                    {' / '}
-                    {recipe.dishId ? (
-                      dishes[
-                        dishes.findIndex(index => index.id === recipe.dishId)
-                      ].name
-                    ) : (
-                      <strong style={{ color: 'red' }}>Brak dishId</strong>
-                    )}
-                  </div>
-                </ListGroupItem>
-                {/* <ListGroupItem>
-              <strong>Kategoria:</strong>{' '}
-              {recipe.dishMainCategoryId !== 0 ? (
-                categories[recipe.dishMainCategoryId - 1].name
-              ) : (
-                <strong style={{ color: 'red' }}>Brak kategorii</strong>
-              )}
-              <br />
-              <strong>Podkategoria:</strong>{' '}
-              {recipe.dishMainCategoryId !== 0 ? (
-                categories[recipe.dishMainCategoryId - 1].subcategories[
-                  categories[
-                    recipe.dishMainCategoryId - 1
-                  ].subcategories.findIndex(
-                    index => index.id === recipe.dishSubCategoryId
-                  )
-                ].name
-              ) : (
-                <strong style={{ color: 'red' }}>Brak podkategorii</strong>
-              )}
-              <br />
-              <strong>Typ dania</strong>:{' '}
-              {recipe.dishId ? (
-                dishes[dishes.findIndex(index => index.id === recipe.dishId)]
-                  .name
-              ) : (
-                <strong style={{ color: 'red' }}>Brak typu dania</strong>
-              )}
-            </ListGroupItem> */}
-                <ListGroupItem style={{ height: '97px' }}>
-                  <div className="limiter-3">
-                    <strong>Składniki:</strong>{' '}
-                    {recipe.ingredientIds.map(ingredientID => (
-                      <span key={ingredientID}>
-                        {
-                          ingredients[
-                            ingredients.findIndex(
-                              index => index.id === ingredientID
-                            )
-                          ].name
-                        }
-                        ,{' '}
-                      </span>
-                    ))}
-                  </div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <strong>Trudność:</strong>{' '}
-                  {recipe.featureIds
-                    ? recipe.featureIds.map(featureID => (
-                        <>
-                          {features[
-                            features.findIndex(
-                              index =>
-                                index.id === featureID && index.categoryId === 5
-                            )
-                          ] &&
-                            features[
-                              features.findIndex(
-                                index =>
-                                  index.id === featureID &&
-                                  index.categoryId === 5
-                              )
-                            ].name}
-                        </>
-                      ))
-                    : null}
-                </ListGroupItem>
-                <ListGroupItem>
-                  <div className="limiter-1">
-                    <strong>Czas przygotowania:</strong>{' '}
-                    {recipe.featureIds
-                      ? recipe.featureIds.map(featureID => (
-                          <>
-                            {features[
-                              features.findIndex(
-                                index =>
-                                  index.id === featureID &&
-                                  index.categoryId === 6
-                              )
-                            ] &&
-                              features[
-                                features.findIndex(
-                                  index =>
-                                    index.id === featureID &&
-                                    index.categoryId === 6
-                                )
-                              ].name}
-                          </>
-                        ))
-                      : null}
-                  </div>
-                </ListGroupItem>
-                {/* <ListGroupItem>
-              {featuresCategories.map(featureCategory => (
-                <>
-                  <strong>{featureCategory.name}: </strong>
-                  {recipe.featureIds
-                    ? recipe.featureIds.map(featureID => (
-                        <>
-                          {features[
-                            features.findIndex(
-                              index =>
-                                index.id === featureID &&
-                                index.categoryId === featureCategory.id
-                            )
-                          ] &&
-                            features[
-                              features.findIndex(
-                                index =>
-                                  index.id === featureID &&
-                                  index.categoryId === featureCategory.id
-                              )
-                            ].name + ', '}
-                        </>
-                      ))
-                    : null}
-                  <br />
-                </>
-              ))}
-            </ListGroupItem> */}
-                {/* <ListGroupItem className="goto">
-              <Link
-                style={{ textDecoration: 'none', color: 'hsl(215, 37%, 19%)' }}
-                to={{
-                  pathname: `/recipe/${recipe.id}`
-                }}
-              >
-                <strong>Przejdź do przepisu</strong>
-              </Link>
-            </ListGroupItem> */}
-              </ListGroup>
-            </StyledCard>
-          </>
-        )}
-      </AppContext.Consumer>
-    </>
-  );
-};
 
 export default RecipeCard;

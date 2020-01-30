@@ -9,7 +9,6 @@ import { routes } from '../../routes';
 const Userbox = () => {
   const {
     isAuthenticated,
-    loginWithPopup,
     loginWithRedirect,
     logout,
     loading,
@@ -38,7 +37,7 @@ const Userbox = () => {
               {loading || !user ? (
                 <div>Loading...</div>
               ) : (
-                <div>{user.name}</div>
+                <div>{user.nickname}</div>
               )}
             </StyledButton>
           </NavLink>
@@ -57,6 +56,7 @@ const Userbox = () => {
 };
 
 const StyledButton = styled(Button)`
+  width: 100%;
   margin: 3px 0 4px 10px;
   padding: 6px 12px;
   font-size: 0.9rem;
@@ -80,6 +80,10 @@ const StyledButton = styled(Button)`
         background-color: hsl(348, 45%, 40%);
       }
     `}
+
+    @media (min-width: 992px) {
+    width: auto;
+  }
 `;
 
 export default Userbox;

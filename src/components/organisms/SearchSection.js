@@ -45,10 +45,6 @@ const StyledBackground = styled(Container)`
   background-position: center;
   background-size: cover;
   opacity: 0.1;
-
-  @media (min-width: 992px) {
-    background-position-y: -80px;
-  }
 `;
 
 const StyledInnerContainer = styled(Container)`

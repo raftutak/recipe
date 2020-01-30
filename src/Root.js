@@ -26,9 +26,31 @@ import ConverterView from './views/ConverterView';
 
 class Root extends React.Component {
   state = {
-    search_input: '',
-    category_id: 1,
-    collapseNavbar: false
+    collapseNavbar: false,
+
+    searchInput: '',
+    noResults: false,
+    mainCategory: undefined,
+    subCategory: undefined,
+    dishType: undefined,
+    mealType: undefined,
+    exclusion: undefined,
+    difficulty: undefined,
+    timeRequired: undefined,
+    cost: undefined,
+
+    initialSearch: {
+      isLoading: true,
+      result: undefined,
+      pagination: undefined
+    },
+
+    mainSearch: {
+      isLoading: true,
+      result: undefined,
+      pagination: undefined,
+      heading: undefined
+    }
   };
 
   handleInputChange = event => {
@@ -37,62 +59,56 @@ class Root extends React.Component {
     });
   };
 
-  handleMainCategoryChange = search_mainCategory => {
+  handleMainCategoryChange = mainCategory => {
     this.setState({
-      search_mainCategory,
-      search_subCategory: undefined,
-      search_dishType: undefined
+      mainCategory,
+      subCategory: undefined,
+      dishType: undefined
     });
   };
 
-  handleSubCategoryChange = search_subCategory => {
+  handleSubCategoryChange = subCategory => {
     this.setState({
-      search_subCategory,
-      search_dishType: undefined
+      subCategory,
+      dishType: undefined
     });
   };
 
-  handleDishTypeChange = search_dishType => {
+  handleDishTypeChange = dishType => {
     this.setState({
-      search_dishType
+      dishType
     });
   };
 
-  handleMealTypeChange = search_mealType => {
+  handleMealTypeChange = mealType => {
     this.setState({
-      search_mealType
+      mealType
     });
   };
 
-  handleExclusionChange = search_exclusion => {
+  handleExclusionChange = exclusion => {
     this.setState({
-      search_exclusion
+      exclusion
     });
   };
 
-  handleDifficultyChange = search_difficulty => {
+  handleDifficultyChange = difficulty => {
     this.setState({
-      search_difficulty
+      difficulty
     });
   };
 
-  handleTimeRequiredChange = search_timeRequired => {
+  handleTimeRequiredChange = timeRequired => {
     this.setState({
-      search_timeRequired
+      timeRequired
     });
   };
 
-  handleCostChange = search_cost => {
+  handleCostChange = cost => {
     this.setState({
-      search_cost
+      cost
     });
   };
-
-  // handleExclusionChange = search_exclusion => {
-  //   this.setState({
-  //     search_exclusion
-  //   });
-  // };
 
   handleCheckboxChange = event => {
     const checkboxValue =
@@ -103,114 +119,147 @@ class Root extends React.Component {
     });
   };
 
-  handleInitialSearchPagination = async () => {
-    this.setState({
-      search_isLoading: true,
-      search_result: undefined
-    });
-
-    const url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=papryka&pageNumber=1&pageSize=6`;
-    const response = await axios(url);
-    const search_result = await response.data.recipes;
+  createPagination = responseData => {
     const pagination = {
-      pagesAmount: response.data.pagesAmount,
-      pageNumber: response.data.pageNumber,
-      totalCount: response.data.totalCount,
-      nextPage: response.data.nextPage,
-      prevPage: response.data.prevPage
+      pagesAmount: responseData.pagesAmount,
+      pageNumber: responseData.pageNumber,
+      totalCount: responseData.totalCount,
+      nextPage: responseData.nextPage,
+      prevPage: responseData.prevPage,
+      pageNumbers: []
     };
 
-    this.setState({
-      search_isLoading: false,
-      search_result,
-      pagination
-    });
+    for (let i = 1; i <= responseData.pagesAmount; i++) {
+      pagination.pageNumbers.push(i);
+    }
+
+    return pagination;
   };
 
-  handleInitialSearch = async () => {
-    this.setState({
-      search_isLoading: true,
-      search_result: undefined
-    });
-
-    const url = `https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=makaron&count=6`;
-    const response = await axios(url);
-    const search_result = await response.data.recipes;
-
-    this.setState({ search_isLoading: false, search_result });
-  };
-
-  handleSubmitSearch = async event => {
-    event.preventDefault();
+  handleInitialSearch = async pageNumber => {
+    if (document.getElementById('lastSearchFormInput')) {
+      document
+        .getElementById('lastSearchFormInput')
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
     this.setState({
-      search_isLoading: true,
-      search_result: undefined,
-      search_phrase: this.state.search_input,
-      pagination: undefined
-    });
-
-    const query = this.state.search_input;
-    let url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=${query}&pageNumber=1&pageSize=6`;
-    if (this.state.search_mainCategory) {
-      url = url.concat(
-        `&dishMainCategoryIds=${this.state.search_mainCategory.id}`
-      );
-    }
-    if (this.state.search_subCategory) {
-      url = url.concat(
-        `&dishSubCategoryIds=${this.state.search_subCategory.id}`
-      );
-    }
-    if (this.state.search_dishType) {
-      url = url.concat(`&dishIds=${this.state.search_dishType.id}`);
-    }
-    if (this.state.search_mealType) {
-      url = url.concat(`&featureIds=${this.state.search_mealType.id}`);
-    }
-    if (this.state.search_exclusion) {
-      this.state.search_exclusion.map(
-        exclusion => (url = url.concat(`&featureIds=${exclusion.id}`))
-      );
-    }
-    if (this.state.search_difficulty) {
-      url = url.concat(`&featureIds=${this.state.search_difficulty.id}`);
-    }
-    if (this.state.search_timeRequired) {
-      url = url.concat(`&featureIds=${this.state.search_timeRequired.id}`);
-    }
-    if (this.state.search_cost) {
-      url = url.concat(`&featureIds=${this.state.search_cost.id}`);
-    }
-
-    console.log(url);
-
-    const response = await axios(url);
-    const search_result = await response.data.recipes;
-    // const pagination = {
-    //   pagesAmount: response.data.pagesAmount,
-    //   pageNumber: response.data.pageNumber,
-    //   totalCount: response.data.totalCount,
-    //   nextPage: response.data.nextPage,
-    //   prevPage: response.data.prevPage
-    // };
-
-    this.setState({
-      search_isLoading: false,
-      search_result,
-      pagination: {
-        pagesAmount: response.data.pagesAmount,
-        pageNumber: response.data.pageNumber,
-        totalCount: response.data.totalCount,
-        nextPage: response.data.nextPage,
-        prevPage: response.data.prevPage
+      initialSearch: {
+        isLoading: true,
+        result: undefined
       }
     });
 
-    // document
-    //   .getElementById('search-form')
-    //   .scrollIntoView({ behavior: 'smooth' });
+    const url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=papryka&pageNumber=${pageNumber}&pageSize=6`;
+    const response = await axios(url);
+    const result = await response.data.recipes;
+
+    const pagination = this.createPagination(response.data);
+
+    this.setState({
+      initialSearch: {
+        isLoading: false,
+        result,
+        pagination
+      }
+    });
   };
+
+  handleCategorySearch = async (pageNumber, id) => {
+    this.setState({
+      categorySearch: {
+        isLoading: true,
+        result: undefined
+      }
+    });
+
+    const url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=papryka&pageNumber=${pageNumber}&pageSize=6&dishMainCategoryIds=${id}`;
+    const response = await axios(url);
+    const result = await response.data.recipes;
+
+    const pagination = this.createPagination(response.data);
+
+    this.setState({
+      categorySearch: {
+        isLoading: false,
+        result,
+        pagination
+      }
+    });
+  };
+
+  handleMainSearch = async pageNumber => {
+    document
+      .getElementById('lastSearchFormInput')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    this.setState({
+      initialSearch: undefined,
+      noResults: undefined,
+
+      mainSearch: {
+        isLoading: true,
+        result: undefined
+      }
+    });
+
+    const query = this.state.searchInput;
+
+    let url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=${query}&pageNumber=${pageNumber}&pageSize=6`;
+
+    if (this.state.mainCategory) {
+      url = url.concat(`&dishMainCategoryIds=${this.state.mainCategory.id}`);
+    }
+    if (this.state.subCategory) {
+      url = url.concat(`&dishSubCategoryIds=${this.state.subCategory.id}`);
+    }
+    if (this.state.dishType) {
+      url = url.concat(`&dishIds=${this.state.dishType.id}`);
+    }
+    if (this.state.mealType) {
+      url = url.concat(`&featureIds=${this.state.mealType.id}`);
+    }
+    if (this.state.exclusion) {
+      this.state.exclusion.map(
+        exclusion => (url = url.concat(`&featureIds=${exclusion.id}`))
+      );
+    }
+    if (this.state.difficulty) {
+      url = url.concat(`&featureIds=${this.state.difficulty.id}`);
+    }
+    if (this.state.timeRequired) {
+      url = url.concat(`&featureIds=${this.state.timeRequired.id}`);
+    }
+    if (this.state.cost) {
+      url = url.concat(`&featureIds=${this.cost.id}`);
+    }
+
+    await axios(url)
+      .then(response => {
+        const result = response.data.recipes;
+
+        const pagination = this.createPagination(response.data);
+
+        this.setState({
+          mainSearch: {
+            isLoading: false,
+            result,
+            pagination,
+            heading: query
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          noResults: true
+        });
+      });
+  };
+
+  // document
+  //   .getElementById('mainSearchResult')
+  //   .scrollIntoView({ behavior: 'smooth' });
 
   handleTagClick = async tag => {
     this.setState({
@@ -225,20 +274,17 @@ class Root extends React.Component {
     this.setState({ search_isLoading: false, search_result });
   };
 
-  // handleShowLoginModal = event => {
-  //   this.setState({ showLoginModal: !this.state.showLoginModal });
-  // };
-
-  // handleShowRegistrationModal = event => {
-  //   this.setState({ showRegistrationModal: !this.state.showRegistrationModal });
-  // };
+  handleShowCalculatorModal = event => {
+    this.setState({ showCalculatorModal: !this.state.showCalculatorModal });
+  };
 
   handleCollapseNavbar = event => {
     this.setState({ collapseNavbar: !this.state.collapseNavbar });
   };
 
   componentDidMount() {
-    this.handleInitialSearchPagination();
+    this.handleInitialSearch(1);
+    // this.handleSearchWithPagination(1);
   }
 
   render() {
@@ -253,14 +299,17 @@ class Root extends React.Component {
       handleDifficultyChange: this.handleDifficultyChange,
       handleTimeRequiredChange: this.handleTimeRequiredChange,
       handleCostChange: this.handleCostChange,
+      handleInitialSearch: this.handleInitialSearch,
+      handleMainSearch: this.handleMainSearch,
       handleSubmitSearch: this.handleSubmitSearch,
+      handleSearchWithPagination: this.handleSearchWithPagination,
       handleTagClick: this.handleTagClick,
-      handleCollapseNavbar: this.handleCollapseNavbar
-      // handleShowLoginModal: this.handleShowLoginModal,
-      // handleShowRegistrationModal: this.handleShowRegistrationModal
+      handleCollapseNavbar: this.handleCollapseNavbar,
+      handleShowCalculatorModal: this.handleShowCalculatorModal
     };
 
     return (
+<<<<<<< HEAD
       <>
         <Router history={history}>
           <ScrollToTop />
@@ -290,6 +339,34 @@ class Root extends React.Component {
           </AppContext.Provider>
         </Router>
       </>
+=======
+      <Router history={history}>
+        <ScrollToTop />
+        <AppContext.Provider value={contextElements}>
+          <Switch>
+            <MainTemplate>
+              <Route exact path={routes.home} component={HomeView} />
+              <Route
+                path={routes.category}
+                render={props => <CategoryView id={props.match.params.id} />}
+              />
+              <Route
+                path={routes.feature}
+                render={props => <FeatureView id={props.match.params.id} />}
+              />
+              <Route
+                path={routes.recipe}
+                render={props => (
+                  <SingleRecipeView id={props.match.params.id} />
+                )}
+              />
+              <Route path={routes.calculatorBMI} component={CalculatorView} />
+              <Route path={routes.profile} component={ProfileView} />
+            </MainTemplate>
+          </Switch>
+        </AppContext.Provider>
+      </Router>
+>>>>>>> develop
     );
   }
 }
