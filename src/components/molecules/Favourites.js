@@ -45,49 +45,57 @@ class Favourites extends React.Component {
   }
 
   render() {
-    return this.state.favouritesSearch &&
-      this.state.favouritesSearch.amount !== 0 ? (
-      <>
-        <Container fluid>
-          <InnerWrapper>
-            <StyledHeading>
-              Liczba ulubionych przepisów:{' '}
-              <strong>{this.state.favouritesSearch.amount}</strong>
-            </StyledHeading>
-            <StyledFlexContainer>
-              {this.state.favouritesSearch.result &&
-                this.state.favouritesSearch.result.map(recipe => {
-                  return <RecipeCard key={recipe.title} recipe={recipe} />;
-                })}
-            </StyledFlexContainer>
-          </InnerWrapper>
-        </Container>
-      </>
-    ) : this.state.favouritesSearch.amount === 0 ? (
-      <>
-        <Container fluid>
-          <InnerWrapper>
-            <h5 style={{ textAlign: 'center' }}>
-              Brak ulubionych przepisów ...
-            </h5>
-            <div style={{ textAlign: 'center' }}>
-              <img src={hungry} alt="" style={{ width: '350px' }} />
-            </div>
-          </InnerWrapper>
-        </Container>
-      </>
-    ) : (
-      <>
-        <Container fluid>
-          <InnerWrapper>
-            <h5 style={{ textAlign: 'center' }}>
-              Trwa wczytywanie ulubionych przepisów ...
-            </h5>
-            <LoadingDots />
-          </InnerWrapper>
-        </Container>
-      </>
-    );
+    if (this.state.favouritesSearch.isLoading) {
+      return (
+        <>
+          <Container fluid>
+            <InnerWrapper>
+              <h5 style={{ textAlign: 'center' }}>
+                Trwa wczytywanie ulubionych przepisów ...
+              </h5>
+              <LoadingDots />
+            </InnerWrapper>
+          </Container>
+        </>
+      );
+    } else if (
+      this.state.favouritesSearch.amount &&
+      this.state.favouritesSearch.amount !== 0
+    ) {
+      return (
+        <>
+          <Container fluid>
+            <InnerWrapper>
+              <StyledHeading>
+                Liczba ulubionych przepisów:{' '}
+                <strong>{this.state.favouritesSearch.amount}</strong>
+              </StyledHeading>
+              <StyledFlexContainer>
+                {this.state.favouritesSearch.result &&
+                  this.state.favouritesSearch.result.map(recipe => {
+                    return <RecipeCard key={recipe.title} recipe={recipe} />;
+                  })}
+              </StyledFlexContainer>
+            </InnerWrapper>
+          </Container>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Container fluid>
+            <InnerWrapper>
+              <h5 style={{ textAlign: 'center' }}>
+                Brak ulubionych przepisów ...
+              </h5>
+              <div style={{ textAlign: 'center' }}>
+                <img src={hungry} alt="" style={{ width: '350px' }} />
+              </div>
+            </InnerWrapper>
+          </Container>
+        </>
+      );
+    }
   }
 }
 

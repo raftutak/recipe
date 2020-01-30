@@ -19,7 +19,7 @@ export const slider = [
     id: 3,
     heading: 'Przelicznik Miar Kuchennych',
     paragraph:
-      'Nie wiesz jak przeliczyć gramy na szklanki? Łyżki na gramy? Skorzystaj z naszej tabeli przeliczników miar kuchennych poszczególnych produktów żywnościowych. Pamiętaj, że szklanka to 250 cm³, łyżka stołowa wynosi 15 cm³, a jednej łyżce stołowej mieszczą się średnio trzy małe łyżeczki.',
+      'Nie wiesz jak przeliczyć gramy na szklanki, Łyżki na gramy lub masz problem z konwersją innych miar? Skorzystaj z naszej tabeli przeliczników miar kuchennych poszczególnych produktów żywnościowych. Pamiętaj, że szklanka to 250 cm³, łyżka stołowa wynosi 15 cm³, a jednej łyżce stołowej mieszczą się średnio trzy małe łyżeczki.',
     button: 'Przejdź do Przelicznika',
     url: 'routes.calculatorBMI'
   }
