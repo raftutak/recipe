@@ -62,7 +62,7 @@ class RecipeCard extends React.Component {
 
   render() {
     const { recipe } = this.props;
-    const { isAuthenticated } = this.context;
+    const { isAuthenticated, user } = this.context;
 
     return (
       <>
@@ -124,14 +124,13 @@ class RecipeCard extends React.Component {
                           ? true
                           : false
                       }
-                      onClick={
-                        value =>
-                          this.handleRecipeRatePost(
-                            value,
-                            recipe.id,
-                            'raftutak@gmail.com'
-                          )
-                        // this.handleRecipeRatePost(value, recipe.id, user)
+                      onClick={value =>
+                        // this.handleRecipeRatePost(
+                        //   value,
+                        //   recipe.id,
+                        //   'raftutak@gmail.com'
+                        // )
+                        this.handleRecipeRatePost(value, recipe.id, user.name)
                       }
                       placeholderRating={this.state.average}
                       emptySymbol={
