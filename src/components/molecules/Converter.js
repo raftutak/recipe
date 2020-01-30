@@ -1,37 +1,50 @@
 import React from 'react';
+import { Container, Row } from 'react-bootstrap';
 
 class Converter extends React.Component {
 
     state = {
       volume: {
-        ml: 0,
-        glass: 0
+        ml: 0
       },
-      unit: {
-        g: 0,
-        spoon: 0,
-        glass: 0
+      weight: {
+        g: 0
       },
 
     }
 
-    handleAmountChange = (newAmount) => {
-      this.setState({
-        amount: newAmount
-      });
+    handleOnChange = (property, value) => {
+      this.setState({[`${property.category}`]: {...this.state[`${property.category}`], [`${property.unit}`]: value}})
     }
 
-    handleUnitChange = (newUnit) => {
-      this.setState({
-        amount: newUnit
-      });
-    }
+    kitchenUnits = (ml) => {
+      let unit, value
+  
+      if (ml <= 5) {
+          unit = 'łyżeczka', value = ml
+      } else if ( ml > 5 && ml <= 15 ) {
+          unit = 'łyżka', value = ml
+      } else if ( ml > 15 && ml <= 250 ) {
+          unit = 'szklanka', value = ml 
+      } else {
+          unit = 'ml', value = ml
+      }
+  
+      return {unit: unit, value: value}
+  
+  }
+  
 
   render() {
     return (
-      <div>
-        <h3>Przelicznik Miar Kuchennych</h3>
-      </div>
+      <Container fluid>
+        <Row>
+            <h3>
+              Przelicznik Miar Kuchennych
+            </h3>
+        </Row>
+
+      </Container>
     );
   }
 }
