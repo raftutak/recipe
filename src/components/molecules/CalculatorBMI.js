@@ -1,12 +1,10 @@
 import React from 'react';
-import AppContext from '../../context';
 import styled from 'styled-components';
 
 //Bootstrap
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 
 //Data & assets
-import bmiDescription from '../../data/bmiDescription.js';
 
 class CalculatorBMI extends React.Component {
   constructor(props) {
@@ -46,9 +44,8 @@ class CalculatorBMI extends React.Component {
   calculateBMI() {
     let heightSquared = ((this.state.height / 100) * this.state.height) / 100;
     let bmi = this.state.weight / heightSquared;
-    let low = Math.round(18.5 * heightSquared);
-    let high = Math.round(24.99 * heightSquared);
-    let message = '';
+    let message = undefined;
+    console.log(message);
 
     if (bmi >= 18.5 && bmi <= 24.99) {
       message = 'Wartość BMI jest prawidłowa!';

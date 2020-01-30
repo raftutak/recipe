@@ -1,7 +1,7 @@
 import React from 'react';
 import AppContext from '../../context';
 
-import { Modal, Button, Container } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import CalculatorBMI from '../molecules/CalculatorBMI';
 
 class CalculatorModal extends React.Component {

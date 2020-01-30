@@ -7,7 +7,9 @@ import styled from 'styled-components';
 // COMPONENTS
 import RecipeCard from '../molecules/RecipeCard';
 import LoadingDots from '../atoms/LoadingDots';
-import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
+import { Container, Pagination } from 'react-bootstrap';
+
+import hungry from '../../assets/img/hungry.png';
 
 const MainSearchResultSection = () => (
   <AppContext.Consumer>
@@ -50,6 +52,7 @@ const MainSearchResultSection = () => (
                   }
                 />
                 {context.mainSearch.pagination.pageNumbers &&
+                  // eslint-disable-next-line array-callback-return
                   context.mainSearch.pagination.pageNumbers.map(number => {
                     let active = context.mainSearch.pagination.pageNumber;
 
@@ -94,6 +97,21 @@ const MainSearchResultSection = () => (
             </InnerWrapper>
           </Container>
         </>
+      ) : context.noResults ? (
+        context.noResults && (
+          <>
+            <Container fluid>
+              <InnerWrapper>
+                <h5 style={{ textAlign: 'center' }}>
+                  Brak wyników dla <strong>{context.searchInput}</strong> ...
+                </h5>
+                <div style={{ textAlign: 'center' }}>
+                  <img src={hungry} alt="" style={{ width: '350px' }} />
+                </div>
+              </InnerWrapper>
+            </Container>
+          </>
+        )
       ) : (
         <>
           <Container fluid>

@@ -7,31 +7,13 @@ import LoadingDots from '../atoms/LoadingDots';
 import styled, { css } from 'styled-components';
 
 // BOOTSTRAP
-import { Container, Row, Col, Carousel } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 // ASSETS
-import block_bg_1 from '../../assets/img/block_bg_1.jpg';
+import block_bg_2 from '../../assets/img/block_bg_2.jpg';
 
 // DATA
-import { sources } from '../../data/sources';
 import RecipeCard from '../molecules/RecipeCard';
-
-// const containerContent = (
-//   <>
-//     <h5
-//       className="mb-3"
-//       style={{ color: 'white', textShadow: '0 0 5px hsla(0, 0%, 0%, 1)' }}
-//     >
-//       <strong>Kulinarna porada</strong>
-//     </h5>
-//     <p style={{ color: 'white', textShadow: '0 0 5px hsla(0, 0%, 0%, 1)' }}>
-//       Makaron przygotowywany z sosem warto jest gotować ok. minutę krócej, niż
-//       wskazane jest to w instrukcji. Ostatnią minutę powinien być gotowany w
-//       podgrzewającym się sosie. Przeniknie wówczas smakiem i zapachem ziół i
-//       dodatków.
-//     </p>
-//   </>
-// );
 
 const StyledContainerBackground = styled(Container)`
   padding: 0;
@@ -43,8 +25,8 @@ const StyledContainerBackground = styled(Container)`
   ${({ backgroundimage }) =>
     backgroundimage &&
     css`
-      background-image: url(${block_bg_1});
-      background-position: center top;
+      background-image: url(${block_bg_2});
+      background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
     `}
@@ -61,7 +43,7 @@ const StyledContainer = styled(Container)`
     left: 50%;
     margin-left: -1px;
     top: 0;
-    opacity: 0.1;
+    opacity: 0.2;
   }
 
   /* p {
@@ -94,8 +76,6 @@ class AdviceSection extends React.Component {
     const dailyRecipe_result = await response.data.recipe;
 
     this.setState({ dailyRecipe_isLoading: false, dailyRecipe_result });
-
-    console.log(this.state.dailyRecipe_result);
   };
 
   handleRandomRecipe = async () => {
@@ -110,8 +90,6 @@ class AdviceSection extends React.Component {
     const randomRecipe_result = await response.data.recipes[0];
 
     this.setState({ randomRecipe_isLoading: false, randomRecipe_result });
-
-    console.log(this.state.randomRecipe_result);
   };
 
   componentDidMount() {

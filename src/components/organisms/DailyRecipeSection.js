@@ -9,9 +9,6 @@ import { Link } from 'react-router-dom';
 
 import LoadingDots from '../atoms/LoadingDots';
 
-import search from '../../assets/img/search.png';
-import AppContext from '../../context';
-
 import noimage from '../../assets/img/noimage.png';
 
 class DailyRecipeSection extends React.Component {
@@ -158,11 +155,6 @@ class DailyRecipeSection extends React.Component {
     );
   }
 }
-
-const InnerWrapper = styled(Container)`
-  margin: 0 auto;
-  padding: 30px 10px;
-`;
 
 const StyledSearchContainer = styled(Container)`
   padding: 32px 0;

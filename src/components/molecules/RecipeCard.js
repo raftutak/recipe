@@ -1,13 +1,12 @@
 import React from 'react';
 import AppContext from '../../context';
 import axios from 'axios';
-import { useAuth0 } from '../../react-auth0-spa';
 
 // REACT-ROUTER
 import { Link } from 'react-router-dom';
 
 // STYLES
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 // BOOTSTRAP
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -16,10 +15,8 @@ import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { categories } from '../../data/categories';
 import { dishes } from '../../data/dishes';
 import { ingredients } from '../../data/ingredients';
-import { ingredientsCategories } from '../../data/ingredientsCategories';
-import { recipesFeatures } from '../../data/recipesFeatures';
+
 import { features } from '../../data/features';
-import { featuresCategories } from '../../data/featuresCategories';
 
 // ASSETS
 import noimage from '../../assets/img/noimage.png';
@@ -27,9 +24,13 @@ import starRegular from '../../assets/img/icons/star-regular.png';
 import starSolid from '../../assets/img/icons/star-solid.png';
 import Rating from 'react-rating';
 
+import { Auth0Context } from '../../react-auth0-spa';
+
 // const { isAuthenticated, user } = useAuth0();
 
 class RecipeCard extends React.Component {
+  static contextType = Auth0Context;
+
   state = {
     disabled: false,
     average: this.props.recipe.rate.average,
@@ -61,6 +62,7 @@ class RecipeCard extends React.Component {
 
   render() {
     const { recipe } = this.props;
+    const { isAuthenticated } = this.context;
 
     return (
       <>
@@ -112,10 +114,16 @@ class RecipeCard extends React.Component {
                   <ListGroupItem>
                     <strong>Ocena: </strong>
                     <Rating
+                      // readonly={
+                      //   false ? true : this.state.disabled ? true : false
+                      // }
                       readonly={
-                        false ? true : this.state.disabled ? true : false
+                        !isAuthenticated
+                          ? true
+                          : this.state.disabled
+                          ? true
+                          : false
                       }
-                      // readonly={!isAuthenticated ? true : this.state.disabled ? true : false}
                       onClick={
                         value =>
                           this.handleRecipeRatePost(

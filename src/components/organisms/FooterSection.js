@@ -2,7 +2,7 @@ import React from 'react';
 
 // STYLES
 import styled from 'styled-components';
-import { Container, Row, Col, Badge, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import { categories } from '../../data/categories';
 import { features } from '../../data/features';
@@ -53,28 +53,6 @@ const StyledListItem = styled.li`
   }
 `;
 
-const Tag = styled(Badge)`
-  margin: 0 10px 10px 0;
-  padding: 6px 10px;
-  font-weight: 400;
-  cursor: pointer;
-  border-radius: 5px;
-
-  :hover {
-    background-color: hsl(44, 60%, 42%);
-  }
-`;
-
-const StyledButton = styled(Button)`
-  margin-top: 10px;
-  font-size: 0.9rem;
-  border: none;
-
-  :hover {
-    background-color: hsl(44, 60%, 42%);
-  }
-`;
-
 const FooterSection = () => (
   <>
     <StyledContainer fluid>
@@ -98,7 +76,7 @@ const FooterSection = () => (
             </h5>
             <ul style={{ listStyle: 'none' }}>
               {categories.map(category => (
-                <>
+                <div key={category.id}>
                   <StyledListItem
                     as={NavLink}
                     to={{ pathname: `/category/${category.id}` }}
@@ -106,7 +84,7 @@ const FooterSection = () => (
                     {category.name}
                   </StyledListItem>
                   <br />
-                </>
+                </div>
               ))}
             </ul>
           </Col>
@@ -118,7 +96,7 @@ const FooterSection = () => (
               {features
                 .filter(feature => feature.categoryId === 9)
                 .map(feature => (
-                  <>
+                  <div key={feature.id}>
                     <StyledListItem
                       as={NavLink}
                       to={{ pathname: `/feature/${feature.id}` }}
@@ -126,7 +104,7 @@ const FooterSection = () => (
                       {feature.name}
                     </StyledListItem>
                     <br />
-                  </>
+                  </div>
                 ))}
             </ul>
           </Col>
@@ -138,7 +116,7 @@ const FooterSection = () => (
               {features
                 .filter(feature => feature.categoryId === 3)
                 .map(feature => (
-                  <>
+                  <div key={feature.id}>
                     <StyledListItem
                       as={NavLink}
                       to={{ pathname: `/feature/${feature.id}` }}
@@ -146,7 +124,7 @@ const FooterSection = () => (
                       {feature.name}
                     </StyledListItem>
                     <br />
-                  </>
+                  </div>
                 ))}
             </ul>
           </Col>
@@ -158,7 +136,7 @@ const FooterSection = () => (
               {features
                 .filter(feature => feature.categoryId === 2)
                 .map(feature => (
-                  <>
+                  <div key={feature.id}>
                     <StyledListItem
                       as={NavLink}
                       to={{ pathname: `/feature/${feature.id}` }}
@@ -166,7 +144,7 @@ const FooterSection = () => (
                       {feature.name}
                     </StyledListItem>
                     <br />
-                  </>
+                  </div>
                 ))}
             </ul>
           </Col>

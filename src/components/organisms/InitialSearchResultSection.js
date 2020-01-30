@@ -7,7 +7,7 @@ import styled from 'styled-components';
 // COMPONENTS
 import RecipeCard from '../molecules/RecipeCard';
 import LoadingDots from '../atoms/LoadingDots';
-import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
+import { Container, Pagination } from 'react-bootstrap';
 
 const InitialSearchResultSection = () => (
   <AppContext.Consumer>
@@ -42,6 +42,7 @@ const InitialSearchResultSection = () => (
                   }
                 />
                 {context.initialSearch.pagination.pageNumbers &&
+                  // eslint-disable-next-line array-callback-return
                   context.initialSearch.pagination.pageNumbers.map(number => {
                     let active = context.initialSearch.pagination.pageNumber;
 
@@ -54,6 +55,7 @@ const InitialSearchResultSection = () => (
                     ) {
                       return (
                         <Pagination.Item
+                          key={number}
                           onClick={() => context.handleInitialSearch(number)}
                           disabled={number === active ? true : false}
                           active={number === active ? true : false}
@@ -117,32 +119,10 @@ const InnerWrapper = styled(Container)`
   }
 `;
 
-const StyledHeading = styled.h3`
-  padding-bottom: 20px;
-`;
-
 const StyledFlexContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-`;
-
-const StyledCardColumns = styled(CardColumns)`
-  @media (min-width: 576px) {
-    column-count: 1;
-  }
-
-  @media (min-width: 768px) {
-    column-count: 2;
-  }
-
-  @media (min-width: 992px) {
-    column-count: 3;
-  }
-
-  @media (min-width: 1200px) {
-    column-count: 3;
-  }
 `;
 
 export default InitialSearchResultSection;

@@ -3,13 +3,9 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-import { Container, ListGroup, Card, Nav, Row, Col } from 'react-bootstrap';
+import { Container, ListGroup, Row, Col } from 'react-bootstrap';
 
 import LoadingDots from '../atoms/LoadingDots';
-
-// ROUTER
-import { NavLink } from 'react-router-dom';
-import { routes } from '../../routes';
 
 import history from '../../utils/history';
 
@@ -46,7 +42,7 @@ class SingleRecipeSection extends React.Component {
   }
 
   render() {
-    const { id } = this.props;
+    // const { id } = this.props;
 
     return this.state.singleRecipe_result ? (
       <>

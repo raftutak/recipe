@@ -12,12 +12,12 @@ const HomeView = () => (
     {context => (
       <>
         <SearchSection />
-        {context.search_isLoading && !context.search_result && <LoadingDots />}
-        {/* {context.search_result && <SearchResultSection id="recipe-list" />} */}
-        {context.mainSearch.result ? (
+        {context.initialSearch ? (
+          <InitialSearchResultSection />
+        ) : context.mainSearch ? (
           <MainSearchResultSection />
         ) : (
-          context.initialSearch && <InitialSearchResultSection />
+          <LoadingDots />
         )}
       </>
     )}

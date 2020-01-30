@@ -1,10 +1,7 @@
 import React from 'react';
-import { Container, Carousel, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import background from '../../assets/img/background-footer2.jpg';
-import { slider } from '../../data/slider';
-import { NavLink } from 'react-router-dom';
-import { routes } from '../../routes';
 
 const AboveFooterSection = () => (
   <>

@@ -21,30 +21,44 @@ const NavSection = () => (
       <>
         <StyledNavbar collapseOnSelect expand="lg" sticky="top" variant="dark">
           <Container>
-            <Navbar.Brand exact as={NavLink} to={routes.home} eventKey={1}>
+            <Navbar.Brand
+              exact
+              as={NavLink}
+              to={routes.home}
+              eventkey={999}
+              key={999}
+            >
               recipe-search
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav className="mr-auto">
-                <Nav.Link exact as={NavLink} to={routes.home} eventKey={1}>
+                <Nav.Link
+                  exact
+                  as={NavLink}
+                  to={routes.home}
+                  eventkey={999}
+                  key={999}
+                >
                   Strona główna
                 </Nav.Link>
                 <NavDropdown title="Kategorie">
                   {categories.map(category => (
                     <NavDropdown.Item
+                      key={category.id}
                       as={NavLink}
                       to={{ pathname: `/category/${category.id}` }}
-                      eventKey={category.id}
+                      eventkey={category.id}
                     >
                       {category.name}
                     </NavDropdown.Item>
                   ))}
                   {
                     <NavDropdown.Item
+                      key={0}
                       as={NavLink}
                       to={{ pathname: `/category/${0}` }}
-                      eventKey={0}
+                      eventkey={0}
                     >
                       Inne
                     </NavDropdown.Item>
@@ -55,9 +69,10 @@ const NavSection = () => (
                     .filter(feature => feature.categoryId === 9)
                     .map(feature => (
                       <NavDropdown.Item
+                        key={feature.id}
                         as={NavLink}
                         to={{ pathname: `/feature/${feature.id}` }}
-                        eventKey={feature.id}
+                        eventkey={feature.id}
                       >
                         {feature.name}
                       </NavDropdown.Item>
@@ -68,9 +83,10 @@ const NavSection = () => (
                     .filter(feature => feature.categoryId === 3)
                     .map(feature => (
                       <NavDropdown.Item
+                        key={feature.id}
                         as={NavLink}
                         to={{ pathname: `/feature/${feature.id}` }}
-                        eventKey={feature.id}
+                        eventkey={feature.id}
                       >
                         {feature.name}
                       </NavDropdown.Item>
@@ -81,9 +97,10 @@ const NavSection = () => (
                     .filter(feature => feature.categoryId === 2)
                     .map(feature => (
                       <NavDropdown.Item
+                        key={feature.id}
                         as={NavLink}
                         to={{ pathname: `/feature/${feature.id}` }}
-                        eventKey={feature.id}
+                        eventkey={feature.id}
                       >
                         {feature.name}
                       </NavDropdown.Item>
@@ -95,7 +112,7 @@ const NavSection = () => (
                 >
                   Kalkulator BMI
                 </Nav.Link>
-                {/* <Nav.Link as={NavLink} to={routes.calculatorBMI} eventKey={2}>
+                {/* <Nav.Link as={NavLink} to={routes.calculatorBMI} eventkey={2}>
                   Kalkulator BMI
                 </Nav.Link> */}
                 {/* <NavDropdown title="Kalkulatory">

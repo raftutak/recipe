@@ -9,7 +9,6 @@ import { Form, Col, InputGroup, Button } from 'react-bootstrap';
 import { categories } from '../../data/categories';
 import { dishes } from '../../data/dishes';
 import { features } from '../../data/features';
-import { ingredients } from '../../data/ingredients';
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -37,14 +36,29 @@ const SearchForm = () => (
           <Col>
             <InputGroup>
               <Form.Control
-                name="search_input"
+                id="searchInput"
+                name="searchInput"
                 type="search"
-                value={context.search_input}
+                value={context.searchInput}
                 onChange={context.handleInputChange}
                 as="input"
                 placeholder="Wpisz szukaną frazę ..."
-                // required
+                required={
+                  context.searchInput ||
+                  context.mainCategory ||
+                  context.mealType ||
+                  context.exclusion ||
+                  context.difficulty ||
+                  context.timeRequired ||
+                  context.cost
+                    ? false
+                    : true
+                }
               />
+
+              <Form.Control.Feedback type="invalid">
+                Please choose a username.
+              </Form.Control.Feedback>
               <InputGroup.Append>
                 <Button type="submit" variant="secondary">
                   Szukaj
@@ -72,14 +86,13 @@ const SearchForm = () => (
               <Select
                 styles={customStyles}
                 options={
-                  context.search_mainCategory &&
-                  context.search_mainCategory.subcategories
+                  context.mainCategory && context.mainCategory.subcategories
                 }
                 getOptionLabel={subcategory => subcategory.name}
                 getOptionValue={subcategory => subcategory.id}
                 placeholder="Wybierz podkategorię"
                 onChange={context.handleSubCategoryChange}
-                isDisabled={context.search_mainCategory ? false : true}
+                isDisabled={context.mainCategory ? false : true}
                 isClearable
               />
             </Form.Group>
@@ -89,16 +102,16 @@ const SearchForm = () => (
               <Select
                 styles={customStyles}
                 options={
-                  context.search_subCategory &&
+                  context.subCategory &&
                   dishes.filter(
-                    dish => dish.subCategoryId === context.search_subCategory.id
+                    dish => dish.subCategoryId === context.subCategory.id
                   )
                 }
                 getOptionLabel={dish => dish.name}
                 getOptionValue={dish => dish.id}
                 placeholder="Wybierz typ dania"
                 onChange={context.handleDishTypeChange}
-                isDisabled={context.search_subCategory ? false : true}
+                isDisabled={context.subCategory ? false : true}
                 isClearable
               />
             </Form.Group>
@@ -119,7 +132,7 @@ const SearchForm = () => (
             </Form.Group>
           </Col>
           <Col xs={12} md={8} lg={8}>
-            <Form.Group className="mb-0">
+            <Form.Group>
               <Select
                 styles={customStyles}
                 options={features.filter(feature => feature.categoryId === 7)}
@@ -162,7 +175,7 @@ const SearchForm = () => (
             </Form.Group>
           </Col>
           <Col xs={12} md={4} lg={4}>
-            <Form.Group className="mb-0">
+            <Form.Group className="mb-0" id="lastSearchFormInput">
               <Select
                 styles={customStyles}
                 options={features.filter(feature => feature.categoryId === 4)}

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
+import { Container, Pagination } from 'react-bootstrap';
 
 import LoadingDots from '../atoms/LoadingDots';
 import RecipeCard from '../molecules/RecipeCard';
@@ -114,6 +114,7 @@ class FeatureSection extends React.Component {
                 }
               />
               {this.state.featureSearch.pagination.pageNumbers &&
+                // eslint-disable-next-line array-callback-return
                 this.state.featureSearch.pagination.pageNumbers.map(number => {
                   let active = this.state.featureSearch.pagination.pageNumber;
 

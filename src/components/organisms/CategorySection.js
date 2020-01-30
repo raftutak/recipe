@@ -7,7 +7,7 @@ import LoadingDots from '../atoms/LoadingDots';
 import RecipeCard from '../molecules/RecipeCard';
 
 import { categories } from '../../data/categories';
-import { Container, CardColumns, Pagination, CardGroup } from 'react-bootstrap';
+import { Container, Pagination } from 'react-bootstrap';
 
 class CategorySection extends React.Component {
   state = {
@@ -113,6 +113,7 @@ class CategorySection extends React.Component {
                 }
               />
               {this.state.categorySearch.pagination.pageNumbers &&
+                // eslint-disable-next-line array-callback-return
                 this.state.categorySearch.pagination.pageNumbers.map(number => {
                   let active = this.state.categorySearch.pagination.pageNumber;
 
@@ -126,6 +127,7 @@ class CategorySection extends React.Component {
                   ) {
                     return (
                       <Pagination.Item
+                        key={number}
                         onClick={() => this.handleCategorySearch(number)}
                         disabled={number === active ? true : false}
                         active={number === active ? true : false}
