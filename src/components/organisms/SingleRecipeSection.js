@@ -3,17 +3,17 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-<<<<<<< HEAD
-import { Container, ListGroup, Card, Nav, Row, Col, Button } from 'react-bootstrap';
-=======
-import { Container, ListGroup, Row, Col } from 'react-bootstrap';
->>>>>>> develop
+import { Button, Container, ListGroup, Row, Col } from 'react-bootstrap';
 
 import LoadingDots from '../atoms/LoadingDots';
 
 import history from '../../utils/history';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faAngleLeft, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretLeft,
+  faAngleLeft,
+  faArrowAltCircleLeft
+} from '@fortawesome/free-solid-svg-icons';
 
 class SingleRecipeSection extends React.Component {
   state = {
@@ -69,13 +69,7 @@ class SingleRecipeSection extends React.Component {
                   <strong>{this.state.singleRecipe.result.blog}</strong>
                 </p>
                 <p className="mb-0 text-break">
-<<<<<<< HEAD
-                  <a href={this.state.singleRecipe_result.source_Url} style={{textDecoration: "none", color: "hsl(215, 37%, 19%)"}}>
-                    {this.state.singleRecipe_result.source_Url}
-                  </a>
-=======
                   {this.state.singleRecipe.result.source_Url}
->>>>>>> develop
                 </p>
               </Col>
             </Row>
@@ -103,8 +97,11 @@ class SingleRecipeSection extends React.Component {
             </Row>
             <Row className="mb-2 mt-4">
               <Col xs={12} md={12} lg={12}>
-                <StyledButton onClick={history.goBack} className="btn-secondary">
-                  {arrow}{' '}Powrót do wyników
+                <StyledButton
+                  onClick={history.goBack}
+                  className="btn-secondary"
+                >
+                  {arrow} Powrót do wyników
                 </StyledButton>
               </Col>
             </Row>
@@ -119,7 +116,7 @@ class SingleRecipeSection extends React.Component {
 
 const StyledSingleRecipeContainer = styled(Container)``;
 
-const arrow = <FontAwesomeIcon icon={faAngleLeft} size="lg"/>;
+const arrow = <FontAwesomeIcon icon={faAngleLeft} size="lg" />;
 
 const StyledImageBackground = styled(Container)`
   min-height: 200px;
@@ -131,16 +128,16 @@ const StyledImageBackground = styled(Container)`
 `;
 
 const StyledButton = styled(Button)`
-    display: inline-block;
-    width: auto;
-    height: 47px;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
+  display: inline-block;
+  width: auto;
+  height: 47px;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
 
-    :hover {
-      background-color: hsl(44, 60%, 42%);
-    }
-`
+  :hover {
+    background-color: hsl(44, 60%, 42%);
+  }
+`;
 
 export default SingleRecipeSection;

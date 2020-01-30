@@ -39,10 +39,6 @@ const FeatureSection = () => {
                 </p>
               </StyledInnerContainer>
             </StyledSearchContainer>
-            {/* {context.search_isLoading && !context.search_result && (
-              <LoadingDots />
-            )}
-            {context.search_result && <SearchResultSection id="recipe-list" />} */}
             <Favourites username={user.name} />
           </>
         )}

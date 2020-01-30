@@ -309,37 +309,6 @@ class Root extends React.Component {
     };
 
     return (
-<<<<<<< HEAD
-      <>
-        <Router history={history}>
-          <ScrollToTop />
-          <AppContext.Provider value={contextElements}>
-            <Switch>
-              <MainTemplate>
-                <Route exact path={routes.home} component={HomeView} />
-                <Route
-                  path={routes.category}
-                  render={props => <CategoryView id={props.match.params.id} />}
-                />
-                <Route
-                  path={routes.feature}
-                  render={props => <FeatureView id={props.match.params.id} />}
-                />
-                <Route
-                  path={routes.recipe}
-                  render={props => (
-                    <SingleRecipeView id={props.match.params.id} />
-                  )}
-                />
-                <Route path={routes.converter} component={ConverterView} />
-                <Route path={routes.calculatorBMI} component={CalculatorView} />
-                <Route path={routes.profile} component={ProfileView} />
-              </MainTemplate>
-            </Switch>
-          </AppContext.Provider>
-        </Router>
-      </>
-=======
       <Router history={history}>
         <ScrollToTop />
         <AppContext.Provider value={contextElements}>
@@ -366,7 +335,6 @@ class Root extends React.Component {
           </Switch>
         </AppContext.Provider>
       </Router>
->>>>>>> develop
     );
   }
 }
