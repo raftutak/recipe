@@ -155,7 +155,7 @@ class CalculatorBMI extends React.Component {
 
                 <input
                   className="field"
-                  type="text"
+                  type="number"
                   name="height"
                   required
                   value={this.state.height}
@@ -169,7 +169,7 @@ class CalculatorBMI extends React.Component {
                 
                 <input
                   className="field"
-                  type="text"
+                  type="number"
                   refs="weight"
                   required
                   value={this.state.weight}

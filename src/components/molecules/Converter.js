@@ -3,8 +3,16 @@ import React from 'react';
 class Converter extends React.Component {
 
     state = {
-      amount: '',
-      unit: '',
+      volume: {
+        ml: 0,
+        glass: 0
+      },
+      unit: {
+        g: 0,
+        spoon: 0,
+        glass: 0
+      },
+
     }
 
     handleAmountChange = (newAmount) => {
