@@ -79,7 +79,8 @@ class CategorySection extends React.Component {
         <Container fluid>
           <InnerWrapper>
             <StyledHeading>
-              Aktualna kategoria: <strong>{categories[id - 1].name}</strong>
+              Aktualna kategoria:{' '}
+              <strong>{id == 0 ? 'Inne' : categories[id - 1].name}</strong>
               {', ilość wyników: '}
               <strong>{this.state.categorySearch.pagination.totalCount}</strong>
               {', strona: '}

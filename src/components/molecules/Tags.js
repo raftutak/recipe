@@ -5,65 +5,133 @@ import { Badge } from 'react-bootstrap';
 
 import AppContext from '../../context';
 
+import { NavLink } from 'react-router-dom';
+
 const Tags = () => (
   <AppContext.Consumer>
     {context => (
       <>
         <div>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('pierogi')}
-          >
-            pierogi
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('pierogi')}
-          >
-            pizza
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('zupa')}
-          >
-            zupa
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('kotlet')}
-          >
-            kotlet
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('ciasto')}
-          >
-            ciasto
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('koktajl')}
-          >
-            koktajl
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('kompot')}
-          >
-            kompot
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('tort')}
-          >
-            tort
-          </Tag>
-          <Tag
-            variant="secondary"
-            onClick={() => context.handleTagClick('bułka')}
-          >
-            bułka
-          </Tag>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'pierogi')}
+            >
+              pierogi
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'pizza')}
+            >
+              pizza
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'zupa')}
+            >
+              zupa
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'kotlet')}
+            >
+              kotlet
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'ciasto')}
+            >
+              ciasto
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'koktajl')}
+            >
+              koktajl
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'kurczak')}
+            >
+              kurczak
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'tort')}
+            >
+              tort
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'makaron')}
+            >
+              makaron
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'grzyby')}
+            >
+              grzyby
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'zapiekanka')}
+            >
+              zapiekanka
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'kasza')}
+            >
+              kasza
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'zapiekanka')}
+            >
+              zapiekanka
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'lody')}
+            >
+              lody
+            </Tag>
+          </NavLink>
+          <NavLink to={{ pathname: '/' }}>
+            <Tag
+              variant="secondary"
+              onClick={() => context.handleTagClick(1, 'burger')}
+            >
+              buger
+            </Tag>
+          </NavLink>
         </div>
       </>
     )}

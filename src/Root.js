@@ -231,7 +231,7 @@ class Root extends React.Component {
       url = url.concat(`&featureIds=${this.state.timeRequired.id}`);
     }
     if (this.state.cost) {
-      url = url.concat(`&featureIds=${this.cost.id}`);
+      url = url.concat(`&featureIds=${this.state.cost.id}`);
     }
 
     await axios(url)
@@ -261,17 +261,48 @@ class Root extends React.Component {
   //   .getElementById('mainSearchResult')
   //   .scrollIntoView({ behavior: 'smooth' });
 
-  handleTagClick = async tag => {
-    this.setState({
-      search_isLoading: true,
-      search_result: undefined
+  handleTagClick = async (pageNumber, tag) => {
+    await this.setState({
+      initialSearch: undefined,
+      noResults: undefined,
+
+      mainSearch: {
+        isLoading: true,
+        result: undefined
+      },
+
+      searchInput: tag
     });
 
-    const url = `https://recipe-search.projektstudencki.pl/recipe/searchRecipes/?search=${tag}&count=8`;
-    const response = await axios(url);
-    const search_result = await response.data.recipes;
+    const query = this.state.searchInput;
 
-    this.setState({ search_isLoading: false, search_result });
+    let url = `https://recipe-search.projektstudencki.pl/recipe/SearchRecipesPaged/?search=${tag}&pageNumber=${pageNumber}&pageSize=6`;
+
+    await axios(url)
+      .then(response => {
+        const result = response.data.recipes;
+
+        const pagination = this.createPagination(response.data);
+
+        this.setState({
+          mainSearch: {
+            isLoading: false,
+            result,
+            pagination,
+            heading: query
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          noResults: true
+        });
+      });
+
+    document
+      .getElementById('lastSearchFormInput')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   handleShowCalculatorModal = event => {

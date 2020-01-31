@@ -4,8 +4,6 @@ import React from 'react';
 import SingleRecipeSection from '../components/organisms/SingleRecipeSection';
 
 const SingleRecipeView = ({ id }) => {
-  console.log(id);
-
   return (
     <>
       <SingleRecipeSection id={id} />

@@ -2,8 +2,19 @@ import React from 'react';
 import axios from 'axios';
 
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-import { Image, Button, Container, ListGroup, Row, Col } from 'react-bootstrap';
+import {
+  Image,
+  Button,
+  Container,
+  ListGroup,
+  Row,
+  Col,
+  Overlay,
+  Tooltip,
+  Modal
+} from 'react-bootstrap';
 
 import LoadingDots from '../atoms/LoadingDots';
 
@@ -38,39 +49,82 @@ class SingleRecipeSection extends React.Component {
       result: undefined
     },
 
-    disabled: false
+    disabled: false,
+    favouritesExistsNotificaiton: false,
+    favouritesAddedNotification: false,
+    rateExistsNotification: false,
+    rateAddedNotification: false
   };
 
-  handleRecipeRatePost = async (value, recipeId, user) => {
-    const url = `https://recipe-search.projektstudencki.pl/recipe/insertRecipeRate/?recipeId=${recipeId}&rate=${value}&username=${user.name}`;
+  handleRecipeRatePost = async (value, recipeId, username) => {
+    const url = `https://recipe-search.projektstudencki.pl/recipe/insertRecipeRate/?recipeId=${recipeId}&rate=${value}&username=${username}`;
     const response = await axios.post(url);
 
     if (!response.data.exists) {
       this.setState({
         amount: response.data.amount,
-        average: response.data.average
+        average: response.data.average,
+        rateAddedNotification: true
       });
     }
 
     if (response.data.exists) {
-      alert('Już głosowałeś na ten przepis!');
       this.setState({
-        disabled: true
+        disabled: true,
+        rateExistsNotification: true
       });
     }
 
     this.setState({ disabled: false });
   };
 
-  handleAddToFavourites = async (recipeId, user) => {
-    const url = `https://recipe-search.projektstudencki.pl/recipe/InsertFavRecipe/?recipeId=${recipeId}&username=${user.name}`;
+  handleAddToFavourites = async (recipeId, username) => {
+    const url = `https://recipe-search.projektstudencki.pl/recipe/InsertFavRecipe/?recipeId=${recipeId}&username=${username}`;
     const response = await axios.post(url);
 
-    console.log(response);
+    console.log(response.data);
+
+    if (response.data.exists) {
+      this.setState({
+        favouritesExistsNotificaiton: true
+      });
+    }
+
+    if (!response.data.exists) {
+      this.setState({
+        favouritesAddedNotification: true
+      });
+    }
+  };
+
+  handleShowFavouritesAddedModal = () => {
+    this.setState({
+      favouritesAddedNotification: !this.state.favouritesAddedNotification
+    });
+  };
+
+  handleShowFavouritesExistsModal = () => {
+    this.setState({
+      favouritesExistsNotificaiton: !this.state.favouritesExistsNotificaiton
+    });
+  };
+
+  handleShowRateAddedModal = () => {
+    this.setState({
+      rateAddedNotification: !this.state.rateAddedNotificaiton
+    });
+  };
+
+  handleShowRateExistsModal = () => {
+    this.setState({
+      rateExistsNotification: !this.state.rateExistsNotification
+    });
   };
 
   handleSingleRecipe = async () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document
+      .getElementById('top')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     this.setState({
       singleRecipe: {
@@ -98,12 +152,35 @@ class SingleRecipeSection extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.handleSingleRecipe();
-  }
+  handleUserRating = async (recipeId, user) => {
+    const url = `https://recipe-search.projektstudencki.pl/recipe/searchUserRecipeRate/?id=${recipeId}&username=${user}`;
+    const response = await axios(url);
+    const result = await response.data;
+
+    console.log(result);
+
+    if (result.exists) {
+      this.setState({
+        average: result.recipeRate
+      });
+    }
+  };
+
+  componentDidMount = async () => {
+    await this.handleSingleRecipe();
+
+    // this.setState(
+    //   {
+    //     currentUser: this.context.user.name
+    //   },
+    //   () => this.handleUserRating(this.props.id, this.state.currentUser)
+    // );
+  };
 
   componentDidUpdate(prevProps) {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document
+      .getElementById('top')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     if (this.props.id !== prevProps.id) {
       this.handleSingleRecipe();
@@ -111,9 +188,7 @@ class SingleRecipeSection extends React.Component {
   }
 
   render() {
-    const { recipe } = this.props;
-    const { isAuthenticated, user } = this.context;
-    // const { id } = this.props;
+    const { isAuthenticated, user, loading } = this.context;
 
     return this.state.singleRecipe && this.state.singleRecipe.result ? (
       <>
@@ -121,6 +196,7 @@ class SingleRecipeSection extends React.Component {
           <Container>
             <Row className="my-4">
               <Col style={{ textAlign: 'center' }}>
+                {/* <p>{this.state.currentUser}</p> */}
                 <h2 className="mb-3">{this.state.singleRecipe.result.title}</h2>
                 <p className="mb-1">
                   Przepis pochodzi z serwisu:{' '}
@@ -216,6 +292,7 @@ class SingleRecipeSection extends React.Component {
                 </p>
               </Col>
             </Row>
+
             <Row>
               <div
                 className="background"
@@ -227,11 +304,11 @@ class SingleRecipeSection extends React.Component {
                   backgroundImage: `url(${this.state.singleRecipe.result.image_Url})`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundAttachment: 'fixed'
+                  backgroundPosition: 'center'
                 }}
               ></div>
             </Row>
+
             <Row className="mb-4">
               <Col xs={12} md={6} lg={6} className="mb-4">
                 <ListGroup>
@@ -291,22 +368,81 @@ class SingleRecipeSection extends React.Component {
             <Row className="my-4">
               <Col xs={12} md={12} lg={12}>
                 <StyledButton
-                  onClick={history.goBack}
-                  className="btn-secondary"
-                >
-                  {arrow}&nbsp;&nbsp;&nbsp;&nbsp;Powrót do wyników
-                </StyledButton>
-                <StyledButtonGold
-                  onClick={() =>
-                    this.handleAddToFavourites(
-                      this.state.singleRecipe.result.id,
-                      user
-                    )
+                  onClick={
+                    document.referrer.indexOf('recipe-search.pl') >= 0 ||
+                    document.referrer.indexOf('localhost:3000') >= 0
+                      ? history.goBack
+                      : () => (window.location.href = '/')
                   }
                   className="btn-secondary"
                 >
-                  <strong>Dodaj do ulubionych</strong>
-                </StyledButtonGold>
+                  {arrow}&nbsp;&nbsp;Powrót
+                </StyledButton>
+                {isAuthenticated && (
+                  <>
+                    <StyledButtonGold
+                      onClick={() =>
+                        this.handleAddToFavourites(
+                          this.state.singleRecipe.result.id,
+                          user.name
+                        )
+                      }
+                      className="btn-secondary"
+                    >
+                      <strong>Dodaj do ulubionych</strong>
+                    </StyledButtonGold>
+                    <Modal
+                      show={this.state.favouritesAddedNotification}
+                      onClick={() => this.handleShowFavouritesAddedModal()}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Informacja</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body style={{ textAlign: 'center' }}>
+                        Gotowe. Przepis został dodany do ulubionych!
+                        <br />
+                        <br />
+                        <NavLink to={{ pathname: '/profile' }}>
+                          <StyledButton>Przejdź do ulubionych</StyledButton>
+                        </NavLink>
+                      </Modal.Body>
+                    </Modal>
+                    <Modal
+                      show={this.state.favouritesExistsNotificaiton}
+                      onClick={() => this.handleShowFavouritesExistsModal()}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Informacja</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body style={{ textAlign: 'center' }}>
+                        Ten przepis został już dodany do ulubionych!
+                        <br />
+                        <br />
+                        <NavLink to={{ pathname: '/profile' }}>
+                          <StyledButton>Przejdź do ulubionych</StyledButton>
+                        </NavLink>
+                      </Modal.Body>
+                    </Modal>
+                    <Modal
+                      show={this.state.rateExistsNotification}
+                      onClick={() => this.handleShowRateExistsModal()}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Informacja</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>Ten przepis został już oceniony!</Modal.Body>
+                    </Modal>
+                    <Modal
+                      show={this.state.rateAddedNotificaiton}
+                      onClick={() => this.handleShowRateAddedModal()}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Informacja</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>Ocena została dodana!</Modal.Body>
+                    </Modal>
+                  </>
+                )}
               </Col>
             </Row>
           </Container>
@@ -329,6 +465,7 @@ const StyledSingleRecipeContainer = styled(Container)`
 const arrow = <FontAwesomeIcon icon={faAngleLeft} size="lg" />;
 
 const StyledButton = styled(Button)`
+  background-color: #6c757d;
   display: inline-block;
   width: auto;
   height: 47px;

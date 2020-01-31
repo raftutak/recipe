@@ -37,7 +37,8 @@ const Userbox = () => {
               {loading || !user ? (
                 <div>Loading...</div>
               ) : (
-                <div>{user.nickname}</div>
+                // <div>{user.nickname}</div>
+                <div>Twój profil</div>
               )}
             </StyledButton>
           </NavLink>

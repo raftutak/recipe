@@ -6,34 +6,73 @@ import { slider } from '../../data/slider';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../../routes';
 
+import AppContext from '../../context';
+
+const moveToSearch = () => {
+  document
+    .getElementById('buttonToMove')
+    .scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
 const HeaderSection = () => (
-  <>
-    <StyledHeader fluid>
-      <StyledContainer>
-        <StyledInnerContainer>
-          <StyledCarousel indicators={false} interval={15000}>
-            {slider.map((item, id) => {
-              return (
-                <Carousel.Item key={id}>
+  <AppContext.Consumer>
+    {context => (
+      <>
+        <StyledHeader fluid>
+          <StyledContainer>
+            <StyledInnerContainer>
+              <StyledCarousel indicators={false} interval={15000}>
+                <Carousel.Item key={1}>
                   <>
                     <h2 className="mb-4">
-                      <strong>{item.heading}</strong>
+                      <strong>Łatwe przepisy na każdą okazję!</strong>
                     </h2>
                     <p style={{ fontSize: '1.1rem' }} className="mb-4">
-                      {item.paragraph}
+                      Witaj na recipe-search! Jest to ogromna baza przepisów
+                      zawierająca treści z najlepszych polskich blogów
+                      kulinarnych. Od dziś nie musisz przeglądać wielu stron w
+                      poszukiwaniu najlepszego lub najprostszego przepisu -
+                      wszystko znajdziesz w jednym miejscu, właśnie tutaj.
+                      Przekonaj się sam korzystając z poniższej wyszukiwarki!
                     </p>
-                    <NavLink to={routes.calculatorBMI}>
-                      <StyledButton>{item.button}</StyledButton>
-                    </NavLink>
+
+                    <StyledButton
+                      id="buttonToMove"
+                      onClick={() => moveToSearch()}
+                    >
+                      Skorzystaj z wyszukiwarki
+                    </StyledButton>
                   </>
                 </Carousel.Item>
-              );
-            })}
-          </StyledCarousel>
-        </StyledInnerContainer>
-      </StyledContainer>
-    </StyledHeader>
-  </>
+                <Carousel.Item key={2}>
+                  <>
+                    <h2 className="mb-4">
+                      <strong>Oblicz wskaźnik masy ciała</strong>
+                    </h2>
+                    <p style={{ fontSize: '1.1rem' }} className="mb-4">
+                      Kalkulator BMI (Body Mass Index) daje każdemu możliwość
+                      szybkiego i wygodego obliczenia własnego wskaźnika masy
+                      ciała. BMI obliczamy dzieląc masę ciała (w kilogramach)
+                      przez wzrost do kwadratu (w metrach). Wskaźnik ten
+                      wykorzystywany jest przede wszystkim do oceny ryzyka
+                      pojawienia się groźnych chorób oraz oceny stanu zdrowia.
+                    </p>
+
+                    <StyledButton
+                      id="buttonToMove"
+                      onClick={context.handleShowCalculatorModal}
+                    >
+                      Przejdź do kalkulatora BMI
+                    </StyledButton>
+                  </>
+                </Carousel.Item>
+              </StyledCarousel>
+            </StyledInnerContainer>
+          </StyledContainer>
+        </StyledHeader>
+      </>
+    )}
+  </AppContext.Consumer>
 );
 
 const StyledHeader = styled(Container)`
@@ -102,6 +141,37 @@ const StyledButton = styled(Button)`
   :hover {
     border: 1px solid hsl(215, 37%, 19%);
     background-color: hsl(215, 37%, 19%);
+    box-shadow: none;
+  }
+
+  :active {
+    border: 1px solid hsl(215, 37%, 19%) !important;
+    background-color: hsl(215, 37%, 19%) !important;
+    box-shadow: none !important;
+  }
+
+  :visited {
+    border: 1px solid hsl(215, 37%, 19%);
+    background-color: hsl(215, 37%, 19%);
+    box-shadow: none;
+  }
+
+  :focus {
+    border: 1px solid hsl(215, 37%, 19%);
+    background-color: hsl(215, 37%, 19%);
+    box-shadow: none;
+  }
+
+  :default {
+    border: 1px solid hsl(215, 37%, 19%);
+    background-color: hsl(215, 37%, 19%);
+    box-shadow: none;
+  }
+
+  :target {
+    border: 1px solid hsl(215, 37%, 19%);
+    background-color: hsl(215, 37%, 19%);
+    box-shadow: none;
   }
 `;
 

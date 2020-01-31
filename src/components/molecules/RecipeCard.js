@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // BOOTSTRAP
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Modal, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 // DATA
 import { categories } from '../../data/categories';
@@ -34,30 +34,44 @@ class RecipeCard extends React.Component {
   state = {
     disabled: false,
     average: this.props.recipe.rate.average,
-    amount: this.props.recipe.rate.amount
+    amount: this.props.recipe.rate.amount,
+
+    rateExistsNotification: false,
+    rateAddedNotification: false
   };
 
-  handleRecipeRatePost = async (value, recipeId, user) => {
-    const url = `https://recipe-search.projektstudencki.pl/recipe/insertRecipeRate/?recipeId=${recipeId}&rate=${value}&username=${user.name}`;
+  handleRecipeRatePost = async (value, recipeId, username) => {
+    const url = `https://recipe-search.projektstudencki.pl/recipe/insertRecipeRate/?recipeId=${recipeId}&rate=${value}&username=${username}`;
     const response = await axios.post(url);
-
-    console.log(response.data);
 
     if (!response.data.exists) {
       this.setState({
         amount: response.data.amount,
-        average: response.data.average
+        average: response.data.average,
+        rateAddedNotification: true
       });
     }
 
     if (response.data.exists) {
-      alert('Już głosowałeś na ten przepis!');
       this.setState({
-        disabled: true
+        disabled: true,
+        rateExistsNotification: true
       });
     }
 
     this.setState({ disabled: false });
+  };
+
+  handleShowRateAddedModal = () => {
+    this.setState({
+      rateAddedNotification: !this.state.rateAddedNotificaiton
+    });
+  };
+
+  handleShowRateExistsModal = () => {
+    this.setState({
+      rateExistsNotification: !this.state.rateExistsNotification
+    });
   };
 
   render() {
@@ -340,6 +354,24 @@ class RecipeCard extends React.Component {
             </ListGroupItem> */}
                 </ListGroup>
               </StyledCard>
+              <Modal
+                show={this.state.rateExistsNotification}
+                onClick={() => this.handleShowRateExistsModal()}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Informacja</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Ten przepis został już oceniony!</Modal.Body>
+              </Modal>
+              <Modal
+                show={this.state.rateAddedNotificaiton}
+                onClick={() => this.handleShowRateAddedModal()}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Informacja</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Ocena została dodana!</Modal.Body>
+              </Modal>
             </>
           )}
         </AppContext.Consumer>

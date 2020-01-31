@@ -22,20 +22,6 @@ class CalculatorModal extends React.Component {
               <Modal.Body>
                 <CalculatorBMI />
               </Modal.Body>
-              <Modal.Footer>
-                <Button
-                  variant="secondary"
-                  onClick={context.handleShowCalculatorModal}
-                >
-                  Close
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={context.handleShowCalculatorModal}
-                >
-                  Save Changes
-                </Button>
-              </Modal.Footer>
             </Modal>
           </>
         )}

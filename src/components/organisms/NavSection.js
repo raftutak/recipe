@@ -58,7 +58,7 @@ const NavSection = () => (
                       key={0}
                       as={NavLink}
                       to={{ pathname: `/category/${0}` }}
-                      eventkey={0}
+                      eventkey={545}
                     >
                       Inne
                     </NavDropdown.Item>
