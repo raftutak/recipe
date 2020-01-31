@@ -1,36 +1,90 @@
 import React from 'react';
-import { Container, Row, Form, Col } from 'react-bootstrap';
+import { Container, Row, Form, Col, Button } from 'react-bootstrap';
 import { Panel } from 'react-bootstrap';
+
+import styled from 'styled-components';
 
 class Converter extends React.Component {
 
     state = {
-      volume: {
-        ml: 0
-      },
-      weight: {
-        g: 0
-      },
-
+    //  volume: '',
+      weight: '',
+      product: ''
     }
 
-    handleVolumeChange = (newVolume) => {
+    handleProductChange = (newProduct) => {
       this.setState({
-        volume: newVolume
+        product: newProduct
       });
-
-        return( 
-        <>
-        {this.state.volume}
-        </>
-        );
-
     }
+
+    // handleVolumeChange = (newVolume) => {
+    //   this.setState({
+    //     volume: newVolume
+    //   });
+
+    //     return( 
+    //     <>
+    //     {this.state.volume}
+    //     </>
+    //     );
+    // }
 
     handleWeightChange = (newWeight) => {
       this.setState({
         weight: newWeight
       });
+
+        return( 
+        <>
+        {this.state.weight}
+        </>
+        );
+
+    }
+
+    submitButton = (event) => {
+      event.preventDefault();
+
+      const product = this.state.product;
+      const weight = this.state.weight;
+      let volume;
+      let teaSpoon;
+      let spoon;
+      let glass;;
+      // let teaSpoon = 0.05;
+      // let spoon = 0.15;
+      // let glass = 2.5;
+
+      if( product === 'liquids' ) {
+        teaSpoon = weight * 0.05
+        spoon = weight * 0.15
+        glass = weight * 2.5 
+
+      } else if ( product === 'flour' ) {
+        teaSpoon = weight * 0.03
+        spoon = weight * 0.11
+        glass = weight * 1.65
+
+      } else if ( product === 'sweet' ) {
+        teaSpoon = weight * 0.04
+        spoon = weight * 0.13
+        glass = weight * 2.2
+
+      } else if ( product === 'rice' ) {
+        teaSpoon = weight * 0.05
+        spoon = weight * 0.14
+        glass = weight * 2.3
+
+      } else if ( product === 'butter' ) {
+        teaSpoon = weight * 0.05
+        spoon = weight * 0.14
+        glass = weight * 2.4
+
+      } else {
+        return volume;
+      }
+
     }
 
     // handleOnChange = (property, value) => {
@@ -72,20 +126,65 @@ class Converter extends React.Component {
             <Form onSubmit={this.SubmitButton}>
 
               <p className="mb-2">
+                Wybierz rodzaj produktu z listy:
+              </p>
+
+              <select value={this.state.product} onChange={this.handleProductChange}>
+                <option value="liquids">Substancje płynne</option>
+                <option value="flour">Mąka</option>
+                <option value="sweet">Cukier</option>
+                <option value="rice">Ryż</option>
+                <option value="butter">Masło</option>
+                <option value="oil">Olej</option>
+                <option value="salt">Sól</option>
+              </select>
+
+              <p className="mb-2 mt-2">
                 Wprowadź ilość:
               </p>
 
               <input
                 type="number"
-                //className="field"
+                className="field"
                 name="volume"
                 required
-                value={this.state.volume}
+                //value={this.state.volume}
                // onBlur={this.blur}
                 onChange={this.handleVolumeChange}
               />
 
+              {/* 
+              <p className="mb-2 mt-2">
+                Wprowadź ilość w g:
+              </p>
 
+              <input
+                type="number"
+                className="field"
+                name="weight"
+                required
+                //value={this.state.weight}
+               // onBlur={this.blur}
+                onChange={this.handleWeightChange}
+              />
+              */}
+              
+              <Button
+                type="submit"
+                className="btn-secondary"
+                onChange={this.submitButton}>
+                Przelicz!
+              </Button>
+
+              <p className="mb-2">
+                Ilość łyżeczek: {this.state.teaSpoon}
+              </p>
+              <p className="mb-2 mt-2">
+                Ilość łyżek: {this.state.spoon}
+              </p>
+              <p className="mb-2 mt-2">
+                Ilość szklanek: {this.state.glass}
+              </p>
 
             </Form>
           </Col>
@@ -95,5 +194,49 @@ class Converter extends React.Component {
     );
   }
 }
+
+const StyledDescriptionContainer = styled(Container)`
+      width: 100%;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 5px;
+      padding: 1.2em;
+      text-align: justify;
+`;
+
+const StyledContainer = styled(Container)`
+    padding: 1.2em;
+
+    Button { 
+      width: 100%;
+      color: hsl(215, 40%, 12%);
+      font-weight: 600;
+      background-color: rgba(0,0,0,0.1);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+
+    Button:hover {
+      color: rgb(255,255,255);
+      background-color: hsl(44, 60%, 42%);
+      border: 1px solid hsl(44, 60%, 42%);
+    }
+
+    Button:focus {
+      outline: none;
+      color: rgb(255,255,255);
+      background-color: hsl(44, 60%, 42%);
+      border: 1px solid hsl(44, 60%, 42%);
+    }
+`;
+
+const StyledForm = styled(Form)`
+    .field {
+      text-indent: 10px;
+      width: 100%;
+      height: 30px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+`;
+
 
 export default Converter;
