@@ -46,12 +46,13 @@ class Converter extends React.Component {
     submitButton = (event) => {
       event.preventDefault();
 
-      const product = this.state.product;
-      const weight = this.state.weight;
-      let volume;
-      let teaSpoon;
-      let spoon;
-      let glass;;
+      var product = this.state.product;
+      var weight = this.state.weight / 100;
+
+      let volume = '';
+      let teaSpoon = 0;
+      let spoon = 0;
+      let glass = 0;
       // let teaSpoon = 0.05;
       // let spoon = 0.15;
       // let glass = 2.5;
@@ -82,8 +83,16 @@ class Converter extends React.Component {
         glass = weight * 2.4
 
       } else {
-        return volume;
+        teaSpoon = weight * 0.05
+        spoon = weight * 0.15
+        glass = weight * 2.5
       }
+
+      // return (
+      //   <>
+      //   {this.state.teaSpoon}{this.state.spoon}{this.state.glass}
+      //   </>
+      // )
 
     }
 
@@ -172,7 +181,7 @@ class Converter extends React.Component {
               <Button
                 type="submit"
                 className="btn-secondary"
-                onChange={this.submitButton}>
+                onSubmit={this.submitButton}>
                 Przelicz!
               </Button>
 
