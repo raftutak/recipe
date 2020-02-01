@@ -16,6 +16,12 @@ class Converter extends React.Component {
       this.setState({
         product: newProduct
       });
+
+      return(
+        <>
+        {this.state.product}
+        </>
+      );
     }
 
     // handleVolumeChange = (newVolume) => {
@@ -46,8 +52,8 @@ class Converter extends React.Component {
     submitButton = (event) => {
       event.preventDefault();
 
-      var product = this.state.product;
-      var weight = this.state.weight / 100;
+      let product = this.state.product;
+      let weight = this.state.weight / 100;
 
       let volume = '';
       let teaSpoon = 0;
@@ -67,7 +73,7 @@ class Converter extends React.Component {
         spoon = weight * 0.11
         glass = weight * 1.65
 
-      } else if ( product === 'sweet' ) {
+      } else if ( product === 'sugar' ) {
         teaSpoon = weight * 0.04
         spoon = weight * 0.13
         glass = weight * 2.2
@@ -88,11 +94,11 @@ class Converter extends React.Component {
         glass = weight * 2.5
       }
 
-      // return (
-      //   <>
-      //   {this.state.teaSpoon}{this.state.spoon}{this.state.glass}
-      //   </>
-      // )
+      return (
+        <>
+        {this.state.teaSpoon}{this.state.spoon}{this.state.glass}
+        </>
+      )
 
     }
 
@@ -124,6 +130,7 @@ class Converter extends React.Component {
 
   render() {
     return (
+      <StyledContainer>
       <Container fluid>
         <Row>
             <h3>
@@ -138,10 +145,10 @@ class Converter extends React.Component {
                 Wybierz rodzaj produktu z listy:
               </p>
 
-              <select value={this.state.product} onChange={this.handleProductChange}>
+              <select value={this.state.product} onChange={() => this.handleProductChange()}>
                 <option value="liquids">Substancje płynne</option>
                 <option value="flour">Mąka</option>
-                <option value="sweet">Cukier</option>
+                <option value="sugar">Cukier</option>
                 <option value="rice">Ryż</option>
                 <option value="butter">Masło</option>
                 <option value="oil">Olej</option>
@@ -200,6 +207,7 @@ class Converter extends React.Component {
         </Row>
 
       </Container>
+      </StyledContainer>
     );
   }
 }
