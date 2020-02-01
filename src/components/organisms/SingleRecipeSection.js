@@ -194,178 +194,7 @@ class SingleRecipeSection extends React.Component {
       <>
         <StyledSingleRecipeContainer fluid>
           <Container>
-            <Row className="my-4">
-              <Col style={{ textAlign: 'center' }}>
-                {/* <p>{this.state.currentUser}</p> */}
-                <h2 className="mb-3">{this.state.singleRecipe.result.title}</h2>
-                <p className="mb-1">
-                  Przepis pochodzi z serwisu:{' '}
-                  <strong>{this.state.singleRecipe.result.blog}</strong>
-                </p>
-                <p className="mb-1 text-break">
-                  <a
-                    style={{
-                      color: 'hsl(215, 37%, 19%)',
-                      textDecoration: 'none'
-                    }}
-                    href={this.state.singleRecipe.result.source_Url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {this.state.singleRecipe.result.source_Url}
-                  </a>
-                </p>
-                <p className="mb-1">
-                  <strong>Kategoria:</strong>{' '}
-                  {this.state.singleRecipe.result.dishMainCategoryId !== 0 ? (
-                    categories[
-                      this.state.singleRecipe.result.dishMainCategoryId - 1
-                    ].name
-                  ) : (
-                    <strong style={{ color: 'red' }}>Brak kategorii</strong>
-                  )}
-                  {' / '}
-                  {this.state.singleRecipe.result.dishMainCategoryId !== 0 ? (
-                    categories[
-                      this.state.singleRecipe.result.dishMainCategoryId - 1
-                    ].subcategories[
-                      categories[
-                        this.state.singleRecipe.result.dishMainCategoryId - 1
-                      ].subcategories.findIndex(
-                        index =>
-                          index.id ===
-                          this.state.singleRecipe.result.dishSubCategoryId
-                      )
-                    ].name
-                  ) : (
-                    <strong style={{ color: 'red' }}>Brak podkategorii</strong>
-                  )}
-                  {' / '}
-                  {this.state.singleRecipe.result.dishId ? (
-                    dishes[
-                      dishes.findIndex(
-                        index =>
-                          index.id === this.state.singleRecipe.result.dishId
-                      )
-                    ].name
-                  ) : (
-                    <strong style={{ color: 'red' }}>Brak dishId</strong>
-                  )}
-                </p>
-                <p className="mb-1">
-                  <strong>Ocena: </strong>
-                  <Rating
-                    // readonly={
-                    //   false ? true : this.state.disabled ? true : false
-                    // }
-                    readonly={
-                      !isAuthenticated
-                        ? true
-                        : this.state.disabled
-                        ? true
-                        : false
-                    }
-                    onClick={value =>
-                      // this.handleRecipeRatePost(
-                      //   value,
-                      //   recipe.id,
-                      //   'raftutak@gmail.com'
-                      // )
-                      this.handleRecipeRatePost(
-                        value,
-                        this.state.singleRecipe.result.id,
-                        user.name
-                      )
-                    }
-                    placeholderRating={this.state.average}
-                    emptySymbol={
-                      <img src={starRegular} className="icon" alt="" />
-                    }
-                    fullSymbol={<img src={starSolid} className="icon" alt="" />}
-                    placeholderSymbol={
-                      <img src={starSolid} className="icon" alt="" />
-                    }
-                  />
-                  <br />
-                  <strong>Liczba ocen: </strong>
-                  {this.state.amount}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <div
-                className="background"
-                style={{
-                  margin: 'auto',
-                  width: '100%',
-                  margin: '0px 15px 25px 15px',
-                  height: '400px',
-                  backgroundImage: `url(${this.state.singleRecipe.result.image_Url})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              ></div>
-            </Row>
-
-            <Row className="mb-4">
-              <Col xs={12} md={6} lg={6} className="mb-4">
-                <ListGroup>
-                  {featuresCategories.map(featureCategory => (
-                    <ListGroup.Item>
-                      <>
-                        <strong>{featureCategory.name}: </strong>
-                        {this.state.singleRecipe.result.featureIds
-                          ? this.state.singleRecipe.result.featureIds.map(
-                              featureID => (
-                                <>
-                                  {features[
-                                    features.findIndex(
-                                      index =>
-                                        index.id === featureID &&
-                                        index.categoryId === featureCategory.id
-                                    )
-                                  ] &&
-                                    features[
-                                      features.findIndex(
-                                        index =>
-                                          index.id === featureID &&
-                                          index.categoryId ===
-                                            featureCategory.id
-                                      )
-                                    ].name + ', '}
-                                </>
-                              )
-                            )
-                          : null}
-                      </>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Col>
-              <Col xs={12} md={6} lg={6}>
-                <ListGroup>
-                  <ListGroup.Item>
-                    <strong>Składniki</strong>
-                  </ListGroup.Item>
-                  {this.state.singleRecipe.result.ingredients.map(item => {
-                    return <ListGroup.Item>{item}</ListGroup.Item>;
-                  })}
-                </ListGroup>
-              </Col>
-            </Row>
-            <Row className="mb-4">
-              <Col
-                xs={12}
-                md={12}
-                lg={12}
-                style={{ textAlign: 'justify', lineHeight: '1.8rem' }}
-              >
-                {this.state.singleRecipe.result.description}
-              </Col>
-            </Row>
-            <Row className="my-4">
+            <Row className="mt-4">
               <Col xs={12} md={12} lg={12}>
                 <StyledButton
                   onClick={
@@ -445,6 +274,175 @@ class SingleRecipeSection extends React.Component {
                 )}
               </Col>
             </Row>
+            <Row className="mb-4">
+              <Col className="mb-4">
+                <StyledImage
+                  className="mb-4"
+                  src={this.state.singleRecipe.result.image_Url}
+                  onError={e => {
+                    e.target.onerror = null;
+                    e.target.src = `${noimage}`;
+                  }}
+                  rounded
+                />
+
+                <ListGroup>
+                  <ListGroup.Item>
+                    <strong>Składniki</strong>
+                  </ListGroup.Item>
+                  {this.state.singleRecipe.result.ingredients.map(item => {
+                    return <ListGroup.Item>{item}</ListGroup.Item>;
+                  })}
+                </ListGroup>
+              </Col>
+              <Col>
+                <div className="mb-4">
+                  {/* <p>{this.state.currentUser}</p> */}
+                  <h2 className="mb-3">
+                    {this.state.singleRecipe.result.title}
+                  </h2>
+                  <p className="mb-1">
+                    Przepis pochodzi z serwisu:{' '}
+                    <strong>
+                      <a
+                        style={{
+                          color: 'hsl(215, 37%, 19%)',
+                          textDecoration: 'none'
+                        }}
+                        href={this.state.singleRecipe.result.source_Url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {this.state.singleRecipe.result.blog}
+                      </a>
+                    </strong>
+                  </p>
+
+                  <p className="mb-1">
+                    <strong>Kategoria:</strong>{' '}
+                    {this.state.singleRecipe.result.dishMainCategoryId !== 0 ? (
+                      categories[
+                        this.state.singleRecipe.result.dishMainCategoryId - 1
+                      ].name
+                    ) : (
+                      <strong style={{ color: 'red' }}>Brak kategorii</strong>
+                    )}
+                    {' / '}
+                    {this.state.singleRecipe.result.dishMainCategoryId !== 0 ? (
+                      categories[
+                        this.state.singleRecipe.result.dishMainCategoryId - 1
+                      ].subcategories[
+                        categories[
+                          this.state.singleRecipe.result.dishMainCategoryId - 1
+                        ].subcategories.findIndex(
+                          index =>
+                            index.id ===
+                            this.state.singleRecipe.result.dishSubCategoryId
+                        )
+                      ].name
+                    ) : (
+                      <strong style={{ color: 'red' }}>
+                        Brak podkategorii
+                      </strong>
+                    )}
+                    {' / '}
+                    {this.state.singleRecipe.result.dishId ? (
+                      dishes[
+                        dishes.findIndex(
+                          index =>
+                            index.id === this.state.singleRecipe.result.dishId
+                        )
+                      ].name
+                    ) : (
+                      <strong style={{ color: 'red' }}>Brak dishId</strong>
+                    )}
+                  </p>
+                  <p className="mb-1">
+                    <strong>Ocena: </strong>
+                    <Rating
+                      // readonly={
+                      //   false ? true : this.state.disabled ? true : false
+                      // }
+                      readonly={
+                        !isAuthenticated
+                          ? true
+                          : this.state.disabled
+                          ? true
+                          : false
+                      }
+                      onClick={value =>
+                        // this.handleRecipeRatePost(
+                        //   value,
+                        //   recipe.id,
+                        //   'raftutak@gmail.com'
+                        // )
+                        this.handleRecipeRatePost(
+                          value,
+                          this.state.singleRecipe.result.id,
+                          user.name
+                        )
+                      }
+                      placeholderRating={this.state.average}
+                      emptySymbol={
+                        <img src={starRegular} className="icon" alt="" />
+                      }
+                      fullSymbol={
+                        <img src={starSolid} className="icon" alt="" />
+                      }
+                      placeholderSymbol={
+                        <img src={starSolid} className="icon" alt="" />
+                      }
+                    />
+                    <br />
+                    <strong>Liczba ocen: </strong>
+                    {this.state.amount}
+                  </p>
+                </div>
+                <ListGroup>
+                  {featuresCategories.map(featureCategory => (
+                    <ListGroup.Item>
+                      <>
+                        <strong>{featureCategory.name}: </strong>
+                        {this.state.singleRecipe.result.featureIds
+                          ? this.state.singleRecipe.result.featureIds.map(
+                              featureID => (
+                                <>
+                                  {features[
+                                    features.findIndex(
+                                      index =>
+                                        index.id === featureID &&
+                                        index.categoryId === featureCategory.id
+                                    )
+                                  ] &&
+                                    features[
+                                      features.findIndex(
+                                        index =>
+                                          index.id === featureID &&
+                                          index.categoryId ===
+                                            featureCategory.id
+                                      )
+                                    ].name + ', '}
+                                </>
+                              )
+                            )
+                          : null}
+                      </>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </Col>
+            </Row>
+
+            <Row className="mb-4">
+              <Col
+                xs={12}
+                md={12}
+                lg={12}
+                style={{ textAlign: 'justify', lineHeight: '1.8rem' }}
+              >
+                {this.state.singleRecipe.result.description}
+              </Col>
+            </Row>
           </Container>
         </StyledSingleRecipeContainer>
       </>
@@ -453,6 +451,11 @@ class SingleRecipeSection extends React.Component {
     );
   }
 }
+
+const StyledImage = styled(Image)`
+  width: 100%;
+  height: auto;
+`;
 
 const StyledSingleRecipeContainer = styled(Container)`
   .icon {

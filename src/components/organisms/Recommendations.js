@@ -12,6 +12,37 @@ import block_bg_1 from '../../assets/img/block_bg_1.jpg';
 // DATA
 import { sources } from '../../data/sources';
 
+const advices = [
+  {
+    content:
+      'Makaron przygotowywany z sosem warto jest gotować ok. minutę krócej, niż wskazane jest to w instrukcji. Ostatnią minutę powinien być gotowany w podgrzewającym się sosie. Przeniknie wówczas smakiem i zapachem ziół i dodatków.'
+  },
+  {
+    content:
+      'Jeżeli przygotowujesz na spotkanie towarzyskie sałatkę na bazie sałat, nie dodawaj do niej sosu a postaw go obok w sosjerce. Nie spowoduje to szybkiego “zwiędnięcia” sałatki.'
+  },
+  {
+    content:
+      'Doskonałym sposobem na sprawdzenie, czy tłuszcz na patelni jest już rozgrzany, jest położenie w niej drewnianej łyzki. Jeżeli wokół pojawią się bąbelki, oznacza to, że możemy wrzucać na patelnię produkty do smażenia.'
+  },
+  {
+    content:
+      'Przed rozpoczęciem gotowania lub pieczenia, pilnie przeczytaj przepis. Nie zaczynaj przygotowań bez zapoznania się z nim aż do samego końca. Pomoże to zapobiec panice w momencie, kiedy odkryjesz, że nie przygotowałeś wszystkiego należycie.'
+  },
+  {
+    content:
+      'Soląc i pieprząc rybę lub mięso, rób to ze zwiększonej wysokości, zataczając coraz większe kręgi, żeby przyprawy mogły pokryć całą potrawę a nie tylko jej fragmenty.'
+  },
+  {
+    content:
+      'Nie wybieraj się do sklepu z listą zakupów spożywczych. Idź na zakupy, przekonaj się, jakie produkty są świeże i najbardziej atrakcyjne, a następnie stwórz z nich na miejscu swój plan posiłków.'
+  },
+  {
+    content:
+      'Chcąc zachować biały kolor gotowanego kalafiora, gotuj go z dodatkiem małej ilości mleka i soli a po odlaniu szybko przelej lodowatą wodą.'
+  }
+];
+
 const containerContent = (
   <>
     <h5
@@ -21,10 +52,7 @@ const containerContent = (
       <strong>Kulinarna porada</strong>
     </h5>
     <p style={{ color: 'white', textShadow: '0 0 5px hsla(0, 0%, 0%, 1)' }}>
-      Makaron przygotowywany z sosem warto jest gotować ok. minutę krócej, niż
-      wskazane jest to w instrukcji. Ostatnią minutę powinien być gotowany w
-      podgrzewającym się sosie. Przeniknie wówczas smakiem i zapachem ziół i
-      dodatków.
+      {advices[Math.floor(Math.random() * advices.length)].content}
     </p>
   </>
 );
@@ -94,7 +122,7 @@ const Recommendations = () => (
         <Row>
           <StyledCol xs={12} md={6} lg={6}>
             <StyledContainerBackground backgroundimage={1}>
-              <StyledContainer grayoverlay={1}>
+              <StyledContainer style={{ minHeight: '190px' }} grayoverlay={1}>
                 {containerContent}
               </StyledContainer>
             </StyledContainerBackground>

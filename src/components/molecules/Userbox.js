@@ -1,10 +1,18 @@
 import React from 'react';
 import { useAuth0 } from '../../react-auth0-spa';
 import styled, { css } from 'styled-components';
-import { Button } from 'react-bootstrap';
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 
 import { NavLink } from 'react-router-dom';
 import { routes } from '../../routes';
+
+import {
+  faCaretLeft,
+  faAngleLeft,
+  faArrowAltCircleLeft,
+  faHeart
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Userbox = () => {
   const {
@@ -29,19 +37,49 @@ const Userbox = () => {
       ) : (
         <>
           <NavLink to={routes.profile}>
-            <StyledButton
-              authenticated
-              variant="secondary"
-              title="Sprawdź swój profil"
-            >
+            <StyledButton favourites variant="secondary" title="Ulubione">
               {loading || !user ? (
                 <div>Loading...</div>
               ) : (
                 // <div>{user.nickname}</div>
-                <div>Twój profil</div>
+                <div>
+                  <FontAwesomeIcon icon={faHeart} size="lg" />
+                </div>
               )}
             </StyledButton>
           </NavLink>
+          <OverlayTrigger
+            key="popover"
+            placement="bottom"
+            trigger="hover"
+            overlay={
+              <Popover id="profile-popover">
+                <Popover.Title>Dane użytkownika</Popover.Title>
+                <Popover.Content>
+                  {loading || !user ? (
+                    <div>Loading</div>
+                  ) : (
+                    <div>
+                      Email: <strong>{user.name}</strong>
+                      <br />
+                      Aktywny: <strong>{user.updated_at}</strong>
+                    </div>
+                  )}
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <NavLink to={routes.profile}>
+              <StyledButton authenticated variant="secondary">
+                {loading || !user ? (
+                  <div>Loading...</div>
+                ) : (
+                  // <div>{user.nickname}</div>
+                  <div>Twój profil</div>
+                )}
+              </StyledButton>
+            </NavLink>
+          </OverlayTrigger>
           <StyledButton
             logout
             onClick={() => logout()}
@@ -72,7 +110,21 @@ const StyledButton = styled(Button)`
     authenticated &&
     css`
       background-color: hsl(44, 60%, 42%);
+
+      :hover {
+        background-color: hsl(44, 60%, 30%);
+      }
     `}
+
+    ${({ favourites }) =>
+      favourites &&
+      css`
+        background-color: hsl(348, 45%, 40%);
+
+        :hover {
+          background-color: hsl(348, 45%, 30%);
+        }
+      `}
 
   ${({ logout }) =>
     logout &&
